@@ -1,0 +1,2378 @@
+/* Подключение шрифта PFDinTextPro */
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-XThin.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-XBlack.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-XThinItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-MedItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-BoldItal.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'PFDinTextPro';
+    src: url('../fonts/PFDinTextPro-XBlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-deep-blue: #1a1f3a;
+    --color-purple: #2d1b4e;
+    --color-indigo: #3b2f5f;
+    --color-warm-amber: #f4a460;
+    --color-golden: #ffd700;
+    --color-orange: #ff8c42;
+    --color-brown: #8b4513;
+    --color-red: #c41e3a;
+    --color-emerald: #50c878;
+    --color-white: #ffffff;
+    --color-snow: #f0f8ff;
+    --color-burgundy: #800020;
+}
+
+body {
+    font-family: 'PFDinTextPro', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-purple) 50%, var(--color-indigo) 100%);
+    color: var(--color-white);
+}
+
+.lab-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Дальний фон (первый) */
+.background-far {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/background/lab-background-far.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+/* Фон лаборатории (второй) */
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/background/lab-background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
+
+.wall {
+    /* Удалено - теперь используется единый фон */
+    display: none;
+}
+
+.shelves {
+    display: none;
+}
+
+/* Окно (центр сверху) */
+.window {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -1px;
+    width: 1000px;
+    height: 730px;
+    background: rgba(30, 30, 60, 0.7);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 
+        inset 0 0 50px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    overflow: hidden;
+}
+
+.window-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 2px;
+}
+
+.window-frame::before {
+    display: none;
+}
+
+.window-frame::after {
+    display: none;
+}
+
+.snow-container {
+    position: absolute;
+    width: 100%;
+    height: 120%;
+    overflow: hidden;
+    border-radius: 2px;
+    top: -20%;
+    left: 0;
+}
+
+.snowflake {
+    position: absolute;
+    color: var(--color-snow);
+    font-size: 1em;
+    font-family: 'PFDinTextPro', sans-serif;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    animation: snowfall linear infinite;
+    opacity: 0.8;
+    will-change: transform;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-200px) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) translateX(var(--drift, 50px));
+        opacity: 0;
+    }
+}
+
+/* Рабочий стол */
+.desk {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    /* Фон стола теперь в едином изображении lab-background.png */
+    background: transparent;
+    z-index: 3;
+}
+
+/* Лампа */
+.lamp {
+    display: none;
+}
+
+.lamp-base {
+    width: 60px;
+    height: 20px;
+    background: rgba(139, 69, 19, 0.8);
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.lamp-shade {
+    width: 100px;
+    height: 80px;
+    background: linear-gradient(to bottom, rgba(255, 140, 66, 0.9), rgba(255, 215, 0, 0.7));
+    border-radius: 50% 50% 20% 20%;
+    margin: -10px auto 0;
+    position: relative;
+    box-shadow: 
+        0 0 50px rgba(255, 215, 0, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.lamp-light {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    animation: lampFlicker 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes lampFlicker {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+/* Интерактивные элементы */
+.interactive-item {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    z-index: 5;
+}
+
+.interactive-item:hover {
+    filter: brightness(1.2);
+}
+
+/* Подсветка монитора красным при наведении - тень вокруг картинки */
+.crt-monitor:hover .monitor-screen {
+    animation: glitchImageWithRedGlow 2.5s infinite !important;
+}
+
+@keyframes glitchImageWithRedGlow {
+    0%, 85%, 100% {
+        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(0);
+    }
+    86% {
+        filter: brightness(1.4) hue-rotate(5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-2px, 2px);
+    }
+    87% {
+        filter: brightness(1.4) hue-rotate(-5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(2px, -2px);
+    }
+    88% {
+        filter: brightness(1.45) hue-rotate(3deg) saturate(1.3) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-2px, -2px);
+    }
+    89% {
+        filter: brightness(1.4) hue-rotate(-3deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(2px, 2px);
+    }
+    90% {
+        filter: brightness(1.35) hue-rotate(2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-1px, 1px);
+    }
+    91% {
+        filter: brightness(1.35) hue-rotate(-2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(1px, -1px);
+    }
+    92% {
+        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(0);
+    }
+}
+
+/* Подсветка планшета желтым при наведении, как у карточек */
+.map-tablet {
+    transition: filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-tablet:hover {
+    filter: brightness(1.2) drop-shadow(0 0 4px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 8px rgba(135, 206, 250, 0.6)) drop-shadow(0 0 12px rgba(135, 206, 250, 0.4));
+}
+
+.item-glow {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(135, 206, 250, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.interactive-item:hover .item-glow {
+    opacity: 1;
+}
+
+/* Планшет с картой */
+.map-tablet {
+    position: absolute;
+    left: 50%;
+    bottom: 18%;
+    transform: translateX(-50%);
+    width: 82%;
+    height: 77%;
+    background-image: url('../assets/images/interactive/map-tablet.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    transition: filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Подсветка планшета желтым при наведении - подсветка по краям изображения */
+.map-tablet:hover {
+    filter: brightness(1.2) drop-shadow(0 0 4px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 8px rgba(135, 206, 250, 0.6)) drop-shadow(0 0 12px rgba(135, 206, 250, 0.4));
+}
+
+.map-paper {
+    display: none;
+}
+
+.magnifying-glass {
+    display: none;
+}
+
+.item-glow {
+    display: none;
+}
+
+/* Доска с анонсами */
+.bulletin-board {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    z-index: 4;
+    overflow: visible;
+}
+
+.garland-control {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+}
+
+.garland-toggle {
+    background: rgba(255, 215, 0, 0.3);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2em;
+}
+
+.garland-toggle:hover {
+    background: rgba(255, 215, 0, 0.5);
+    border-color: var(--color-golden);
+    transform: scale(1.1);
+}
+
+.garland-toggle.active {
+    background: rgba(255, 215, 0, 0.7);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+
+.photo-card {
+    position: absolute;
+    width: 140px;
+    height: 180px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(250, 250, 240, 0.95) 100%
+    );
+    border: 4px solid rgba(139, 69, 19, 0.9);
+    border-radius: 8px;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    backdrop-filter: blur(2px);
+    z-index: 5;
+}
+
+/* Прищепка на карточке, прикрепленная к проводу гирлянды */
+.photo-card::before {
+    content: '';
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 22px;
+    background: linear-gradient(to bottom, 
+        rgba(139, 69, 19, 0.9) 0%,
+        rgba(101, 67, 33, 1) 100%
+    );
+    border-radius: 16px 16px 4px 4px;
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    z-index: 6;
+}
+
+/* Разрез прищепки */
+.photo-card::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 7;
+}
+
+/* Ниточка от прищепки к гирлянде - убрана, так как прищепки теперь на проводе */
+.clip-string {
+    display: none;
+}
+
+/* Позиционирование карточек, прикрепленных к проводу гирлянды - равномерно распределены по проводу */
+.photo-card:nth-child(3) {
+    left: 5%;
+    top: calc(12% + 15px);
+    transform: rotate(-5deg);
+}
+
+.photo-card:nth-child(4) {
+    left: 19%;
+    top: calc(12% + 15px);
+    transform: rotate(3deg);
+}
+
+.photo-card:nth-child(5) {
+    left: 33%;
+    top: calc(12% + 15px);
+    transform: rotate(-2deg);
+}
+
+.photo-card:nth-child(6) {
+    left: 47%;
+    top: calc(12% + 15px);
+    transform: rotate(4deg);
+}
+
+.photo-card:nth-child(7) {
+    left: 61%;
+    top: calc(12% + 15px);
+    transform: rotate(-3deg);
+}
+
+.photo-card:nth-child(8) {
+    left: 75%;
+    top: calc(12% + 15px);
+    transform: rotate(2deg);
+}
+
+.photo-card:nth-child(9) {
+    left: 89%;
+    top: calc(12% + 15px);
+    transform: rotate(-2deg);
+}
+
+.photo-card:hover {
+    transform: scale(1.1) rotate(0deg) translateY(-10px) !important;
+    box-shadow: 0 10px 25px rgba(135, 206, 250, 0.5);
+    z-index: 10;
+}
+
+.photo-card:hover::before {
+    box-shadow: 
+        0 2px 5px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2),
+        0 0 10px rgba(135, 206, 250, 0.4);
+}
+
+.photo-content {
+    width: 100%;
+    height: 72%;
+    background: linear-gradient(135deg, rgba(255, 140, 66, 0.3), rgba(255, 215, 0, 0.2));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, 
+        transparent 0%,
+        rgba(0, 0, 0, 0.05) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Для карточек с событиями - убираем общий градиент, используем только тематические элементы */
+.photo-card[data-event] .photo-content::before {
+    background: none;
+    z-index: 2;
+}
+
+/* Тематические иллюстрации для карточек через CSS */
+
+/* 1. Час поэзии Эдит Сёдергран - Книга, перо, арфа */
+.photo-card[data-event="0"] .photo-content {
+    background-image: url('../assets/images/event-0-poetry.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="0"] .photo-content::before,
+.photo-card[data-event="0"] .photo-content::after {
+    display: none;
+}
+
+/* 2. Концерт «За час до Нового года» - Фортепиано, ноты, праздник */
+.photo-card[data-event="1"] .photo-content {
+    background-image: url('../assets/images/event-1-concert.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="1"] .photo-content::before,
+.photo-card[data-event="1"] .photo-content::after {
+    display: none;
+}
+
+/* 3. Мастер-класс для видеокриейторов - Камера, экран */
+.photo-card[data-event="2"] .photo-content {
+    background-image: url('../assets/images/event-2-videomakers.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="2"] .photo-content::before,
+.photo-card[data-event="2"] .photo-content::after {
+    display: none;
+}
+
+/* 4. Лекция «О районе с любовью» - Карта, компас, книга */
+.photo-card[data-event="3"] .photo-content {
+    background-image: url('../assets/images/event-3-lecture-district.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="3"] .photo-content::before,
+.photo-card[data-event="3"] .photo-content::after {
+    display: none;
+}
+
+/* 5. Мастер-класс «Сказочный символ района» - Игрушка, фетр, творчество */
+.photo-card[data-event="4"] .photo-content {
+    background-image: url('../assets/images/event-4-masterclass-symbol.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="4"] .photo-content::before,
+.photo-card[data-event="4"] .photo-content::after {
+    display: none;
+}
+
+/* 6. Лекция о «Властелине колец» - Кольцо, книга, математика */
+.photo-card[data-event="5"] .photo-content {
+    background-image: url('../assets/images/event-5-lecture-tolkien.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="5"] .photo-content::before,
+.photo-card[data-event="5"] .photo-content::after {
+    display: none;
+}
+
+.photo-card[data-event="6"] .photo-content {
+    background-image: url('../assets/images/event-6-exhibition.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-card[data-event="6"] .photo-content::before,
+.photo-card[data-event="6"] .photo-content::after {
+    display: none;
+}
+
+.photo-label {
+    font-size: 0.95em;
+    color: var(--color-deep-blue);
+    text-align: center;
+    font-weight: 300;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    padding: 4px 0;
+    width: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 4px;
+    margin-top: 4px;
+}
+
+.garland {
+    position: absolute;
+    top: 12%;
+    left: -5%;
+    width: 110%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    opacity: 1;
+    transition: none;
+    pointer-events: none;
+}
+
+/* Темный провод, соединяющий лампочки - выходит за пределы экрана, всегда видим */
+.garland::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right,
+        rgba(20, 20, 20, 0.95) 0%,
+        rgba(30, 30, 30, 0.95) 10%,
+        rgba(20, 20, 20, 0.95) 20%,
+        rgba(30, 30, 30, 0.95) 30%,
+        rgba(20, 20, 20, 0.95) 40%,
+        rgba(30, 30, 30, 0.95) 50%,
+        rgba(20, 20, 20, 0.95) 60%,
+        rgba(30, 30, 30, 0.95) 70%,
+        rgba(20, 20, 20, 0.95) 80%,
+        rgba(30, 30, 30, 0.95) 90%,
+        rgba(20, 20, 20, 0.95) 100%
+    );
+    transform: translateY(-50%);
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    border-radius: 2px;
+    opacity: 1;
+}
+
+.garland.active {
+    opacity: 1;
+}
+
+.garland-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-golden);
+    box-shadow: 
+        0 0 40px rgba(255, 215, 0, 1),
+        0 0 80px rgba(255, 215, 0, 1),
+        0 0 120px rgba(255, 215, 0, 1),
+        0 0 160px rgba(255, 215, 0, 0.9),
+        0 0 200px rgba(255, 215, 0, 0.8);
+    animation: lightTwinkle 2.5s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(20, 20, 20, 0.6);
+    opacity: 1;
+}
+
+/* При выключении гирлянды останавливаем только анимацию, лампочки остаются видимыми */
+.garland:not(.active) .garland-light {
+    animation: none;
+    opacity: 0.4;
+    box-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.6),
+        0 0 20px rgba(255, 215, 0, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.garland-light:nth-child(1) { animation-delay: 0s; }
+.garland-light:nth-child(2) { animation-delay: 0.1s; }
+.garland-light:nth-child(3) { animation-delay: 0.2s; }
+.garland-light:nth-child(4) { animation-delay: 0.3s; }
+.garland-light:nth-child(5) { animation-delay: 0.4s; }
+.garland-light:nth-child(6) { animation-delay: 0.5s; }
+.garland-light:nth-child(7) { animation-delay: 0.6s; }
+.garland-light:nth-child(8) { animation-delay: 0.7s; }
+.garland-light:nth-child(9) { animation-delay: 0.8s; }
+.garland-light:nth-child(10) { animation-delay: 0.9s; }
+.garland-light:nth-child(11) { animation-delay: 1s; }
+.garland-light:nth-child(12) { animation-delay: 1.1s; }
+
+@keyframes lightTwinkle {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(0.95);
+        filter: brightness(1.2);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+        filter: brightness(1.5);
+    }
+}
+
+/* ЭЛТ-монитор */
+.crt-monitor {
+    position: absolute;
+    left: 0.5%;
+    bottom: 58.8%;
+    width: 38%;
+    height: 64.5%;
+}
+
+.monitor-base {
+    display: none;
+}
+
+.monitor-screen {
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/images/interactive/monitor-screen.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    box-shadow: none;
+    overflow: visible;
+    transition: filter 0.3s ease;
+    animation: glitchImage 2.5s infinite;
+}
+
+/* Подсветка монитора красным при наведении - тень вокруг картинки */
+.crt-monitor:hover .monitor-screen {
+    animation: glitchImageWithRedGlow 2.5s infinite !important;
+}
+
+@keyframes glitchImageWithRedGlow {
+    0%, 85%, 100% {
+        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(0);
+    }
+    86% {
+        filter: brightness(1.4) hue-rotate(5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-2px, 2px);
+    }
+    87% {
+        filter: brightness(1.4) hue-rotate(-5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(2px, -2px);
+    }
+    88% {
+        filter: brightness(1.45) hue-rotate(3deg) saturate(1.3) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-2px, -2px);
+    }
+    89% {
+        filter: brightness(1.4) hue-rotate(-3deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(2px, 2px);
+    }
+    90% {
+        filter: brightness(1.35) hue-rotate(2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(-1px, 1px);
+    }
+    91% {
+        filter: brightness(1.35) hue-rotate(-2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(1px, -1px);
+    }
+    92% {
+        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
+        transform: translate(0);
+    }
+}
+
+@keyframes glitchImage {
+    0%, 85%, 100% {
+        filter: brightness(1) hue-rotate(0deg) saturate(1);
+    }
+    86% {
+        filter: brightness(1.1) hue-rotate(5deg) saturate(1.2);
+        transform: translate(-2px, 2px);
+    }
+    87% {
+        filter: brightness(1.1) hue-rotate(-5deg) saturate(1.2);
+        transform: translate(2px, -2px);
+    }
+    88% {
+        filter: brightness(1.15) hue-rotate(3deg) saturate(1.3);
+        transform: translate(-2px, -2px);
+    }
+    89% {
+        filter: brightness(1.1) hue-rotate(-3deg) saturate(1.2);
+        transform: translate(2px, 2px);
+    }
+    90% {
+        filter: brightness(1.05) hue-rotate(2deg) saturate(1.1);
+        transform: translate(-1px, 1px);
+    }
+    91% {
+        filter: brightness(1.05) hue-rotate(-2deg) saturate(1.1);
+        transform: translate(1px, -1px);
+    }
+    92% {
+        filter: brightness(1) hue-rotate(0deg) saturate(1);
+        transform: translate(0);
+    }
+}
+
+/* Дублирующий hover эффект - удален, используется основной выше */
+
+@keyframes glitchImageHover {
+    0%, 100% {
+        filter: brightness(1.4) hue-rotate(0deg) saturate(1) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
+        transform: translate(0);
+    }
+    25% {
+        filter: brightness(1.5) hue-rotate(5deg) saturate(1.2) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
+        transform: translate(-2px, 2px);
+    }
+    50% {
+        filter: brightness(1.5) hue-rotate(-5deg) saturate(1.2) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
+        transform: translate(2px, -2px);
+    }
+    75% {
+        filter: brightness(1.45) hue-rotate(3deg) saturate(1.15) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
+        transform: translate(-1px, -1px);
+    }
+}
+
+.screen-content {
+    display: none;
+}
+
+.game-logo {
+    display: none;
+}
+
+.glitch-overlay {
+    display: none;
+}
+
+@keyframes glitch {
+    0%, 85%, 100% {
+        transform: translate(0);
+        opacity: 0;
+    }
+    86% {
+        transform: translate(-4px, 4px);
+        opacity: 0.6;
+    }
+    87% {
+        transform: translate(4px, -4px);
+        opacity: 0.6;
+    }
+    88% {
+        transform: translate(-4px, -4px);
+        opacity: 0.6;
+    }
+    89% {
+        transform: translate(4px, 4px);
+        opacity: 0.6;
+    }
+    90% {
+        transform: translate(-3px, 3px);
+        opacity: 0.4;
+    }
+    91% {
+        transform: translate(3px, -3px);
+        opacity: 0.4;
+    }
+    92% {
+        transform: translate(0);
+        opacity: 0;
+    }
+}
+
+
+.glitch-overlay::before,
+.glitch-overlay::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.glitch-overlay::before {
+    background: rgba(0, 255, 0, 0.3);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch-overlay::after {
+    background: rgba(255, 0, 0, 0.3);
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+/* Алхимическая станция */
+.alchemy-station {
+    position: absolute;
+    right: -5%;
+    bottom: 15%;
+    width: 32%;
+    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.flask-container {
+    position: relative;
+    width: 262px;
+    height: 262px;
+    flex-shrink: 0;
+    margin-bottom: 296px;
+}
+
+.flask {
+    width: 262px;
+    height: 262px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    box-shadow: 
+        0 0 40px rgba(255, 215, 0, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+.flask-liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(75, 0, 130, 0.8), rgba(138, 43, 226, 0.6));
+    border-radius: 0 0 50% 50%;
+    transition: all 0.5s ease;
+}
+
+.flask.active .flask-liquid {
+    height: 60%;
+    background: linear-gradient(to top, rgba(75, 0, 130, 0.9), rgba(255, 215, 0, 0.7));
+    border-radius: 0 0 50% 50%;
+    animation: bubble 1.5s ease-in-out;
+}
+
+@keyframes bubble {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1.1);
+    }
+}
+
+.flask-bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.flask.active .flask-bubbles {
+    opacity: 1;
+}
+
+.flask-bubbles::before,
+.flask-bubbles::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    bottom: 20%;
+    animation: bubbleUp 1.5s ease-in-out infinite;
+}
+
+.flask-bubbles::before {
+    left: 30%;
+    animation-delay: 0s;
+}
+
+.flask-bubbles::after {
+    left: 60%;
+    animation-delay: 0.5s;
+}
+
+@keyframes bubbleUp {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+.flask-steam {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.flask.active .flask-steam {
+    opacity: 0.6;
+    animation: steam 2s ease-in-out infinite;
+}
+
+@keyframes steam {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateX(-50%) translateY(-20px) scale(1.2);
+        opacity: 0.6;
+    }
+}
+
+.flask-steam::before,
+.flask-steam::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: steamRise 2s ease-in-out infinite;
+}
+
+.flask-steam::before {
+    animation-delay: 0s;
+}
+
+.flask-steam::after {
+    animation-delay: 1s;
+    width: 15px;
+    height: 25px;
+}
+
+@keyframes steamRise {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(0.8);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-30px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Пузырьки над колбой */
+.flask-bubbles-above {
+    position: absolute;
+    top: -240px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 470px;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.flask-bubbles-above .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.9), rgba(75, 0, 130, 0.7));
+    box-shadow: 
+        0 0 4px rgba(138, 43, 226, 0.8),
+        0 0 8px rgba(75, 0, 130, 0.6),
+        inset 0 0 2px rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+}
+
+@keyframes bubbleRise {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.4);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        /* Поднимаются по узкому горлышку вертикально вверх */
+        transform: translateY(-450px) translateX(0) scale(1);
+        opacity: 0;
+    }
+}
+
+.flask-stand {
+    display: none;
+}
+
+.ingredients-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 30%;
+    flex: 0 0 30%;
+}
+
+.ingredients-group {
+    background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
+    border: 3px solid rgba(255, 215, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1;
+    min-width: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.ingredients-group h3 {
+    font-size: 1em;
+    margin-bottom: 12px;
+    color: #FFD700;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ingredient {
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8em;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.ingredient:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.8);
+    transform: scale(1.05);
+    color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.ingredient.selected {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: rgba(255, 215, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    color: #FFD700;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+.ingredient.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.selected-ingredients {
+    min-height: 30px;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1);
+    margin-top: 10px;
+}
+
+.selected-label {
+    color: #FFD700;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.synthesize-btn {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--color-golden), var(--color-orange));
+    border: 2px solid var(--color-golden);
+    border-radius: 25px;
+    color: var(--color-deep-blue);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    margin-top: 10px;
+    width: 100%;
+}
+
+.synthesize-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6);
+}
+
+.synthesize-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Уютные детали */
+.cozy-details {
+    display: none;
+}
+
+.mug {
+    width: 60px;
+    height: 70px;
+    background: rgba(139, 69, 19, 0.8);
+    border: 3px solid rgba(101, 67, 33, 1);
+    border-radius: 0 0 30px 30px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.mug::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -15px;
+    width: 20px;
+    height: 30px;
+    border: 3px solid rgba(101, 67, 33, 1);
+    border-left: none;
+    border-radius: 0 20px 20px 0;
+    background: rgba(139, 69, 19, 0.8);
+}
+
+.mug-steam {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 40px;
+    animation: steam 3s ease-in-out infinite;
+}
+
+.mug-steam::before,
+.mug-steam::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: steamRise 3s ease-in-out infinite;
+}
+
+.mug-steam::after {
+    animation-delay: 1.5s;
+    width: 12px;
+    height: 20px;
+}
+
+/* Кружка с паром под монитором */
+.mug-with-steam {
+    position: absolute;
+    left: 27%;
+    bottom: 30%;
+    width: 65px;
+    height: 130px;
+    z-index: 6;
+}
+
+.mug-steam-animation {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.mug-steam-animation::before,
+.mug-steam-animation::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 35px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: steamRiseMug 3s ease-in-out infinite;
+    filter: blur(4px);
+    box-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.3),
+        0 0 25px rgba(255, 255, 255, 0.2);
+}
+
+.mug-steam-animation::before {
+    left: 35%;
+    animation-delay: 0s;
+    transform: translateX(-50%) rotate(-5deg);
+    --steam-rotate: -5deg;
+    --steam-drift: -5px;
+    width: 22px;
+    height: 32px;
+}
+
+.mug-steam-animation::after {
+    left: 65%;
+    animation-delay: 0.6s;
+    transform: translateX(-50%) rotate(5deg);
+    --steam-rotate: 5deg;
+    --steam-drift: 5px;
+    width: 20px;
+    height: 30px;
+}
+
+/* Дополнительные клубы пара через псевдоэлементы родителя */
+.mug-with-steam::before,
+.mug-with-steam::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 28px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: steamRiseMug 3.2s ease-in-out infinite;
+    filter: blur(3px);
+    box-shadow: 
+        0 0 12px rgba(255, 255, 255, 0.25),
+        0 0 20px rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+}
+
+.mug-with-steam::before {
+    left: 45%;
+    animation-delay: 0.3s;
+    transform: translateX(-50%) rotate(-3deg);
+    --steam-rotate: -3deg;
+    --steam-drift: -3px;
+    width: 16px;
+    height: 26px;
+}
+
+.mug-with-steam::after {
+    left: 55%;
+    animation-delay: 0.9s;
+    transform: translateX(-50%) rotate(3deg);
+    --steam-rotate: 3deg;
+    --steam-drift: 3px;
+    width: 15px;
+    height: 24px;
+}
+
+@keyframes steamRiseMug {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(0.7) rotate(var(--steam-rotate, 0deg));
+        opacity: 0.5;
+    }
+    20% {
+        opacity: 0.6;
+        transform: translateX(calc(-50% + var(--steam-drift, 0px) * 0.5)) translateY(-8px) scale(0.85) rotate(calc(var(--steam-rotate, 0deg) + 3deg));
+    }
+    40% {
+        opacity: 0.55;
+        transform: translateX(calc(-50% + var(--steam-drift, 0px) * 1)) translateY(-20px) scale(1) rotate(calc(var(--steam-rotate, 0deg) - 2deg));
+    }
+    60% {
+        opacity: 0.45;
+        transform: translateX(calc(-50% + var(--steam-drift, 0px) * 1.3)) translateY(-35px) scale(1.15) rotate(calc(var(--steam-rotate, 0deg) + 2deg));
+    }
+    80% {
+        opacity: 0.3;
+        transform: translateX(calc(-50% + var(--steam-drift, 0px) * 1.5)) translateY(-55px) scale(1.3) rotate(calc(var(--steam-rotate, 0deg) - 1deg));
+    }
+    100% {
+        transform: translateX(calc(-50% + var(--steam-drift, 0px) * 1.8)) translateY(-100px) scale(1.5) rotate(calc(var(--steam-rotate, 0deg) + 1deg));
+        opacity: 0;
+    }
+}
+
+.cookies,
+.mandarins,
+.books-stack {
+    width: 40px;
+    height: 40px;
+    background: rgba(139, 69, 19, 0.6);
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.mandarins {
+    border-radius: 50%;
+    background: rgba(255, 140, 66, 0.8);
+}
+
+.books-stack {
+    height: 50px;
+    background: linear-gradient(to right, var(--color-burgundy), var(--color-deep-blue));
+}
+
+/* Новогодний конверт */
+.new-year-envelope {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 120px;
+    height: 120px;
+    z-index: 100;
+    cursor: pointer;
+    animation: envelopeFloat 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.new-year-envelope:hover {
+    transform: scale(1.1);
+}
+
+.envelope-icon {
+    font-size: 100px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 25px rgba(135, 206, 250, 0.5));
+    animation: envelopeShake 2s ease-in-out infinite;
+}
+
+.envelope-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(135, 206, 250, 0.5), rgba(176, 224, 230, 0.3), transparent 70%);
+    border-radius: 50%;
+    animation: envelopeGlow 2s ease-in-out infinite;
+    z-index: 1;
+}
+
+
+@keyframes envelopeFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes envelopeShake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-3deg);
+    }
+    75% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes envelopeGlow {
+    0%, 100% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+}
+
+/* Модальные окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.98), rgba(255, 250, 240, 0.98));
+    border: 3px solid rgba(139, 69, 19, 0.6);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 
+        0 0 50px rgba(139, 69, 19, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+/* Декоративные угловые элементы для всех модалок */
+.modal-content::before,
+.modal-content::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(139, 69, 19, 0.4);
+    z-index: 1;
+}
+
+.modal-content::before {
+    top: -3px;
+    left: -3px;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 15px;
+}
+
+.modal-content::after {
+    bottom: -3px;
+    right: -3px;
+    border-left: none;
+    border-top: none;
+    border-bottom-right-radius: 15px;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #8B4513;
+    font-size: 2em;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.modal-close:hover {
+    background: rgba(139, 69, 19, 0.2);
+    transform: rotate(90deg);
+    color: #654321;
+}
+
+.modal-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(139, 69, 19, 0.4);
+    position: relative;
+}
+
+.modal-header::after {
+    content: '❄';
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.98), rgba(255, 250, 240, 0.98));
+    padding: 0 10px;
+    font-size: 1.2em;
+    opacity: 0.6;
+}
+
+.modal-header h2 {
+    color: #8B4513;
+    font-size: 1.8em;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+    padding: 0 20px;
+}
+
+.modal-body {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #2C1810 !important;
+}
+
+.modal-body p {
+    margin-bottom: 15px;
+    color: #2C1810 !important;
+}
+
+.modal-body p.section-spacing {
+    margin-top: 25px;
+}
+
+/* Специфичные стили для модального окна карты */
+.map-modal {
+    background: linear-gradient(135deg, rgba(240, 248, 255, 0.98), rgba(230, 240, 250, 0.98)) !important;
+    border: 3px solid rgba(70, 130, 180, 0.6) !important;
+    box-shadow: 
+        0 0 50px rgba(70, 130, 180, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.3) !important;
+    overflow-y: auto !important;
+    max-height: 85vh !important;
+}
+
+.map-modal .modal-header h2 {
+    color: #4682B4 !important;
+    text-shadow: 0 2px 4px rgba(70, 130, 180, 0.3) !important;
+}
+
+.map-modal .modal-header::after {
+    content: '🗺️';
+    background: linear-gradient(135deg, rgba(240, 248, 255, 0.98), rgba(230, 240, 250, 0.98));
+}
+
+.map-modal .modal-body ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.map-modal .modal-body ul li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.map-modal .modal-body ul li::before {
+    content: '📍';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    font-size: 1.1em;
+}
+
+.map-modal .modal-body ul li strong {
+    color: #4682B4;
+    font-weight: 600;
+}
+
+.map-modal .modal-body {
+    color: #2C1810 !important;
+}
+
+.map-modal .modal-body p {
+    color: #2C1810 !important;
+}
+
+.map-modal .cta-btn {
+    background: linear-gradient(135deg, #4682B4, #5A9BD4);
+    color: #FFF;
+    box-shadow: 
+        0 5px 15px rgba(70, 130, 180, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.map-modal .cta-btn:hover {
+    box-shadow: 
+        0 10px 25px rgba(70, 130, 180, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Специфичные стили для модального окна мероприятия */
+.event-modal {
+    background: linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(255, 245, 230, 0.98)) !important;
+    border: 3px solid rgba(128, 0, 32, 0.6) !important;
+    box-shadow: 
+        0 0 50px rgba(128, 0, 32, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.event-modal .modal-header h2 {
+    color: #800020 !important;
+    text-shadow: 0 2px 4px rgba(128, 0, 32, 0.3) !important;
+}
+
+.event-modal .modal-header::after {
+    content: '🎄';
+    background: linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(255, 245, 230, 0.98));
+}
+
+.event-date {
+    background: linear-gradient(135deg, rgba(128, 0, 32, 0.1), rgba(139, 0, 0, 0.1));
+    padding: 12px 20px;
+    border-radius: 8px;
+    border-left: 4px solid rgba(128, 0, 32, 0.6);
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #2C1810 !important;
+    font-size: 1.1em;
+}
+
+.event-description {
+    line-height: 1.8;
+    color: #2C1810 !important;
+}
+
+.event-modal .modal-body {
+    color: #2C1810 !important;
+}
+
+.event-modal .modal-body p {
+    color: #2C1810 !important;
+}
+
+.event-modal .cta-btn {
+    background: linear-gradient(135deg, #800020, #A00028);
+    color: #FFF;
+    box-shadow: 
+        0 5px 15px rgba(128, 0, 32, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.event-modal .cta-btn:hover {
+    box-shadow: 
+        0 10px 25px rgba(128, 0, 32, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Специфичные стили для модального окна монитора */
+.monitor-modal {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 3px solid rgba(0, 255, 0, 0.6) !important;
+    box-shadow: 
+        0 0 50px rgba(0, 255, 0, 0.4),
+        inset 0 0 30px rgba(0, 255, 0, 0.1),
+        0 10px 40px rgba(0, 0, 0, 0.5) !important;
+    padding: 20px !important;
+}
+
+.monitor-modal .modal-close {
+    color: rgba(0, 255, 0, 1) !important;
+    border: 2px solid rgba(0, 255, 0, 0.5) !important;
+}
+
+.monitor-modal .modal-close:hover {
+    background: rgba(0, 255, 0, 0.2) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.6) !important;
+}
+
+.monitor-modal .modal-header::after {
+    content: '💻';
+    background: rgba(0, 0, 0, 0.95);
+    color: rgba(0, 255, 0, 0.8);
+}
+
+/* Специфичные стили для модального окна предсказания */
+#predictionModal .modal-content {
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.98), rgba(255, 250, 240, 0.98)) !important;
+    border: 3px solid rgba(139, 69, 19, 0.6) !important;
+    box-shadow: 
+        0 0 50px rgba(184, 134, 11, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+#predictionModal .modal-header h2 {
+    color: #B8860B !important;
+    text-shadow: 0 2px 4px rgba(184, 134, 11, 0.3) !important;
+}
+
+#predictionModal .modal-header::after {
+    content: '✨';
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.98), rgba(255, 250, 240, 0.98));
+}
+
+#predictionModal .modal-body {
+    color: #2C1810 !important;
+}
+
+#predictionModal .modal-body * {
+    color: #2C1810 !important;
+}
+
+#predictionModal .cta-btn {
+    background: linear-gradient(135deg, #B8860B, #DAA520);
+    color: #FFF;
+    box-shadow: 
+        0 5px 15px rgba(184, 134, 11, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+#predictionModal .cta-btn:hover {
+    box-shadow: 
+        0 10px 25px rgba(184, 134, 11, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Модальное окно новогоднего послания */
+.message-modal {
+    background: linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(250, 245, 230, 0.98)) !important;
+    border: 3px solid rgba(184, 134, 11, 0.6) !important;
+    box-shadow: 
+        0 0 50px rgba(184, 134, 11, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.3) !important;
+    max-width: 700px !important;
+}
+
+.message-modal .modal-header h2 {
+    color: #B8860B !important;
+    text-shadow: 0 2px 4px rgba(184, 134, 11, 0.3) !important;
+}
+
+.message-modal .modal-header::after {
+    content: '💌';
+    background: linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(250, 245, 230, 0.98));
+}
+
+.message-content {
+    color: #2C1810;
+    line-height: 1.8;
+}
+
+.message-greeting {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #B8860B !important;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.message-content p {
+    margin-bottom: 15px;
+    color: #2C1810 !important;
+    text-align: justify;
+}
+
+.message-signature {
+    margin-top: 30px;
+    text-align: right;
+    font-style: italic;
+    color: #8B4513 !important;
+    font-weight: 600;
+}
+
+.social-links {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(184, 134, 11, 0.3);
+}
+
+.social-title {
+    text-align: center;
+    font-weight: 600;
+    color: #B8860B !important;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vk-btn {
+    background: linear-gradient(135deg, #4C75A3, #5B7FA6);
+    color: #FFF;
+}
+
+.vk-btn:hover {
+    background: linear-gradient(135deg, #5B7FA6, #6B8FB6);
+    box-shadow: 0 6px 20px rgba(76, 117, 163, 0.4);
+}
+
+.telegram-btn {
+    background: linear-gradient(135deg, #229ED9, #2BA5E0);
+    color: #FFF;
+}
+
+.telegram-btn:hover {
+    background: linear-gradient(135deg, #2BA5E0, #33B5F0);
+    box-shadow: 0 6px 20px rgba(34, 158, 217, 0.4);
+}
+
+.social-icon {
+    font-size: 1.3em;
+}
+
+.modal-note {
+    font-style: italic;
+    color: var(--color-golden);
+    margin-top: 20px;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 15px 35px;
+    background: linear-gradient(135deg, var(--color-golden), var(--color-orange));
+    color: var(--color-deep-blue);
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 5px 15px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cta-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 10px 25px rgba(255, 215, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.cta-btn:active {
+    transform: scale(0.98);
+}
+
+/* Терминал */
+.terminal {
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid rgba(0, 255, 0, 0.6);
+    border-radius: 8px;
+    padding: 25px;
+    font-family: 'PFDinTextPro', monospace;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 0, 0.3),
+        inset 0 0 20px rgba(0, 255, 0, 0.05);
+    position: relative;
+}
+
+.terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.5), transparent);
+    animation: scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.terminal-title {
+    color: rgba(0, 255, 0, 1);
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.terminal-status {
+    color: rgba(255, 255, 0, 1);
+    font-size: 0.9em;
+}
+
+.terminal-body {
+    margin-bottom: 20px;
+}
+
+.terminal-line {
+    color: rgba(0, 255, 0, 0.9);
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.terminal-indent {
+    padding-left: 20px;
+}
+
+.terminal-accent {
+    color: rgba(255, 255, 0, 1);
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.8);
+}
+
+.terminal-warning {
+    color: rgba(255, 100, 100, 1);
+}
+
+.terminal-btn {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.3), rgba(0, 200, 0, 0.5));
+    color: rgba(0, 255, 0, 1);
+    border: 2px solid rgba(0, 255, 0, 0.5);
+}
+
+.terminal-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.5), rgba(0, 200, 0, 0.7));
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+}
+
+/* Предсказание */
+.prediction-quote {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.95), rgba(255, 250, 240, 0.95));
+    border-left: 5px solid #B8860B;
+    border-radius: 8px;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(184, 134, 11, 0.05);
+    position: relative;
+}
+
+.prediction-quote::before {
+    content: '"';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 4em;
+    color: rgba(184, 134, 11, 0.2);
+    font-family: 'PFDinTextPro', sans-serif;
+    line-height: 1;
+}
+
+.prediction-quote blockquote {
+    font-size: 1.2em;
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: #2C1810 !important;
+}
+
+.prediction-quote cite {
+    display: block;
+    text-align: right;
+    color: #8B4513;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.prediction-challenge {
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(250, 245, 230, 0.95), rgba(255, 250, 240, 0.95));
+    border-radius: 8px;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(184, 134, 11, 0.05);
+    border: 2px solid rgba(184, 134, 11, 0.4);
+    position: relative;
+}
+
+.prediction-challenge::before {
+    content: '📚';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5em;
+    opacity: 0.3;
+}
+
+.prediction-challenge h3 {
+    color: #8B4513;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.prediction-challenge p {
+    line-height: 1.6;
+    color: #2C1810 !important;
+}
+
+/* События - стили перенесены в секцию .event-modal выше */
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .desk {
+        padding: 20px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .lab-container {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .desk {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .window {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        margin-bottom: 20px;
+    }
+
+    .interactive-item,
+    .bulletin-board,
+    .alchemy-station,
+    .crt-monitor {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+    }
+
+    .ingredients-panel {
+        flex-direction: column;
+    }
+
+    .ingredients-group {
+        width: 100%;
+    }
+}
+
