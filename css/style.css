@@ -135,6 +135,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    /* Для привязки к фону: используй aspect-ratio если знаешь соотношение сторон фона */
+    /* Например, для 1920×1080: aspect-ratio: 16 / 9; */
 }
 
 /* Дальний фон (первый) */
@@ -155,10 +157,15 @@ body {
     width: 100%;
     height: 100%;
     background-image: url('../assets/images/background/lab-background.png');
+    /* ВАЖНО: Измени cover на contain, если хочешь точную привязку элементов */
+    /* cover - фон заполняет весь экран (может обрезаться) */
+    /* contain - фон полностью виден (может быть пустое место) */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     z-index: 3;
+    /* Для точной привязки раскомментируй и укажи размер исходного изображения: */
+    /* aspect-ratio: 1920 / 1080; */
 }
 
 .wall {
@@ -173,11 +180,13 @@ body {
 /* Окно (центр сверху) */
 .window {
     position: absolute;
+    /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
     left: 50%;
     transform: translateX(-50%);
-    top: -1px;
-    width: 1000px;
-    height: 730px;
+    top: 0;
+    width: min(1000px, 52vw);
+    height: min(730px, 67.6vh);
+    max-width: 100%;
     background: rgba(30, 30, 60, 0.7);
     border: none;
     border-radius: 5px;
@@ -385,8 +394,9 @@ body {
     left: 50%;
     bottom: 18%;
     transform: translateX(-50%);
-    width: 82%;
-    height: 77%;
+    width: min(82%, 1000px);
+    height: min(77%, 600px);
+    max-width: 100%;
     background-image: url('../assets/images/interactive/map-tablet.png');
     background-size: contain;
     background-position: center;
@@ -464,8 +474,10 @@ body {
 
 .photo-card {
     position: absolute;
-    width: 140px;
-    height: 180px;
+    width: min(120px, 7.5vw);
+    height: min(155px, 10vw);
+    max-width: 120px;
+    max-height: 155px;
     background: linear-gradient(to bottom, 
         rgba(255, 255, 255, 0.98) 0%,
         rgba(250, 250, 240, 0.95) 100%
@@ -526,44 +538,44 @@ body {
 
 /* Позиционирование карточек, прикрепленных к проводу гирлянды - равномерно распределены по проводу */
 .photo-card:nth-child(3) {
-    left: 5%;
-    top: calc(12% + 15px);
+    left: clamp(15%, 15vw, 15%);
+    top: calc(5% + 15px);
     transform: rotate(-5deg);
 }
 
 .photo-card:nth-child(4) {
-    left: 19%;
-    top: calc(12% + 15px);
+    left: clamp(25%, 25vw, 25%);
+    top: calc(5% + 15px);
     transform: rotate(3deg);
 }
 
 .photo-card:nth-child(5) {
-    left: 33%;
-    top: calc(12% + 15px);
+    left: clamp(35%, 35vw, 35%);
+    top: calc(5% + 15px);
     transform: rotate(-2deg);
 }
 
 .photo-card:nth-child(6) {
-    left: 47%;
-    top: calc(12% + 15px);
+    left: clamp(45%, 45vw, 45%);
+    top: calc(5% + 15px);
     transform: rotate(4deg);
 }
 
 .photo-card:nth-child(7) {
-    left: 61%;
-    top: calc(12% + 15px);
+    left: clamp(55%, 55vw, 55%);
+    top: calc(5% + 15px);
     transform: rotate(-3deg);
 }
 
 .photo-card:nth-child(8) {
-    left: 75%;
-    top: calc(12% + 15px);
+    left: clamp(65%, 65vw, 65%);
+    top: calc(5% + 15px);
     transform: rotate(2deg);
 }
 
 .photo-card:nth-child(9) {
-    left: 89%;
-    top: calc(12% + 15px);
+    left: clamp(75%, 75vw, 75%);
+    top: calc(5% + 15px);
     transform: rotate(-2deg);
 }
 
@@ -746,7 +758,7 @@ body {
 
 .garland {
     position: absolute;
-    top: 12%;
+    top: 5%;
     left: -5%;
     width: 110%;
     height: 30px;
@@ -831,6 +843,12 @@ body {
 .garland-light:nth-child(10) { animation-delay: 0.9s; }
 .garland-light:nth-child(11) { animation-delay: 1s; }
 .garland-light:nth-child(12) { animation-delay: 1.1s; }
+.garland-light:nth-child(13) { animation-delay: 1.2s; }
+.garland-light:nth-child(14) { animation-delay: 1.3s; }
+.garland-light:nth-child(15) { animation-delay: 1.4s; }
+.garland-light:nth-child(16) { animation-delay: 1.5s; }
+.garland-light:nth-child(17) { animation-delay: 1.6s; }
+.garland-light:nth-child(18) { animation-delay: 1.7s; }
 
 @keyframes lightTwinkle {
     0%, 100% {
@@ -848,10 +866,13 @@ body {
 /* ЭЛТ-монитор */
 .crt-monitor {
     position: absolute;
-    left: 0.5%;
-    bottom: 58.8%;
-    width: 38%;
-    height: 64.5%;
+    /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
+    left: 3.2%;
+    bottom: 56.5%;
+    width: 42%;
+    height: 70%;
+    max-width: 550px;
+    max-height: 550px;
 }
 
 .monitor-base {
@@ -1040,27 +1061,29 @@ body {
 /* Алхимическая станция */
 .alchemy-station {
     position: absolute;
-    right: -5%;
-    bottom: 15%;
-    width: 32%;
+    /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
+    right: 0.6%;
+    bottom: 29.5%;
+    width: min(32%, 450px);
+    max-width: calc(100% - 4%);
     z-index: 6;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    gap: 20px;
+    gap: 30px;
 }
 
 .flask-container {
     position: relative;
-    width: 262px;
-    height: 262px;
+    width: min(150px, 11.5vw);
+    height: min(150px, 11.5vw);
     flex-shrink: 0;
-    margin-bottom: 296px;
+    margin-bottom: min(175px, 14.5vh);
 }
 
 .flask {
-    width: 262px;
-    height: 262px;
+    width: 100%;
+    height: 100%;
     background: rgba(255, 255, 255, 0.15);
     border: 5px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
@@ -1214,11 +1237,11 @@ body {
 /* Пузырьки над колбой */
 .flask-bubbles-above {
     position: absolute;
-    top: -240px;
+    top: -145px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
-    height: 470px;
+    width: 30px;
+    height: 275px;
     pointer-events: none;
     overflow: visible;
 }
@@ -1247,7 +1270,7 @@ body {
     }
     100% {
         /* Поднимаются по узкому горлышку вертикально вверх */
-        transform: translateY(-450px) translateX(0) scale(1);
+        transform: translateY(-275px) translateX(0) scale(1);
         opacity: 0;
     }
 }
@@ -1259,24 +1282,36 @@ body {
 .ingredients-panel {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 30%;
-    flex: 0 0 30%;
+    gap: 6px;
+    width: min(16%, 140px);
+    flex: 0 0 min(16%, 140px);
+    min-width: 0;
+    position: fixed;
+    /* Позиция зафиксирована в правом нижнем углу экрана */
+    right: 2%;
+    bottom: 2%;
+    z-index: 100;
+    pointer-events: auto;
 }
 
 .ingredients-group {
     background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
-    border: 3px solid rgba(255, 215, 0, 0.6);
-    border-radius: 10px;
-    padding: 10px;
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    border-radius: 6px;
+    padding: 10px 6px 6px 6px;
     flex: 1;
     min-width: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1);
+    pointer-events: auto;
+    overflow: visible;
+    position: relative;
 }
 
 .ingredients-group h3 {
-    font-size: 1em;
-    margin-bottom: 12px;
+    font-size: 0.75em;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding: 0;
     color: #FFD700;
     text-align: center;
     font-weight: bold;
@@ -1284,31 +1319,53 @@ body {
         0 0 10px rgba(255, 215, 0, 0.8),
         0 0 20px rgba(255, 215, 0, 0.6),
         0 0 30px rgba(255, 215, 0, 0.4);
+    pointer-events: none !important;
+    position: relative;
+    z-index: 0 !important;
+    line-height: 1.2;
+    height: auto;
+    max-height: 18px;
+    overflow: hidden;
 }
 
 .ingredients {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    pointer-events: auto;
+    position: relative;
+    z-index: 2;
 }
 
 .ingredient {
-    padding: 8px 10px;
+    padding: 8px 6px;
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid rgba(255, 215, 0, 0.4);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 calc(50% - 3px);
+    min-width: calc(50% - 3px);
+    max-width: calc(50% - 3px);
+    pointer-events: auto;
+    position: relative;
+    z-index: 3;
+    line-height: 1.2;
 }
 
-.ingredient:hover {
+.ingredient:hover:not(.selected) {
     background: rgba(255, 215, 0, 0.2);
     border-color: rgba(255, 215, 0, 0.8);
     transform: scale(1.05);
@@ -1317,12 +1374,12 @@ body {
 }
 
 .ingredient.selected {
-    background: rgba(255, 215, 0, 0.3);
-    border-color: rgba(255, 215, 0, 0.9);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    color: #FFD700;
-    font-weight: bold;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+    background: rgba(255, 215, 0, 0.4) !important;
+    border-color: rgba(255, 215, 0, 1) !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8) !important;
+    color: #FFD700 !important;
+    font-weight: bold !important;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8) !important;
 }
 
 .ingredient.disabled {
@@ -1353,18 +1410,27 @@ body {
 }
 
 .synthesize-btn {
-    padding: 15px 30px;
+    padding: 5px 8px;
     background: linear-gradient(135deg, var(--color-golden), var(--color-orange));
     border: 2px solid var(--color-golden);
-    border-radius: 25px;
+    border-radius: 5px;
     color: var(--color-deep-blue);
-    font-size: 1em;
+    font-size: 0.7em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    min-height: 24px;
     margin-top: 10px;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    position: relative;
     width: 100%;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .synthesize-btn:hover:not(:disabled) {
@@ -1437,10 +1503,13 @@ body {
 /* Кружка с паром под монитором */
 .mug-with-steam {
     position: absolute;
-    left: 27%;
-    bottom: 30%;
-    width: 65px;
-    height: 130px;
+    /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
+    left: 26.5%;
+    bottom: 18%;
+    width: 5.8vw;
+    height: 11.5vw;
+    max-width: 75px;
+    max-height: 150px;
     z-index: 6;
 }
 
@@ -1581,10 +1650,12 @@ body {
 /* Новогодний конверт */
 .new-year-envelope {
     position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 120px;
-    height: 120px;
+    bottom: min(30px, 2.5vh);
+    left: min(30px, 2vw);
+    width: min(120px, 8vw);
+    height: min(120px, 8vw);
+    max-width: 120px;
+    max-height: 120px;
     z-index: 100;
     cursor: pointer;
     animation: envelopeFloat 3s ease-in-out infinite;
@@ -1596,7 +1667,7 @@ body {
 }
 
 .envelope-icon {
-    font-size: 100px;
+    font-size: min(100px, 6.5vw);
     position: relative;
     z-index: 2;
     filter: drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 25px rgba(135, 206, 250, 0.5));
@@ -1608,8 +1679,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
+    width: min(160px, 10.5vw);
+    height: min(160px, 10.5vw);
+    max-width: 160px;
+    max-height: 160px;
     background: radial-gradient(circle, rgba(135, 206, 250, 0.5), rgba(176, 224, 230, 0.3), transparent 70%);
     border-radius: 50%;
     animation: envelopeGlow 2s ease-in-out infinite;
@@ -2324,9 +2397,216 @@ body {
 /* События - стили перенесены в секцию .event-modal выше */
 
 /* Адаптивность */
+/* Ноутбуки и средние экраны */
+@media (max-width: 1600px) {
+    .window {
+        width: min(1000px, 62.5vw);
+        height: min(730px, 67.6vh);
+    }
+    
+    .map-tablet {
+        width: min(82%, 900px);
+        height: min(77%, 550px);
+    }
+    
+    .crt-monitor {
+        left: 3.2%;
+        bottom: 56.5%;
+        width: 42%;
+        height: 70%;
+        max-width: 500px;
+        max-height: 500px;
+    }
+    
+    .alchemy-station {
+        width: min(32%, 400px);
+        right: 0.6%;
+        bottom: 29.5%;
+        max-width: calc(100% - 4%);
+        gap: min(30px, 2vw);
+    }
+    
+    .flask-container {
+        width: min(150px, 10.5vw);
+        height: min(150px, 10.5vw);
+        margin-bottom: min(175px, 14.5vh);
+    }
+    
+    .ingredients-panel {
+        width: min(28%, 220px);
+        flex: 0 0 min(28%, 220px);
+    }
+    
+    .photo-card {
+        width: min(120px, 7.5vw);
+        height: min(155px, 10vw);
+    }
+}
+
+@media (max-width: 1440px) {
+    .window {
+        width: min(1000px, 69.4vw);
+        height: min(730px, 50.7vh);
+    }
+    
+    .map-tablet {
+        width: min(82%, 800px);
+        height: min(77%, 500px);
+    }
+    
+    .crt-monitor {
+        left: 3.2%;
+        bottom: 56.5%;
+        width: 42%;
+        height: 70%;
+        max-width: 450px;
+        max-height: 450px;
+    }
+    
+    .alchemy-station {
+        width: min(32%, 350px);
+        right: 0.6%;
+        bottom: 29.5%;
+        max-width: calc(100% - 4%);
+        gap: min(15px, 1.2vw);
+    }
+    
+    .flask-container {
+        width: min(140px, 9.5vw);
+        height: min(140px, 9.5vw);
+        margin-bottom: min(165px, 13.5vh);
+    }
+    
+    .ingredients-panel {
+        width: min(28%, 200px);
+        flex: 0 0 min(28%, 200px);
+    }
+    
+    .photo-card {
+        width: min(110px, 7vw);
+        height: min(145px, 9.5vw);
+    }
+    
+    .mug-with-steam {
+        left: 26.5%;
+        bottom: 18%;
+        width: 5.3vw;
+        height: 10.5vw;
+        max-width: 70px;
+        max-height: 140px;
+    }
+}
+
+@media (max-width: 1366px) {
+    .window {
+        width: min(1000px, 73.2vw);
+        height: min(730px, 53.4vh);
+    }
+    
+    .map-tablet {
+        width: min(82%, 750px);
+        height: min(77%, 480px);
+    }
+    
+    .crt-monitor {
+        left: 3.2%;
+        bottom: 56.5%;
+        width: 42%;
+        height: 70%;
+        max-width: 420px;
+        max-height: 420px;
+    }
+    
+    .alchemy-station {
+        width: min(32%, 320px);
+        right: 0.6%;
+        bottom: 29.5%;
+        max-width: calc(100% - 4%);
+        gap: min(12px, 1vw);
+    }
+    
+    .flask-container {
+        width: min(130px, 8.5vw);
+        height: min(130px, 8.5vw);
+        margin-bottom: min(155px, 12.5vh);
+    }
+    
+    .ingredients-panel {
+        width: min(28%, 180px);
+        flex: 0 0 min(28%, 180px);
+    }
+    
+    .photo-card {
+        width: min(100px, 7vw);
+        height: min(135px, 9.5vw);
+    }
+    
+    .mug-with-steam {
+        left: 26.5%;
+        bottom: 18%;
+        width: 4.7vw;
+        height: 9.5vw;
+        max-width: 65px;
+        max-height: 130px;
+    }
+}
+
 @media (max-width: 1024px) {
     .desk {
         padding: 20px 30px;
+    }
+    
+    .window {
+        width: min(1000px, 97.6vw);
+        height: min(730px, 71.3vh);
+    }
+    
+    .map-tablet {
+        width: min(82%, 700px);
+        height: min(77%, 450px);
+        bottom: 15%;
+    }
+    
+    .crt-monitor {
+        left: 3.2%;
+        bottom: 56.5%;
+        width: 42%;
+        height: 70%;
+        max-width: 390px;
+        max-height: 390px;
+    }
+    
+    .alchemy-station {
+        width: min(32%, 300px);
+        right: 0.6%;
+        bottom: 29.5%;
+        max-width: calc(100% - 4%);
+        gap: min(10px, 1vw);
+    }
+    
+    .flask-container {
+        width: min(120px, 10vw);
+        height: min(120px, 10vw);
+        margin-bottom: min(145px, 14vh);
+    }
+    
+    .ingredients-panel {
+        width: min(28%, 160px);
+        flex: 0 0 min(28%, 160px);
+    }
+    
+    .photo-card {
+        width: min(90px, 8vw);
+        height: min(125px, 11vw);
+    }
+    
+    .mug-with-steam {
+        left: 26.5%;
+        bottom: 18%;
+        width: 5.2vw;
+        height: 10.5vw;
+        max-width: 60px;
+        max-height: 120px;
     }
 }
 
@@ -2355,6 +2635,8 @@ body {
         width: 100%;
         height: 300px;
         margin-bottom: 20px;
+        transform: none;
+        left: 0;
     }
 
     .interactive-item,
@@ -2365,14 +2647,107 @@ body {
         width: 100%;
         height: auto;
         min-height: 200px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
     }
-
+    
+    .map-tablet {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+    }
+    
+    .crt-monitor {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        margin: 20px 0;
+    }
+    
+    .alchemy-station {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0;
+    }
+    
+    .flask-container {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 0;
+    }
+    
     .ingredients-panel {
         flex-direction: column;
+        width: 100%;
     }
 
     .ingredients-group {
         width: 100%;
+    }
+    
+    .photo-card {
+        width: 100px;
+        height: 130px;
+        position: relative;
+        margin: 10px;
+    }
+    
+    .bulletin-board {
+        position: relative;
+        height: auto;
+        min-height: 300px;
+    }
+    
+    .garland {
+        position: relative;
+        width: 100%;
+        left: 0;
+    }
+    
+    .mug-with-steam {
+        position: relative;
+        left: 0;
+        width: 50px;
+        height: 100px;
+        margin: 20px auto;
+    }
+    
+    .new-year-envelope {
+        width: 80px;
+        height: 80px;
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .envelope-icon {
+        font-size: 70px;
+    }
+    
+    .envelope-glow {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        max-width: 95%;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.4em;
+    }
+    
+    .terminal {
+        padding: 15px;
+    }
+    
+    .terminal-line {
+        font-size: 0.9em;
     }
 }
 

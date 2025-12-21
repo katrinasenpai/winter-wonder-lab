@@ -146,7 +146,7 @@ function initInteractivity() {
 
 // Алхимическая станция (Генератор предсказаний)
 function initAlchemyStation() {
-    const ingredients = document.querySelectorAll('.ingredient');
+    const ingredientsPanel = document.querySelector('.ingredients-panel');
     const synthesizeBtn = document.getElementById('synthesizeBtn');
     const selectedCount = document.getElementById('selectedCount');
     const flask = document.querySelector('.flask');
@@ -155,79 +155,120 @@ function initAlchemyStation() {
     
     let selectedIngredients = [];
     
-    ingredients.forEach(ingredient => {
-        ingredient.addEventListener('click', () => {
-            const category = ingredient.dataset.category;
-            const id = ingredient.dataset.id;
-            
-            // Проверяем, не выбрано ли уже 3 ингредиента
-            if (selectedIngredients.length >= 3 && !ingredient.classList.contains('selected')) {
-                return;
-            }
-            
-            // Переключаем выбор
-            if (ingredient.classList.contains('selected')) {
-                ingredient.classList.remove('selected');
-                selectedIngredients = selectedIngredients.filter(item => 
-                    item.category !== category || item.id !== id
-                );
-            } else {
-                ingredient.classList.add('selected');
-                selectedIngredients.push({ category, id });
-            }
-            
-            // Обновляем счетчик
-            selectedCount.textContent = selectedIngredients.length;
-            
-            // Активируем кнопку синтеза
-            if (selectedIngredients.length === 3) {
-                synthesizeBtn.disabled = false;
-            } else {
-                synthesizeBtn.disabled = true;
-            }
-        });
-    });
-    
-    // Синтез предсказания
-    synthesizeBtn.addEventListener('click', () => {
-        if (selectedIngredients.length !== 3) {
+    // Функция обработки клика на ингредиент
+    function handleIngredientClick(ingredient) {
+        const category = ingredient.dataset.category;
+        const id = ingredient.dataset.id;
+        
+        if (!category || !id) {
             return;
         }
         
-        // Анимация бурления
-        flask.classList.add('active');
-        synthesizeBtn.disabled = true;
-        
-        // Блокируем все ингредиенты
-        ingredients.forEach(ing => {
-            ing.classList.add('disabled');
-        });
-        
-        // Через 2 секунды показываем результат
-        setTimeout(() => {
-            const randomPrediction = predictionsData.predictions[
-                Math.floor(Math.random() * predictionsData.predictions.length)
-            ];
-            
-            // Заполняем модальное окно
-            document.getElementById('predictionTitle').textContent = randomPrediction.title;
-            document.getElementById('predictionQuote').textContent = randomPrediction.quote;
-            document.getElementById('predictionAuthor').textContent = randomPrediction.author;
-            document.getElementById('predictionChallenge').textContent = randomPrediction.challenge;
-            
-            // Показываем модальное окно
-            predictionModal.classList.add('active');
-            
-            // Сбрасываем состояние
-            flask.classList.remove('active');
-            selectedIngredients = [];
-            selectedCount.textContent = '0';
-            ingredients.forEach(ing => {
-                ing.classList.remove('selected', 'disabled');
+        // Если ингредиент уже выбран, снимаем выбор
+        if (ingredient.classList.contains('selected')) {
+            ingredient.classList.remove('selected');
+            selectedIngredients = selectedIngredients.filter(item => 
+                item.category !== category || item.id !== id
+            );
+        } else {
+            // Снимаем выбор с других ингредиентов той же категории
+            const sameCategoryIngredients = document.querySelectorAll(
+                `.ingredient[data-category="${category}"]`
+            );
+            sameCategoryIngredients.forEach(ing => {
+                if (ing.classList.contains('selected')) {
+                    ing.classList.remove('selected');
+                    selectedIngredients = selectedIngredients.filter(item => 
+                        item.category !== category
+                    );
+                }
             });
-            synthesizeBtn.disabled = true;
-        }, 2000);
+            
+            // Добавляем новый выбор
+            ingredient.classList.add('selected');
+            selectedIngredients.push({ category, id });
+        }
+        
+        // Обновляем счетчик
+        if (selectedCount) selectedCount.textContent = selectedIngredients.length;
+        
+        // Активируем кнопку синтеза только если выбрано ровно 3 ингредиента из разных категорий
+        const uniqueCategories = new Set(selectedIngredients.map(item => item.category));
+        if (selectedIngredients.length === 3 && uniqueCategories.size === 3) {
+            if (synthesizeBtn) synthesizeBtn.disabled = false;
+        } else {
+            if (synthesizeBtn) synthesizeBtn.disabled = true;
+        }
+    }
+    
+    // Добавляем прямые обработчики для всех кнопок
+    const allIngredients = document.querySelectorAll('.ingredient');
+    allIngredients.forEach((ingredient, index) => {
+        ingredient.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Ingredient clicked:', index, ingredient.textContent, ingredient.dataset);
+            handleIngredientClick(ingredient);
+        });
     });
+    
+    // Делегирование событий отключено, так как используем прямые обработчики
+    
+    // Синтез предсказания
+    if (synthesizeBtn) {
+        synthesizeBtn.addEventListener('click', () => {
+            if (selectedIngredients.length !== 3) {
+                return;
+            }
+            
+            // Анимация бурления
+            if (flask) flask.classList.add('active');
+            synthesizeBtn.disabled = true;
+            
+            // Блокируем все ингредиенты
+            const allIngredients = document.querySelectorAll('.ingredient');
+            allIngredients.forEach(ing => {
+                ing.classList.add('disabled');
+            });
+            
+            // Через 2 секунды показываем результат
+            setTimeout(() => {
+                if (!predictionsData || !predictionsData.predictions) {
+                    console.error('Predictions data not found');
+                    return;
+                }
+                
+                const randomPrediction = predictionsData.predictions[
+                    Math.floor(Math.random() * predictionsData.predictions.length)
+                ];
+                
+                // Заполняем модальное окно
+                const titleEl = document.getElementById('predictionTitle');
+                const quoteEl = document.getElementById('predictionQuote');
+                const authorEl = document.getElementById('predictionAuthor');
+                const challengeEl = document.getElementById('predictionChallenge');
+                
+                if (titleEl) titleEl.textContent = randomPrediction.title;
+                if (quoteEl) quoteEl.textContent = randomPrediction.quote;
+                if (authorEl) authorEl.textContent = randomPrediction.author;
+                if (challengeEl) challengeEl.textContent = randomPrediction.challenge;
+                
+                // Показываем модальное окно
+                if (predictionModal) {
+                    predictionModal.classList.add('active');
+                }
+                
+                // Сбрасываем состояние
+                if (flask) flask.classList.remove('active');
+                selectedIngredients = [];
+                if (selectedCount) selectedCount.textContent = '0';
+                allIngredients.forEach(ing => {
+                    ing.classList.remove('selected', 'disabled');
+                });
+                synthesizeBtn.disabled = true;
+            }, 2000);
+        });
+    }
     
     // Сохранение открытки (упрощенная версия - можно доработать)
 }
