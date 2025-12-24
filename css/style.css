@@ -1297,6 +1297,8 @@ body {
     bottom: 2%;
     z-index: 100;
     pointer-events: auto;
+    /* Ограничиваем, чтобы панель не выходила слишком далеко за пределы */
+    max-width: calc(100vw - 2%);
 }
 
 .ingredients-group {
@@ -2440,9 +2442,10 @@ body {
     }
     
     .ingredients-panel {
-        width: min(58%, 680px);
-        flex: 0 0 min(58%, 680px);
-        right: -18%;
+        width: min(50%, 600px);
+        flex: 0 0 min(50%, 600px);
+        right: -12%;
+        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
@@ -2488,9 +2491,10 @@ body {
     }
     
     .ingredients-panel {
-        width: min(58%, 660px);
-        flex: 0 0 min(58%, 660px);
-        right: -18%;
+        width: min(48%, 580px);
+        flex: 0 0 min(48%, 580px);
+        right: -10%;
+        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
@@ -2545,9 +2549,10 @@ body {
     }
     
     .ingredients-panel {
-        width: min(58%, 640px);
-        flex: 0 0 min(58%, 640px);
-        right: -18%;
+        width: min(46%, 560px);
+        flex: 0 0 min(46%, 560px);
+        right: -8%;
+        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
@@ -2607,9 +2612,10 @@ body {
     }
     
     .ingredients-panel {
-        width: min(58%, 620px);
-        flex: 0 0 min(58%, 620px);
-        right: -18%;
+        width: min(44%, 540px);
+        flex: 0 0 min(44%, 540px);
+        right: -6%;
+        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
