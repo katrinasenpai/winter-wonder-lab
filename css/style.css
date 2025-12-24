@@ -147,6 +147,8 @@ body {
 /* Дальний фон (первый) */
 .background-far {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-image: url('../assets/images/background/lab-background-far.png');
@@ -159,6 +161,8 @@ body {
 /* Фон лаборатории (второй) */
 .background {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-image: url('../assets/images/background/lab-background.png');
@@ -475,10 +479,10 @@ body {
 
 .photo-card {
     position: absolute;
-    width: min(120px, 7.5vw);
-    height: min(155px, 10vw);
-    max-width: 120px;
-    max-height: 155px;
+    width: min(150px, 9.5vw);
+    height: min(195px, 12.5vw);
+    max-width: 150px;
+    max-height: 195px;
     background: linear-gradient(to bottom, 
         rgba(255, 255, 255, 0.98) 0%,
         rgba(250, 250, 240, 0.95) 100%
@@ -494,7 +498,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 12px;
+    padding: 14px;
     backdrop-filter: blur(2px);
     z-index: 5;
 }
@@ -503,11 +507,11 @@ body {
 .photo-card::before {
     content: '';
     position: absolute;
-    top: -22px;
+    top: -28px;
     left: 50%;
     transform: translateX(-50%);
-    width: 32px;
-    height: 22px;
+    width: 40px;
+    height: 28px;
     background: linear-gradient(to bottom, 
         rgba(139, 69, 19, 0.9) 0%,
         rgba(101, 67, 33, 1) 100%
@@ -523,11 +527,11 @@ body {
 .photo-card::after {
     content: '';
     position: absolute;
-    top: -15px;
+    top: -19px;
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
-    height: 18px;
+    height: 22px;
     background: rgba(0, 0, 0, 0.3);
     z-index: 7;
 }
@@ -604,7 +608,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2em;
+    font-size: 2.2em;
     border: 2px solid rgba(139, 69, 19, 0.3);
     box-shadow: 
         inset 0 2px 4px rgba(0, 0, 0, 0.1),
@@ -742,19 +746,19 @@ body {
 }
 
 .photo-label {
-    font-size: 0.95em;
+    font-size: 1em;
     color: var(--color-deep-blue);
     text-align: center;
     font-weight: 300;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-    padding: 4px 0;
+    padding: 5px 0;
     width: 100%;
     background: linear-gradient(to bottom, 
         rgba(255, 255, 255, 0.3) 0%,
         rgba(255, 255, 255, 0.1) 100%
     );
     border-radius: 4px;
-    margin-top: 4px;
+    margin-top: 5px;
 }
 
 .garland {
@@ -1283,13 +1287,13 @@ body {
 .ingredients-panel {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    width: min(16%, 140px);
-    flex: 0 0 min(16%, 140px);
+    gap: 8px;
+    width: min(58%, 700px);
+    flex: 0 0 min(58%, 700px);
     min-width: 0;
     position: absolute;
     /* Позиция зафиксирована в правом нижнем углу контейнера */
-    right: 2%;
+    right: -18%;
     bottom: 2%;
     z-index: 100;
     pointer-events: auto;
@@ -1298,8 +1302,8 @@ body {
 .ingredients-group {
     background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
     border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 6px;
-    padding: 10px 6px 6px 6px;
+    border-radius: 8px;
+    padding: 14px 10px 10px 10px;
     flex: 1;
     min-width: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1);
@@ -1309,8 +1313,8 @@ body {
 }
 
 .ingredients-group h3 {
-    font-size: 0.75em;
-    margin-bottom: 10px;
+    font-size: 1em;
+    margin-bottom: 12px;
     margin-top: 0;
     padding: 0;
     color: #FFD700;
@@ -1323,9 +1327,8 @@ body {
     pointer-events: none !important;
     position: relative;
     z-index: 0 !important;
-    line-height: 1.2;
+    line-height: 1.3;
     height: auto;
-    max-height: 18px;
     overflow: hidden;
 }
 
@@ -1333,37 +1336,38 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 8px;
     pointer-events: auto;
     position: relative;
     z-index: 2;
 }
 
 .ingredient {
-    padding: 8px 6px;
+    padding: 8px 14px;
     background: rgba(255, 255, 255, 0.15);
     border: 2px solid rgba(255, 215, 0, 0.4);
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.7em;
+    font-size: 0.95em;
     text-align: center;
     white-space: normal;
     word-wrap: break-word;
-    overflow: visible;
+    overflow: hidden;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
     min-height: 40px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1 1 calc(50% - 3px);
-    min-width: calc(50% - 3px);
-    max-width: calc(50% - 3px);
+    flex: 1 1 calc(50% - 4px);
+    min-width: calc(50% - 4px);
+    max-width: calc(50% - 4px);
     pointer-events: auto;
     position: relative;
     z-index: 3;
-    line-height: 1.2;
+    line-height: 1.3;
 }
 
 .ingredient:hover:not(.selected) {
@@ -1390,11 +1394,11 @@ body {
 }
 
 .selected-ingredients {
-    min-height: 30px;
-    padding: 12px;
+    min-height: 40px;
+    padding: 14px;
     background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
     border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 5px;
+    border-radius: 6px;
     text-align: center;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1);
     margin-top: 10px;
@@ -1402,7 +1406,7 @@ body {
 
 .selected-label {
     color: #FFD700;
-    font-size: 0.9em;
+    font-size: 1em;
     font-weight: 600;
     text-shadow: 
         0 0 10px rgba(255, 215, 0, 0.8),
@@ -1411,24 +1415,23 @@ body {
 }
 
 .synthesize-btn {
-    padding: 5px 8px;
+    padding: 12px 16px;
     background: linear-gradient(135deg, var(--color-golden), var(--color-orange));
     border: 2px solid var(--color-golden);
-    border-radius: 5px;
+    border-radius: 6px;
     color: var(--color-deep-blue);
-    font-size: 0.7em;
+    font-size: 0.95em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-    min-height: 24px;
     margin-top: 10px;
     white-space: normal;
     word-wrap: break-word;
     text-align: center;
     position: relative;
     width: 100%;
-    min-height: 35px;
+    min-height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1671,6 +1674,11 @@ body {
     z-index: 2;
     filter: drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 25px rgba(135, 206, 250, 0.5));
     animation: envelopeShake 2s ease-in-out infinite;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .envelope-glow {
@@ -1678,8 +1686,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: min(160px, 10.5vw);
-    height: min(160px, 10.5vw);
+    width: 133%;
+    height: 133%;
     max-width: 160px;
     max-height: 160px;
     background: radial-gradient(circle, rgba(135, 206, 250, 0.5), rgba(176, 224, 230, 0.3), transparent 70%);
@@ -2432,13 +2440,16 @@ body {
     }
     
     .ingredients-panel {
-        width: min(28%, 220px);
-        flex: 0 0 min(28%, 220px);
+        width: min(58%, 680px);
+        flex: 0 0 min(58%, 680px);
+        right: -18%;
     }
     
     .photo-card {
-        width: min(120px, 7.5vw);
-        height: min(155px, 10vw);
+        width: min(150px, 9.5vw);
+        height: min(195px, 12.5vw);
+        max-width: 150px;
+        max-height: 195px;
     }
 }
 
@@ -2477,13 +2488,16 @@ body {
     }
     
     .ingredients-panel {
-        width: min(28%, 200px);
-        flex: 0 0 min(28%, 200px);
+        width: min(58%, 660px);
+        flex: 0 0 min(58%, 660px);
+        right: -18%;
     }
     
     .photo-card {
-        width: min(110px, 7vw);
-        height: min(145px, 9.5vw);
+        width: min(140px, 9vw);
+        height: min(180px, 12vw);
+        max-width: 140px;
+        max-height: 180px;
     }
     
     .mug-with-steam {
@@ -2531,13 +2545,16 @@ body {
     }
     
     .ingredients-panel {
-        width: min(28%, 180px);
-        flex: 0 0 min(28%, 180px);
+        width: min(58%, 640px);
+        flex: 0 0 min(58%, 640px);
+        right: -18%;
     }
     
     .photo-card {
-        width: min(100px, 7vw);
-        height: min(135px, 9.5vw);
+        width: min(130px, 8.5vw);
+        height: min(170px, 11.5vw);
+        max-width: 130px;
+        max-height: 170px;
     }
     
     .mug-with-steam {
@@ -2590,13 +2607,16 @@ body {
     }
     
     .ingredients-panel {
-        width: min(28%, 160px);
-        flex: 0 0 min(28%, 160px);
+        width: min(58%, 620px);
+        flex: 0 0 min(58%, 620px);
+        right: -18%;
     }
     
     .photo-card {
-        width: min(90px, 8vw);
-        height: min(125px, 11vw);
+        width: min(120px, 9vw);
+        height: min(160px, 12vw);
+        max-width: 120px;
+        max-height: 160px;
     }
     
     .mug-with-steam {
