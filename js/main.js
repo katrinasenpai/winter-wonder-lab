@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initInteractivity();
     initAlchemyStation();
     initGarland();
-    initFlaskBubbles();
+    initMagicParticles();
 });
 
 // Анимация снега
@@ -149,8 +149,6 @@ function initAlchemyStation() {
     const ingredientsPanel = document.querySelector('.ingredients-panel');
     const synthesizeBtn = document.getElementById('synthesizeBtn');
     const selectedCount = document.getElementById('selectedCount');
-    const flask = document.querySelector('.flask');
-    const flaskLiquid = document.getElementById('flaskLiquid');
     const predictionModal = document.getElementById('predictionModal');
     
     let selectedIngredients = [];
@@ -221,8 +219,7 @@ function initAlchemyStation() {
                 return;
             }
             
-            // Анимация бурления
-            if (flask) flask.classList.add('active');
+            // Блокируем кнопку синтеза
             synthesizeBtn.disabled = true;
             
             // Блокируем все ингредиенты
@@ -231,8 +228,54 @@ function initAlchemyStation() {
                 ing.classList.add('disabled');
             });
             
+            // Ускоряем и закручиваем частицы
+            const particlesContainer = document.getElementById('magicParticles');
+            if (particlesContainer) {
+                // Увеличиваем яркость всех искорок
+                const sparkles = particlesContainer.querySelectorAll('.magic-sparkle');
+                sparkles.forEach(sparkle => {
+                    const currentSize = parseFloat(sparkle.style.width) || 3;
+                    const colors = [
+                        { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 1)' },
+                        { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 1)' },
+                        { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 1)' },
+                        { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 1)' },
+                        { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 1)' },
+                        { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 1)' },
+                        { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 1)' },
+                        { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 1)' }
+                    ];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.5)')})`;
+                    sparkle.style.boxShadow = `0 0 ${currentSize * 4}px ${color.shadow}, 0 0 ${currentSize * 8}px ${color.shadow}, 0 0 ${currentSize * 12}px ${color.shadow}`;
+                });
+                particlesContainer.classList.add('synthesizing');
+            }
+            
             // Через 2 секунды показываем результат
             setTimeout(() => {
+                // Возвращаем нормальную анимацию частиц
+                if (particlesContainer) {
+                    particlesContainer.classList.remove('synthesizing');
+                    // Восстанавливаем обычное свечение
+                    const sparkles = particlesContainer.querySelectorAll('.magic-sparkle');
+                    sparkles.forEach(sparkle => {
+                        const currentSize = parseFloat(sparkle.style.width) || 3;
+                        const colors = [
+                            { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 0.9)' },
+                            { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 0.9)' },
+                            { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 0.9)' },
+                            { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 0.9)' },
+                            { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 0.9)' },
+                            { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 0.9)' },
+                            { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 0.9)' },
+                            { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 0.9)' }
+                        ];
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.3)')})`;
+                        sparkle.style.boxShadow = `0 0 ${currentSize * 2}px ${color.shadow}, 0 0 ${currentSize * 4}px ${color.shadow}`;
+                    });
+                }
                 if (!predictionsData || !predictionsData.predictions) {
                     console.error('Predictions data not found');
                     return;
@@ -259,7 +302,6 @@ function initAlchemyStation() {
                 }
                 
                 // Сбрасываем состояние
-                if (flask) flask.classList.remove('active');
                 selectedIngredients = [];
                 if (selectedCount) selectedCount.textContent = '0';
                 allIngredients.forEach(ing => {
@@ -281,6 +323,69 @@ document.addEventListener('keydown', (e) => {
         });
     }
 });
+
+// Инициализация магических частиц (разноцветные искорки)
+function initMagicParticles() {
+    const container = document.getElementById('magicParticles');
+    if (!container) return;
+    
+    // Создаем разноцветные искорки
+    for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+            createSparkle(container);
+        }, i * 100);
+    }
+    
+    // Периодически добавляем новые искорки
+    setInterval(() => {
+        if (container.children.length < 50) {
+            createSparkle(container);
+        }
+    }, 2000);
+}
+
+function createSparkle(container) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'magic-sparkle';
+    
+    // Случайный размер от 2px до 5px
+    const size = Math.random() * 3 + 2;
+    sparkle.style.width = size + 'px';
+    sparkle.style.height = size + 'px';
+    
+    // Случайная начальная позиция
+    sparkle.style.left = Math.random() * 100 + '%';
+    sparkle.style.top = Math.random() * 100 + '%';
+    
+    // Случайная задержка анимации
+    sparkle.style.animationDelay = Math.random() * 4 + 's';
+    sparkle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+    
+    // Случайный цвет из палитры
+    const colors = [
+        { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 0.9)' }, // Красный
+        { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 0.9)' }, // Синий
+        { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 0.9)' }, // Зеленый
+        { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 0.9)' }, // Желтый
+        { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 0.9)' }, // Розовый
+        { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 0.9)' }, // Голубой
+        { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 0.9)' }, // Оранжевый
+        { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 0.9)' }  // Фиолетовый
+    ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    
+    sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.3)')})`;
+    sparkle.style.boxShadow = `0 0 ${size * 2}px ${color.shadow}, 0 0 ${size * 4}px ${color.shadow}`;
+    
+    container.appendChild(sparkle);
+    
+    // Удаляем через 25 секунд
+    setTimeout(() => {
+        if (sparkle.parentNode) {
+            sparkle.remove();
+        }
+    }, 25000);
+}
 
 // Управление гирляндой
 function initGarland() {
@@ -306,63 +411,4 @@ function initGarland() {
 }
 
 // Анимация пузырьков над колбой
-function initFlaskBubbles() {
-    const bubblesContainer = document.querySelector('.flask-bubbles-above');
-    if (!bubblesContainer) return;
-    
-    const colors = [
-        { main: 'rgba(138, 43, 226, 0.9)', secondary: 'rgba(75, 0, 130, 0.7)', glow1: 'rgba(138, 43, 226, 0.8)', glow2: 'rgba(75, 0, 130, 0.6)' },
-        { main: 'rgba(148, 0, 211, 0.9)', secondary: 'rgba(138, 43, 226, 0.7)', glow1: 'rgba(148, 0, 211, 0.8)', glow2: 'rgba(138, 43, 226, 0.6)' },
-        { main: 'rgba(123, 104, 238, 0.9)', secondary: 'rgba(75, 0, 130, 0.7)', glow1: 'rgba(123, 104, 238, 0.8)', glow2: 'rgba(75, 0, 130, 0.6)' }
-    ];
-    
-    function createBubble() {
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        
-        // Случайный размер от 2 до 5px
-        const size = Math.random() * 3 + 2;
-        bubble.style.width = size + 'px';
-        bubble.style.height = size + 'px';
-        
-        // Узкая область появления - сразу из горлышка (от -15px до 15px от центра)
-        const startX = Math.random() * 30 - 15;
-        bubble.style.left = `calc(50% + ${startX}px)`;
-        bubble.style.bottom = '0';
-        
-        // Случайный цвет
-        const colorSet = colors[Math.floor(Math.random() * colors.length)];
-        bubble.style.background = `radial-gradient(circle, ${colorSet.main}, ${colorSet.secondary})`;
-        bubble.style.boxShadow = `
-            0 0 ${size * 0.5}px ${colorSet.glow1},
-            0 0 ${size * 1}px ${colorSet.glow2},
-            inset 0 0 ${size * 0.2}px rgba(255, 255, 255, 0.3)
-        `;
-        
-        // Случайная длительность анимации (медленнее для плавного подъёма)
-        const duration = Math.random() * 2 + 3.5; // от 3.5 до 5.5 секунд
-        bubble.style.animationDuration = duration + 's';
-        bubble.style.animationDelay = Math.random() * 0.5 + 's';
-        bubble.style.animationName = 'bubbleRise';
-        bubble.style.animationTimingFunction = 'ease-in-out';
-        bubble.style.animationIterationCount = 'infinite';
-        
-        bubblesContainer.appendChild(bubble);
-        
-        // Удаляем пузырёк после завершения анимации
-        setTimeout(() => {
-            if (bubble.parentNode) {
-                bubble.remove();
-            }
-        }, (duration + 0.5) * 1000);
-    }
-    
-    // Создаём пузырьки каждые 200-400мс
-    setInterval(createBubble, Math.random() * 200 + 200);
-    
-    // Создаём начальные пузырьки
-    for (let i = 0; i < 8; i++) {
-        setTimeout(() => createBubble(), i * 250);
-    }
-}
 

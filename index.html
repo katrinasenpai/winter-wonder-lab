@@ -16,6 +16,9 @@
 </head>
 <body>
     <div class="lab-container">
+        <!-- Контейнер для пузырьков и искорок -->
+        <div class="magic-particles" id="magicParticles"></div>
+        
         <!-- Дальний фон (первый) -->
         <div class="background-far"></div>
         
@@ -112,15 +115,28 @@
                 <div class="map-paper"></div>
             </div>
 
-            <!-- 3. ЭЛТ-монитор (КрасноЦарство) -->
-            <div class="interactive-item crt-monitor" id="crtMonitor">
-                <div class="monitor-base"></div>
-                <div class="monitor-screen">
-                    <div class="glitch-overlay"></div>
-                    <div class="screen-content">
-                        <div class="game-logo">КрасноЦарство.exe</div>
+            <!-- 3. Ретро джойстик (КрасноЦарство) -->
+            <div class="interactive-item retro-joystick" id="crtMonitor">
+                <div class="joystick-base">
+                    <div class="joystick-dpad">
+                        <div class="dpad-up"></div>
+                        <div class="dpad-down"></div>
+                        <div class="dpad-left"></div>
+                        <div class="dpad-right"></div>
+                        <div class="dpad-center"></div>
+                    </div>
+                    <div class="joystick-center-buttons">
+                        <div class="center-button select-btn">SELECT</div>
+                        <div class="center-button start-btn">START</div>
+                    </div>
+                    <div class="joystick-action-buttons">
+                        <div class="action-button button-x"></div>
+                        <div class="action-button button-y"></div>
+                        <div class="action-button button-a"></div>
+                        <div class="action-button button-b"></div>
                     </div>
                 </div>
+                <div class="joystick-label">КрасноЦарство.exe</div>
             </div>
             
             <!-- Кружка с паром под монитором -->
@@ -130,16 +146,6 @@
 
             <!-- 4. Алхимическая станция (Генератор предсказаний) -->
             <div class="alchemy-station" id="alchemyStation">
-                <div class="flask-container">
-                    <div class="flask">
-                        <div class="flask-liquid" id="flaskLiquid"></div>
-                        <div class="flask-bubbles"></div>
-                        <div class="flask-steam"></div>
-                    </div>
-                    <div class="flask-bubbles-above"></div>
-                    <div class="flask-stand"></div>
-                </div>
-                
                 <div class="ingredients-panel">
                     <div class="ingredients-group">
                         <h3>Атмосфера</h3>

@@ -144,6 +144,93 @@ body {
     /* Контейнер всегда заполняет весь экран */
 }
 
+/* Контейнер для магических частиц */
+.magic-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* Разноцветные магические искорки */
+.magic-sparkle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: floatSparkle 12s infinite ease-in-out;
+}
+
+/* Медленное хаотичное движение искорок */
+@keyframes floatSparkle {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0.6;
+    }
+    15% {
+        transform: translate(-20px, 25px) rotate(54deg);
+        opacity: 1;
+    }
+    30% {
+        transform: translate(30px, 15px) rotate(108deg);
+        opacity: 0.4;
+    }
+    45% {
+        transform: translate(-25px, -15px) rotate(162deg);
+        opacity: 0.9;
+    }
+    60% {
+        transform: translate(15px, 30px) rotate(216deg);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translate(-30px, 10px) rotate(270deg);
+        opacity: 0.8;
+    }
+    90% {
+        transform: translate(20px, -20px) rotate(324deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+        opacity: 0.6;
+    }
+}
+
+/* Ускоренное вращение при синтезе */
+.magic-particles.synthesizing .magic-sparkle {
+    animation: spinSparkle 1.5s infinite linear !important;
+    filter: brightness(2) !important;
+}
+
+@keyframes spinSparkle {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: translate(150px, -150px) rotate(90deg) scale(1.3);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(0, -300px) rotate(180deg) scale(1.5);
+        opacity: 1;
+    }
+    75% {
+        transform: translate(-150px, -150px) rotate(270deg) scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
 /* Дальний фон (первый) */
 .background-far {
     position: absolute;
@@ -327,10 +414,6 @@ body {
     filter: brightness(1.2);
 }
 
-/* Подсветка монитора красным при наведении - тень вокруг картинки */
-.crt-monitor:hover .monitor-screen {
-    animation: glitchImageWithRedGlow 2.5s infinite !important;
-}
 
 @keyframes glitchImageWithRedGlow {
     0%, 85%, 100% {
@@ -868,421 +951,319 @@ body {
     }
 }
 
-/* ЭЛТ-монитор */
-.crt-monitor {
+/* Ретро джойстик */
+.retro-joystick {
     position: absolute;
     /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
     left: 9.3%;
-    bottom: 59%;
-    width: 38%;
-    height: 64%;
-    max-width: 520px;
-    max-height: 520px;
+    bottom: 50%;
+    width: 18%;
+    height: 20%;
+    max-width: 280px;
+    max-height: 200px;
+    min-width: 200px;
+    min-height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    z-index: 10;
 }
 
-.monitor-base {
-    display: none;
+.retro-joystick:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.6)) 
+            drop-shadow(0 0 20px rgba(135, 206, 250, 0.4));
 }
 
-.monitor-screen {
+.joystick-base {
     width: 100%;
     height: 100%;
-    background-image: url('../assets/images/interactive/monitor-screen.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: none;
-    border-radius: 0;
+    background: #c08876;
+    border: 4px solid #8b6f47;
+    border-radius: 20px;
     position: relative;
-    box-shadow: none;
+    box-shadow: 
+        0 10px 25px rgba(101, 67, 33, 0.4),
+        inset 0 3px 8px rgba(255, 248, 240, 0.4),
+        inset 0 -4px 10px rgba(101, 67, 33, 0.3),
+        0 0 0 2px rgba(255, 248, 240, 0.2);
     overflow: visible;
-    transition: filter 0.3s ease;
-    animation: glitchImage 2.5s infinite;
 }
 
-/* Подсветка монитора красным при наведении - тень вокруг картинки */
-.crt-monitor:hover .monitor-screen {
-    animation: glitchImageWithRedGlow 2.5s infinite !important;
+.retro-joystick:hover .joystick-base {
+    box-shadow: 
+        0 12px 30px rgba(101, 67, 33, 0.5),
+        inset 0 3px 8px rgba(255, 248, 240, 0.5),
+        inset 0 -4px 10px rgba(101, 67, 33, 0.3),
+        0 0 0 2px rgba(255, 248, 240, 0.3),
+        0 0 12px rgba(135, 206, 250, 0.6),
+        0 0 20px rgba(135, 206, 250, 0.4);
+    border-color: #87cefa;
+    filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.6)) 
+            drop-shadow(0 0 20px rgba(135, 206, 250, 0.4));
 }
 
-@keyframes glitchImageWithRedGlow {
-    0%, 85%, 100% {
-        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(0);
-    }
-    86% {
-        filter: brightness(1.4) hue-rotate(5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(-2px, 2px);
-    }
-    87% {
-        filter: brightness(1.4) hue-rotate(-5deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(2px, -2px);
-    }
-    88% {
-        filter: brightness(1.45) hue-rotate(3deg) saturate(1.3) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(-2px, -2px);
-    }
-    89% {
-        filter: brightness(1.4) hue-rotate(-3deg) saturate(1.2) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(2px, 2px);
-    }
-    90% {
-        filter: brightness(1.35) hue-rotate(2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(-1px, 1px);
-    }
-    91% {
-        filter: brightness(1.35) hue-rotate(-2deg) saturate(1.1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(1px, -1px);
-    }
-    92% {
-        filter: brightness(1.3) hue-rotate(0deg) saturate(1) drop-shadow(0 0 10px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        transform: translate(0);
-    }
+/* D-pad (крестообразный) */
+.joystick-dpad {
+    position: absolute;
+    top: 45%;
+    left: 10%;
+    width: 22%;
+    height: 24%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 2px;
 }
 
-@keyframes glitchImage {
-    0%, 85%, 100% {
-        filter: brightness(1) hue-rotate(0deg) saturate(1);
-    }
-    86% {
-        filter: brightness(1.1) hue-rotate(5deg) saturate(1.2);
-        transform: translate(-2px, 2px);
-    }
-    87% {
-        filter: brightness(1.1) hue-rotate(-5deg) saturate(1.2);
-        transform: translate(2px, -2px);
-    }
-    88% {
-        filter: brightness(1.15) hue-rotate(3deg) saturate(1.3);
-        transform: translate(-2px, -2px);
-    }
-    89% {
-        filter: brightness(1.1) hue-rotate(-3deg) saturate(1.2);
-        transform: translate(2px, 2px);
-    }
-    90% {
-        filter: brightness(1.05) hue-rotate(2deg) saturate(1.1);
-        transform: translate(-1px, 1px);
-    }
-    91% {
-        filter: brightness(1.05) hue-rotate(-2deg) saturate(1.1);
-        transform: translate(1px, -1px);
-    }
-    92% {
-        filter: brightness(1) hue-rotate(0deg) saturate(1);
-        transform: translate(0);
-    }
+.dpad-up, .dpad-down, .dpad-left, .dpad-right {
+    background: #1a1a1a;
+    border: 2px solid #000;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.8);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Дублирующий hover эффект - удален, используется основной выше */
-
-@keyframes glitchImageHover {
-    0%, 100% {
-        filter: brightness(1.4) hue-rotate(0deg) saturate(1) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
-        transform: translate(0);
-    }
-    25% {
-        filter: brightness(1.5) hue-rotate(5deg) saturate(1.2) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
-        transform: translate(-2px, 2px);
-    }
-    50% {
-        filter: brightness(1.5) hue-rotate(-5deg) saturate(1.2) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
-        transform: translate(2px, -2px);
-    }
-    75% {
-        filter: brightness(1.45) hue-rotate(3deg) saturate(1.15) drop-shadow(0 0 20px rgba(196, 30, 58, 0.8)) drop-shadow(0 0 40px rgba(196, 30, 58, 0.6));
-        transform: translate(-1px, -1px);
-    }
+.dpad-up {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: 3px 3px 1px 1px;
 }
 
-.screen-content {
-    display: none;
+.dpad-down {
+    grid-column: 2;
+    grid-row: 3;
+    border-radius: 1px 1px 3px 3px;
 }
 
-.game-logo {
-    display: none;
+.dpad-left {
+    grid-column: 1;
+    grid-row: 2;
+    border-radius: 3px 1px 1px 3px;
 }
 
-.glitch-overlay {
-    display: none;
+.dpad-right {
+    grid-column: 3;
+    grid-row: 2;
+    border-radius: 1px 3px 3px 1px;
 }
 
-@keyframes glitch {
-    0%, 85%, 100% {
-        transform: translate(0);
-        opacity: 0;
-    }
-    86% {
-        transform: translate(-4px, 4px);
-        opacity: 0.6;
-    }
-    87% {
-        transform: translate(4px, -4px);
-        opacity: 0.6;
-    }
-    88% {
-        transform: translate(-4px, -4px);
-        opacity: 0.6;
-    }
-    89% {
-        transform: translate(4px, 4px);
-        opacity: 0.6;
-    }
-    90% {
-        transform: translate(-3px, 3px);
-        opacity: 0.4;
-    }
-    91% {
-        transform: translate(3px, -3px);
-        opacity: 0.4;
-    }
-    92% {
-        transform: translate(0);
-        opacity: 0;
-    }
+.dpad-center {
+    grid-column: 2;
+    grid-row: 2;
+    background: #0a0a0a;
+    border-radius: 3px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
+.retro-joystick:hover .dpad-up,
+.retro-joystick:hover .dpad-down,
+.retro-joystick:hover .dpad-left,
+.retro-joystick:hover .dpad-right {
+    background: #2a2a2a;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.6),
+        inset 0 2px 4px rgba(255, 255, 255, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.8),
+        0 0 12px rgba(255, 255, 255, 0.2);
+}
 
-.glitch-overlay::before,
-.glitch-overlay::after {
+/* Центральные кнопки SELECT и START */
+.joystick-center-buttons {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 12%;
+    width: 40%;
+}
+
+.center-button {
+    width: 35%;
+    height: 22px;
+    background: #1a1a1a;
+    border: 2px solid #000;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55em;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.8);
+    transition: box-shadow 0.2s ease;
+}
+
+.retro-joystick:hover .center-button {
+    background: #2a2a2a;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.6),
+        inset 0 2px 4px rgba(255, 255, 255, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* Цветные кнопки действий (ромбовидное расположение) */
+.joystick-action-buttons {
+    position: absolute;
+    top: 25%;
+    right: 6%;
+    width: 28%;
+    height: 30%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10%;
+    align-items: center;
+    justify-items: center;
+}
+
+.action-button {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    position: relative;
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.4),
+        inset 0 3px 6px rgba(255, 255, 255, 0.2),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.action-button::before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 70%);
+    z-index: 1;
+    pointer-events: none;
 }
 
-.glitch-overlay::before {
-    background: rgba(0, 255, 0, 0.3);
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+.action-button > * {
+    display: none;
 }
 
-.glitch-overlay::after {
-    background: rgba(255, 0, 0, 0.3);
-    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+
+.button-x {
+    grid-column: 2;
+    grid-row: 1;
+    background: #0066cc;
+    border-color: #004499;
 }
+
+.button-y {
+    grid-column: 1;
+    grid-row: 1;
+    background: #ffcc00;
+    border-color: #cc9900;
+}
+
+.button-a {
+    grid-column: 2;
+    grid-row: 2;
+    background: #cc0000;
+    border-color: #990000;
+}
+
+.button-b {
+    grid-column: 1;
+    grid-row: 2;
+    background: #00cc00;
+    border-color: #009900;
+}
+
+.retro-joystick:hover .action-button {
+    transform: scale(1.08);
+}
+
+.retro-joystick:hover .button-x {
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(0, 102, 204, 0.8);
+}
+
+.retro-joystick:hover .button-y {
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(255, 204, 0, 0.8);
+}
+
+.retro-joystick:hover .button-a {
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(204, 0, 0, 0.8);
+}
+
+.retro-joystick:hover .button-b {
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(0, 204, 0, 0.8);
+}
+
+.joystick-label {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    color: #654321;
+    text-shadow: 
+        0 1px 2px rgba(255, 248, 240, 0.9),
+        0 0 10px rgba(255, 223, 186, 0.5);
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.retro-joystick:hover .joystick-label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
 
 /* Алхимическая станция */
 .alchemy-station {
     position: absolute;
     /* Позиция привязана к фону через проценты - будет масштабироваться вместе с фоном */
     right: 9.3%;
-    bottom: 16.5%;
-    width: min(32%, 450px);
+    bottom: 15%;
+    width: auto;
     max-width: calc(100% - 4%);
     z-index: 6;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-end;
-    gap: 30px;
 }
 
-.flask-container {
-    position: relative;
-    width: min(255px, 19.38vw);
-    height: min(255px, 19.38vw);
-    flex-shrink: 0;
-    margin-bottom: min(290px, 24vh);
-}
-
-.flask {
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.15);
-    border: 5px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    box-shadow: 
-        0 0 40px rgba(255, 215, 0, 0.6),
-        inset 0 0 30px rgba(255, 255, 255, 0.3);
-}
-
-.flask-liquid {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    background: linear-gradient(to top, rgba(75, 0, 130, 0.8), rgba(138, 43, 226, 0.6));
-    border-radius: 0 0 50% 50%;
-    transition: all 0.5s ease;
-}
-
-.flask.active .flask-liquid {
-    height: 60%;
-    background: linear-gradient(to top, rgba(75, 0, 130, 0.9), rgba(255, 215, 0, 0.7));
-    border-radius: 0 0 50% 50%;
-    animation: bubble 1.5s ease-in-out;
-}
-
-@keyframes bubble {
-    0%, 100% {
-        transform: scaleY(1);
-    }
-    50% {
-        transform: scaleY(1.1);
-    }
-}
-
-.flask-bubbles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.flask.active .flask-bubbles {
-    opacity: 1;
-}
-
-.flask-bubbles::before,
-.flask-bubbles::after {
-    content: '';
-    position: absolute;
-    width: 17px;
-    height: 17px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    bottom: 20%;
-    animation: bubbleUp 1.5s ease-in-out infinite;
-}
-
-.flask-bubbles::before {
-    left: 30%;
-    animation-delay: 0s;
-}
-
-.flask-bubbles::after {
-    left: 60%;
-    animation-delay: 0.5s;
-}
-
-@keyframes bubbleUp {
-    0% {
-        transform: translateY(0) scale(0.5);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-170px) scale(1);
-        opacity: 0;
-    }
-}
-
-.flask-steam {
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 65px;
-    height: 85px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.flask.active .flask-steam {
-    opacity: 0.6;
-    animation: steam 2s ease-in-out infinite;
-}
-
-@keyframes steam {
-    0%, 100% {
-        transform: translateX(-50%) translateY(0) scale(1);
-        opacity: 0.3;
-    }
-    50% {
-        transform: translateX(-50%) translateY(-20px) scale(1.2);
-        opacity: 0.6;
-    }
-}
-
-.flask-steam::before,
-.flask-steam::after {
-    content: '';
-    position: absolute;
-    width: 33px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: steamRise 2s ease-in-out infinite;
-}
-
-.flask-steam::before {
-    animation-delay: 0s;
-}
-
-.flask-steam::after {
-    animation-delay: 1s;
-    width: 25px;
-    height: 42px;
-}
-
-@keyframes steamRise {
-    0% {
-        transform: translateX(-50%) translateY(0) scale(0.8);
-        opacity: 0.4;
-    }
-    100% {
-        transform: translateX(-50%) translateY(-30px) scale(1.2);
-        opacity: 0;
-    }
-}
-
-/* Пузырьки над колбой */
-.flask-bubbles-above {
-    position: absolute;
-    top: -240px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 460px;
-    pointer-events: none;
-    overflow: visible;
-}
-
-.flask-bubbles-above .bubble {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(138, 43, 226, 0.9), rgba(75, 0, 130, 0.7));
-    box-shadow: 
-        0 0 4px rgba(138, 43, 226, 0.8),
-        0 0 8px rgba(75, 0, 130, 0.6),
-        inset 0 0 2px rgba(255, 255, 255, 0.3);
-    pointer-events: none;
-}
-
-@keyframes bubbleRise {
-    0% {
-        transform: translateY(0) translateX(0) scale(0.4);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        /* Поднимаются по узкому горлышку вертикально вверх */
-        transform: translateY(-460px) translateX(0) scale(1);
-        opacity: 0;
-    }
-}
-
-.flask-stand {
-    display: none;
-}
 
 .ingredients-panel {
     display: flex;
@@ -1291,22 +1272,31 @@ body {
     width: min(58%, 700px);
     flex: 0 0 min(58%, 700px);
     min-width: 0;
-    position: absolute;
-    /* Позиция зафиксирована в правом нижнем углу контейнера */
-    right: -18%;
-    bottom: 2%;
+    position: relative;
     z-index: 100;
     pointer-events: auto;
+    background: #c08876;
+    border: 4px solid #8b6f47;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 
+        0 10px 25px rgba(101, 67, 33, 0.4),
+        inset 0 3px 8px rgba(255, 248, 240, 0.4),
+        inset 0 -4px 10px rgba(101, 67, 33, 0.3),
+        0 0 0 2px rgba(255, 248, 240, 0.2);
 }
 
 .ingredients-group {
-    background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 8px;
+    background: linear-gradient(135deg, #fff8f0 0%, #f5e6d3 100%);
+    border: 3px solid #8b6f47;
+    border-radius: 15px;
     padding: 14px 10px 10px 10px;
     flex: 1;
     min-width: 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1);
+    box-shadow: 
+        0 4px 10px rgba(101, 67, 33, 0.3),
+        inset 0 2px 4px rgba(255, 248, 240, 0.6),
+        inset 0 -2px 4px rgba(101, 67, 33, 0.2);
     pointer-events: auto;
     overflow: visible;
     position: relative;
@@ -1317,13 +1307,12 @@ body {
     margin-bottom: 12px;
     margin-top: 0;
     padding: 0;
-    color: #FFD700;
+    color: #000;
     text-align: center;
     font-weight: bold;
     text-shadow: 
-        0 0 10px rgba(255, 215, 0, 0.8),
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 30px rgba(255, 215, 0, 0.4);
+        0 1px 2px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(100, 150, 200, 0.4);
     pointer-events: none !important;
     position: relative;
     z-index: 0 !important;
@@ -1344,9 +1333,9 @@ body {
 
 .ingredient {
     padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    border-radius: 6px;
+    background: linear-gradient(135deg, #e8d5c4 0%, #d4c5b0 100%);
+    border: 2px solid #8b6f47;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 0.95em;
@@ -1354,7 +1343,7 @@ body {
     white-space: normal;
     word-wrap: break-word;
     overflow: hidden;
-    color: rgba(255, 255, 255, 0.9);
+    color: #000;
     font-weight: 500;
     min-height: 40px;
     height: auto;
@@ -1368,23 +1357,40 @@ body {
     position: relative;
     z-index: 3;
     line-height: 1.3;
+    box-shadow: 
+        0 3px 6px rgba(101, 67, 33, 0.3),
+        inset 0 2px 4px rgba(255, 248, 240, 0.6),
+        inset 0 -2px 4px rgba(101, 67, 33, 0.2);
 }
 
 .ingredient:hover:not(.selected) {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: rgba(255, 215, 0, 0.8);
-    transform: scale(1.05);
-    color: #FFD700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    background: #c08876;
+    border-color: #a0826d;
+    transform: scale(1.03);
+    color: #000;
+    box-shadow: 
+        0 4px 8px rgba(101, 67, 33, 0.4),
+        inset 0 2px 4px rgba(255, 248, 240, 0.4),
+        inset 0 -2px 4px rgba(101, 67, 33, 0.3),
+        0 0 12px rgba(135, 206, 250, 0.6),
+        0 0 20px rgba(135, 206, 250, 0.4);
+    filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.6)) 
+            drop-shadow(0 0 20px rgba(135, 206, 250, 0.4));
 }
 
 .ingredient.selected {
-    background: rgba(255, 215, 0, 0.4) !important;
-    border-color: rgba(255, 215, 0, 1) !important;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8) !important;
-    color: #FFD700 !important;
+    background: linear-gradient(135deg, #ffc87c 0%, #ffb84d 100%) !important;
+    border-color: #e6a045 !important;
+    box-shadow: 
+        0 4px 8px rgba(101, 67, 33, 0.4),
+        inset 0 2px 4px rgba(255, 248, 240, 0.7),
+        inset 0 -2px 4px rgba(101, 67, 33, 0.2),
+        0 0 15px rgba(255, 200, 124, 0.7) !important;
+    color: #1a3a5c !important;
     font-weight: bold !important;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8) !important;
+    text-shadow: 
+        0 1px 2px rgba(255, 248, 240, 0.9),
+        0 0 8px rgba(100, 150, 200, 0.5) !important;
 }
 
 .ingredient.disabled {
@@ -1396,35 +1402,40 @@ body {
 .selected-ingredients {
     min-height: 40px;
     padding: 14px;
-    background: linear-gradient(135deg, rgba(30, 30, 70, 0.95), rgba(45, 30, 90, 0.95), rgba(55, 20, 100, 0.95));
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 6px;
+    background: linear-gradient(135deg, #fff8f0 0%, #f5e6d3 100%);
+    border: 3px solid #8b6f47;
+    border-radius: 12px;
     text-align: center;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2), inset 0 0 15px rgba(255, 215, 0, 0.1);
+    box-shadow: 
+        0 4px 10px rgba(101, 67, 33, 0.3),
+        inset 0 2px 4px rgba(255, 248, 240, 0.6),
+        inset 0 -2px 4px rgba(101, 67, 33, 0.2);
     margin-top: 10px;
 }
 
 .selected-label {
-    color: #FFD700;
+    color: #000;
     font-size: 1em;
     font-weight: 600;
     text-shadow: 
-        0 0 10px rgba(255, 215, 0, 0.8),
-        0 0 20px rgba(255, 215, 0, 0.6),
-        0 0 30px rgba(255, 215, 0, 0.4);
+        0 1px 2px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(100, 150, 200, 0.4);
 }
 
 .synthesize-btn {
     padding: 12px 16px;
-    background: linear-gradient(135deg, var(--color-golden), var(--color-orange));
-    border: 2px solid var(--color-golden);
-    border-radius: 6px;
-    color: var(--color-deep-blue);
+    background: linear-gradient(135deg, #e8d5c4 0%, #d4c5b0 100%);
+    border: 3px solid #8b6f47;
+    border-radius: 12px;
+    color: #000;
     font-size: 0.95em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 5px 10px rgba(101, 67, 33, 0.3),
+        inset 0 3px 6px rgba(255, 248, 240, 0.6),
+        inset 0 -3px 6px rgba(101, 67, 33, 0.3);
     margin-top: 10px;
     white-space: normal;
     word-wrap: break-word;
@@ -1435,11 +1446,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 
+        0 1px 2px rgba(255, 248, 240, 0.9),
+        0 0 8px rgba(100, 150, 200, 0.4);
 }
 
 .synthesize-btn:hover:not(:disabled) {
-    transform: scale(1.1);
-    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.6);
+    transform: scale(1.03);
+    background: #c08876;
+    box-shadow: 
+        0 6px 12px rgba(101, 67, 33, 0.4),
+        inset 0 3px 6px rgba(255, 248, 240, 0.4),
+        inset 0 -3px 6px rgba(101, 67, 33, 0.3),
+        0 0 12px rgba(255, 200, 124, 0.6),
+        0 0 20px rgba(255, 200, 124, 0.4);
+    filter: drop-shadow(0 0 12px rgba(255, 200, 124, 0.6)) 
+            drop-shadow(0 0 20px rgba(255, 200, 124, 0.4));
 }
 
 .synthesize-btn:disabled {
@@ -1665,14 +1687,14 @@ body {
 }
 
 .new-year-envelope:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .envelope-icon {
     font-size: min(100px, 6.5vw);
     position: relative;
     z-index: 2;
-    filter: drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)) drop-shadow(0 0 25px rgba(135, 206, 250, 0.5));
+    filter: drop-shadow(0 0 12px rgba(135, 206, 250, 0.6)) drop-shadow(0 0 20px rgba(135, 206, 250, 0.4));
     animation: envelopeShake 2s ease-in-out infinite;
     width: 100%;
     height: 100%;
@@ -1829,6 +1851,7 @@ body {
     border-radius: 50%;
     transition: all 0.3s ease;
     font-weight: bold;
+    z-index: 1001;
 }
 
 .modal-close:hover {
@@ -2416,33 +2439,31 @@ body {
         height: min(77%, 550px);
     }
     
-    .crt-monitor {
+    .retro-joystick {
         left: 9.3%;
-        bottom: 59%;
-        width: 38%;
-        height: 64%;
-        max-width: 480px;
-        max-height: 480px;
+        bottom: 50%;
+        width: 18%;
+        height: 20%;
+        max-width: 260px;
+        max-height: 190px;
+        min-width: 190px;
+        min-height: 140px;
     }
     
     .alchemy-station {
-        width: min(32%, 400px);
         right: 9.3%;
-        bottom: 16.5%;
+        bottom: 15%;
+        width: auto;
         max-width: calc(100% - 4%);
-        gap: min(30px, 2vw);
-    }
-    
-    .flask-container {
-        width: min(250px, 19vw);
-        height: min(250px, 19vw);
-        margin-bottom: min(290px, 24vh);
     }
     
     .ingredients-panel {
         width: min(50%, 600px);
         flex: 0 0 min(50%, 600px);
-        right: -12%;
+    }
+    
+    .alchemy-station {
+        width: auto;
     }
     
     .photo-card {
@@ -2464,33 +2485,31 @@ body {
         height: min(77%, 460px);
     }
     
-    .crt-monitor {
+    .retro-joystick {
         left: 9.3%;
-        bottom: 59%;
-        width: 38%;
-        height: 64%;
-        max-width: 400px;
-        max-height: 400px;
+        bottom: 50%;
+        width: 18%;
+        height: 20%;
+        max-width: 250px;
+        max-height: 180px;
+        min-width: 180px;
+        min-height: 135px;
     }
     
     .alchemy-station {
-        width: min(32%, 300px);
         right: 9.3%;
-        bottom: 16.5%;
+        bottom: 15%;
+        width: auto;
         max-width: calc(100% - 4%);
-        gap: min(10px, 0.9vw);
-    }
-    
-    .flask-container {
-        width: min(210px, 14vw);
-        height: min(210px, 14vw);
-        margin-bottom: min(250px, 20vh);
     }
     
     .ingredients-panel {
         width: min(40%, 480px);
         flex: 0 0 min(40%, 480px);
-        right: -5%;
+    }
+    
+    .alchemy-station {
+        width: auto;
     }
     
     .ingredients-group h3 {
@@ -2537,33 +2556,31 @@ body {
         height: min(77%, 500px);
     }
     
-    .crt-monitor {
+    .retro-joystick {
         left: 9.3%;
-        bottom: 59%;
-        width: 38%;
-        height: 64%;
-        max-width: 450px;
-        max-height: 450px;
+        bottom: 50%;
+        width: 18%;
+        height: 20%;
+        max-width: 255px;
+        max-height: 185px;
+        min-width: 185px;
+        min-height: 138px;
     }
     
     .alchemy-station {
-        width: min(32%, 350px);
         right: 9.3%;
-        bottom: 16.5%;
+        bottom: 15%;
+        width: auto;
         max-width: calc(100% - 4%);
-        gap: min(15px, 1.2vw);
-    }
-    
-    .flask-container {
-        width: min(230px, 17vw);
-        height: min(230px, 17vw);
-        margin-bottom: min(270px, 22vh);
     }
     
     .ingredients-panel {
         width: min(48%, 580px);
         flex: 0 0 min(48%, 580px);
-        right: -10%;
+    }
+    
+    .alchemy-station {
+        width: auto;
     }
     
     .photo-card {
@@ -2594,33 +2611,36 @@ body {
         height: min(77%, 480px);
     }
     
-    .crt-monitor {
+    .retro-joystick {
         left: 9.3%;
-        bottom: 59%;
-        width: 38%;
-        height: 64%;
-        max-width: 420px;
-        max-height: 420px;
+        bottom: 50%;
+        width: 18%;
+        height: 20%;
+        max-width: 240px;
+        max-height: 175px;
+        min-width: 170px;
+        min-height: 130px;
+    }
+    
+    .joystick-label {
+        font-size: 0.85em;
+        bottom: -35px;
     }
     
     .alchemy-station {
-        width: min(32%, 320px);
         right: 9.3%;
-        bottom: 16.5%;
+        bottom: 15%;
+        width: auto;
         max-width: calc(100% - 4%);
-        gap: min(12px, 1vw);
-    }
-    
-    .flask-container {
-        width: min(220px, 15vw);
-        height: min(220px, 15vw);
-        margin-bottom: min(260px, 21vh);
     }
     
     .ingredients-panel {
         width: min(42%, 500px);
         flex: 0 0 min(42%, 500px);
-        right: -6%;
+    }
+    
+    .alchemy-station {
+        width: auto;
     }
     
     .ingredients-group h3 {
@@ -2672,33 +2692,36 @@ body {
         bottom: 15%;
     }
     
-    .crt-monitor {
-        left: 8.5%;
-        bottom: 60%;
-        width: 40%;
-        height: 68%;
-        max-width: 360px;
-        max-height: 360px;
+    .retro-joystick {
+        left: 9.3%;
+        bottom: 50%;
+        width: 18%;
+        height: 20%;
+        max-width: 220px;
+        max-height: 160px;
+        min-width: 160px;
+        min-height: 125px;
+    }
+    
+    .joystick-label {
+        font-size: 0.8em;
+        bottom: -30px;
     }
     
     .alchemy-station {
-        width: min(32%, 300px);
         right: 9.3%;
-        bottom: 16.5%;
+        bottom: 15%;
+        width: auto;
         max-width: calc(100% - 4%);
-        gap: min(10px, 1vw);
-    }
-    
-    .flask-container {
-        width: min(200px, 18vw);
-        height: min(200px, 18vw);
-        margin-bottom: min(240px, 24vh);
     }
     
     .ingredients-panel {
         width: min(44%, 540px);
         flex: 0 0 min(44%, 540px);
-        right: -6%;
+    }
+    
+    .alchemy-station {
+        width: auto;
     }
     
     .photo-card {
@@ -2728,16 +2751,6 @@ body {
         min-height: 100vh;
     }
 
-    .desk {
-        position: relative;
-        height: auto;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        padding: 20px;
-    }
-
     .window {
         position: relative;
         width: 100%;
@@ -2747,55 +2760,88 @@ body {
         left: 0;
     }
 
-    .interactive-item,
-    .bulletin-board,
-    .alchemy-station,
-    .crt-monitor {
+    .retro-joystick {
         position: relative;
-        width: 100%;
-        height: auto;
-        min-height: 200px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        transform: none;
+        width: 200px;
+        height: 160px;
+        margin: 20px auto;
+        max-width: none;
+        max-height: none;
+        min-width: 180px;
+        min-height: 140px;
+        left: auto;
+        bottom: auto;
     }
     
-    .map-tablet {
-        position: relative;
-        width: 100%;
-        height: 300px;
-        margin: 20px 0;
+    .joystick-label {
+        font-size: 0.7em;
+        bottom: -25px;
     }
     
-    .crt-monitor {
-        position: relative;
-        width: 100%;
-        height: 300px;
-        margin: 20px 0;
+    .joystick-base {
+        border-width: 3px;
+    }
+    
+    .center-button {
+        font-size: 0.5em;
+        height: 18px;
+    }
+    
+    .action-button {
+        border-width: 2px;
     }
     
     .alchemy-station {
         position: relative;
+        right: auto;
+        bottom: auto;
         width: 100%;
+        max-width: 100%;
+        margin: 20px 0;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 20px 0;
-    }
-    
-    .flask-container {
-        width: 200px;
-        height: 200px;
-        margin-bottom: 0;
     }
     
     .ingredients-panel {
-        flex-direction: column;
         width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto;
+        padding: 12px;
     }
-
+    
     .ingredients-group {
-        width: 100%;
+        padding: 12px 8px 8px 8px;
+    }
+    
+    .ingredients-group h3 {
+        font-size: 0.9em;
+        margin-bottom: 10px;
+    }
+    
+    .ingredients {
+        gap: 6px;
+    }
+    
+    .ingredient {
+        font-size: 0.85em;
+        padding: 6px 10px;
+        min-height: 36px;
+    }
+    
+    .synthesize-btn {
+        font-size: 0.85em;
+        padding: 10px 14px;
+        min-height: 40px;
+    }
+    
+    .selected-ingredients {
+        padding: 12px;
+        min-height: 35px;
+    }
+    
+    .selected-label {
+        font-size: 0.9em;
     }
     
     .photo-card {
@@ -2803,59 +2849,231 @@ body {
         height: 130px;
         position: relative;
         margin: 10px;
+        padding: 10px;
     }
     
-    .bulletin-board {
-        position: relative;
-        height: auto;
-        min-height: 300px;
+    .photo-label {
+        font-size: 0.85em;
+        padding: 3px;
     }
     
-    .garland {
-        position: relative;
-        width: 100%;
-        left: 0;
-    }
-    
-    .mug-with-steam {
-        position: relative;
-        left: 0;
-        width: 50px;
-        height: 100px;
-        margin: 20px auto;
+    .photo-content {
+        font-size: 1.8em;
     }
     
     .new-year-envelope {
-        width: 80px;
-        height: 80px;
-        bottom: 20px;
-        left: 20px;
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 15px;
+        left: 15px;
+        z-index: 100;
     }
     
     .envelope-icon {
-        font-size: 70px;
+        font-size: 50px;
     }
     
     .envelope-glow {
-        width: 110px;
-        height: 110px;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .magic-particles {
+        position: fixed;
+        z-index: 5;
+    }
+    
+    .magic-sparkle {
+        width: 2.5px;
+        height: 2.5px;
+    }
+    
+    @keyframes spinSparkle {
+        0% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        25% {
+            transform: translate(80px, -80px) rotate(90deg) scale(1.2);
+            opacity: 1;
+        }
+        50% {
+            transform: translate(0, -160px) rotate(180deg) scale(1.4);
+            opacity: 1;
+        }
+        75% {
+            transform: translate(-80px, -80px) rotate(270deg) scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(0, 0) rotate(360deg) scale(1);
+            opacity: 1;
+        }
     }
     
     .modal-content {
         padding: 20px;
         max-width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
     }
     
     .modal-header h2 {
-        font-size: 1.4em;
+        font-size: 1.3em;
     }
     
     .terminal {
         padding: 15px;
+        font-size: 0.85em;
     }
     
     .terminal-line {
+        font-size: 0.85em;
+    }
+    
+    .prediction-quote {
+        padding: 15px;
+    }
+    
+    .prediction-quote blockquote {
+        font-size: 1em;
+    }
+    
+    .prediction-challenge {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .retro-joystick {
+        width: 160px;
+        height: 130px;
+        min-width: 150px;
+        min-height: 120px;
+    }
+    
+    .joystick-label {
+        font-size: 0.65em;
+        bottom: -20px;
+    }
+    
+    .center-button {
+        font-size: 0.45em;
+        height: 16px;
+        width: 30%;
+    }
+    
+    .dpad-up, .dpad-down, .dpad-left, .dpad-right {
+        border-width: 1.5px;
+    }
+    
+    .action-button {
+        border-width: 2px;
+    }
+    
+    .ingredients-panel {
+        padding: 10px;
+        gap: 6px;
+    }
+    
+    .ingredients-group {
+        padding: 10px 6px 6px 6px;
+    }
+    
+    .ingredients-group h3 {
+        font-size: 0.8em;
+        margin-bottom: 8px;
+    }
+    
+    .ingredients {
+        gap: 6px;
+    }
+    
+    .ingredient {
+        font-size: 0.75em;
+        padding: 5px 8px;
+        min-height: 32px;
+        flex: 1 1 calc(50% - 3px);
+        min-width: calc(50% - 3px);
+        max-width: calc(50% - 3px);
+    }
+    
+    .synthesize-btn {
+        font-size: 0.75em;
+        padding: 8px 12px;
+        min-height: 36px;
+    }
+    
+    .selected-ingredients {
+        padding: 10px;
+        min-height: 30px;
+    }
+    
+    .selected-label {
+        font-size: 0.8em;
+    }
+    
+    .photo-card {
+        width: 85px;
+        height: 110px;
+        padding: 8px;
+        margin: 8px;
+    }
+    
+    .photo-label {
+        font-size: 0.75em;
+        padding: 2px;
+    }
+    
+    .photo-content {
+        font-size: 1.5em;
+    }
+    
+    .new-year-envelope {
+        width: 50px;
+        height: 50px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .envelope-icon {
+        font-size: 40px;
+    }
+    
+    .envelope-glow {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .modal-content {
+        padding: 15px;
+        max-width: 98%;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.2em;
+    }
+    
+    .terminal {
+        padding: 12px;
+        font-size: 0.75em;
+    }
+    
+    .terminal-line {
+        font-size: 0.75em;
+    }
+    
+    .prediction-quote {
+        padding: 12px;
+    }
+    
+    .prediction-quote blockquote {
         font-size: 0.9em;
+    }
+    
+    .prediction-challenge {
+        padding: 12px;
     }
 }
 
