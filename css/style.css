@@ -1297,8 +1297,6 @@ body {
     bottom: 2%;
     z-index: 100;
     pointer-events: auto;
-    /* Ограничиваем, чтобы панель не выходила слишком далеко за пределы */
-    max-width: calc(100vw - 2%);
 }
 
 .ingredients-group {
@@ -2445,7 +2443,6 @@ body {
         width: min(50%, 600px);
         flex: 0 0 min(50%, 600px);
         right: -12%;
-        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
@@ -2453,6 +2450,79 @@ body {
         height: min(195px, 12.5vw);
         max-width: 150px;
         max-height: 195px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .window {
+        width: min(1000px, 78.1vw);
+        height: min(730px, 57vh);
+    }
+    
+    .map-tablet {
+        width: min(82%, 720px);
+        height: min(77%, 460px);
+    }
+    
+    .crt-monitor {
+        left: 9.3%;
+        bottom: 59%;
+        width: 38%;
+        height: 64%;
+        max-width: 400px;
+        max-height: 400px;
+    }
+    
+    .alchemy-station {
+        width: min(32%, 300px);
+        right: 9.3%;
+        bottom: 16.5%;
+        max-width: calc(100% - 4%);
+        gap: min(10px, 0.9vw);
+    }
+    
+    .flask-container {
+        width: min(210px, 14vw);
+        height: min(210px, 14vw);
+        margin-bottom: min(250px, 20vh);
+    }
+    
+    .ingredients-panel {
+        width: min(40%, 480px);
+        flex: 0 0 min(40%, 480px);
+        right: -5%;
+    }
+    
+    .ingredients-group h3 {
+        font-size: 0.88em;
+    }
+    
+    .ingredient {
+        font-size: 0.82em;
+        padding: 6px 9px;
+        min-height: 36px;
+    }
+    
+    .synthesize-btn {
+        font-size: 0.82em;
+        padding: 9px 13px;
+        min-height: 40px;
+    }
+    
+    .photo-card {
+        width: min(125px, 8vw);
+        height: min(165px, 11vw);
+        max-width: 125px;
+        max-height: 165px;
+    }
+    
+    .mug-with-steam {
+        left: 26.5%;
+        bottom: 18%;
+        width: 4.5vw;
+        height: 9vw;
+        max-width: 60px;
+        max-height: 125px;
     }
 }
 
@@ -2494,7 +2564,6 @@ body {
         width: min(48%, 580px);
         flex: 0 0 min(48%, 580px);
         right: -10%;
-        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
@@ -2549,10 +2618,25 @@ body {
     }
     
     .ingredients-panel {
-        width: min(46%, 560px);
-        flex: 0 0 min(46%, 560px);
-        right: -8%;
-        max-width: calc(100vw - 2%);
+        width: min(42%, 500px);
+        flex: 0 0 min(42%, 500px);
+        right: -6%;
+    }
+    
+    .ingredients-group h3 {
+        font-size: 0.9em;
+    }
+    
+    .ingredient {
+        font-size: 0.85em;
+        padding: 6px 10px;
+        min-height: 38px;
+    }
+    
+    .synthesize-btn {
+        font-size: 0.85em;
+        padding: 10px 14px;
+        min-height: 42px;
     }
     
     .photo-card {
@@ -2615,7 +2699,6 @@ body {
         width: min(44%, 540px);
         flex: 0 0 min(44%, 540px);
         right: -6%;
-        max-width: calc(100vw - 2%);
     }
     
     .photo-card {
