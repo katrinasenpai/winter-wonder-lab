@@ -5,236 +5,299 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Зимняя лаборатория чудес</title>
     <meta name="description" content="Интерактивная новогодняя лаборатория библиотеки «Ржевская»">
-    <meta name="keywords" content="зимняя лаборатория чудес, новогодние мероприятия, Красногвардейский район, библиотека Ржевская">
-    <meta name="author" content="Библиотека Ржевская">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="lab-container">
-        <!-- Контейнер для пузырьков и искорок -->
+    <div class="winter-lab-container">
+        <!-- ФОН -->
+        <div class="background-layer">
+            <div class="background-dark">
+                <div class="background-pattern-1"></div>
+                <div class="background-pattern-2"></div>
+                <div class="background-radial"></div>
+            </div>
+            <div class="background-desk"></div>
+        </div>
+
+        <!-- ГИРЛЯНДА С КАРТОЧКАМИ (сохраняем из старой версии) -->
+        <div class="bulletin-board">
+            <div class="garland-control">
+                <button class="garland-toggle" id="garlandToggle" title="Включить/выключить гирлянду">
+                    <span class="toggle-icon">💡</span>
+                </button>
+            </div>
+            <div class="garland" id="garland">
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+                <div class="garland-light"></div>
+            </div>
+            <div class="photo-card" data-event="0">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Час поэзии</div>
+            </div>
+            <div class="photo-card" data-event="1">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Концерт</div>
+            </div>
+            <div class="photo-card" data-event="2">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Мастер-класс</div>
+            </div>
+            <div class="photo-card" data-event="3">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Лекция</div>
+            </div>
+            <div class="photo-card" data-event="4">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Мастер-класс</div>
+            </div>
+            <div class="photo-card" data-event="5">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Лекция</div>
+            </div>
+            <div class="photo-card" data-event="6">
+                <div class="clip-string"></div>
+                <div class="photo-content"></div>
+                <div class="photo-label">Выставка</div>
+            </div>
+        </div>
+
+        <!-- МАГИЧЕСКИЕ ЧАСТИЦЫ -->
         <div class="magic-particles" id="magicParticles"></div>
-        
-        <!-- Дальний фон (первый) -->
-        <div class="background-far"></div>
-        
-        <!-- Окно со снегом -->
-        <div class="window">
-            <div class="snow-container" id="snowContainer"></div>
-            <div class="window-frame"></div>
-        </div>
-        
-        <!-- Второй фон (lab-background.png) -->
-        <div class="background">
-            <div class="wall"></div>
-            <div class="shelves"></div>
-        </div>
 
-            <!-- 2. Доска с анонсами (гирлянда от левого верхнего к правому верхнему) -->
-            <div class="bulletin-board">
-                <div class="garland-control">
-                    <button class="garland-toggle" id="garlandToggle" title="Включить/выключить гирлянду">
-                        <span class="toggle-icon">💡</span>
-                    </button>
-                </div>
-                <div class="garland" id="garland">
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                    <div class="garland-light"></div>
-                </div>
-                <div class="photo-card" data-event="0">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Час поэзии</div>
-                </div>
-                <div class="photo-card" data-event="1">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Концерт</div>
-                </div>
-                <div class="photo-card" data-event="2">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Мастер-класс</div>
-                </div>
-                <div class="photo-card" data-event="3">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Лекция</div>
-                </div>
-                <div class="photo-card" data-event="4">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Мастер-класс</div>
-                </div>
-                <div class="photo-card" data-event="5">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Лекция</div>
-                </div>
-                <div class="photo-card" data-event="6">
-                    <div class="clip-string"></div>
-                    <div class="photo-content"></div>
-                    <div class="photo-label">Выставка</div>
-                </div>
+        <!-- СВЕТ ЛАМПЫ -->
+        <div class="lamp-light-overlay"></div>
+
+        <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+        <div class="main-content">
+            <!-- Мобильный заголовок -->
+            <div class="mobile-header">
+                <h1>Лаборатория Чудес</h1>
+                <p>Библиотека «Ржевская»</p>
             </div>
 
-        <!-- Рабочий стол -->
-        <div class="desk">
-            <!-- Настольная лампа -->
-            <div class="lamp">
-                <div class="lamp-base"></div>
-                <div class="lamp-shade">
-                    <div class="lamp-light"></div>
-                </div>
-            </div>
-
-            <!-- 1. Планшет с картой (Telegram бот) -->
-            <div class="interactive-item map-tablet" id="mapTablet">
-                <div class="item-glow"></div>
-                <div class="magnifying-glass"></div>
-                <div class="map-paper"></div>
-            </div>
-
-            <!-- 3. Ретро джойстик (КрасноЦарство) -->
-            <div class="interactive-item retro-joystick" id="crtMonitor">
-                <div class="joystick-base">
-                    <div class="joystick-dpad">
-                        <div class="dpad-up"></div>
-                        <div class="dpad-down"></div>
-                        <div class="dpad-left"></div>
-                        <div class="dpad-right"></div>
-                        <div class="dpad-center"></div>
-                    </div>
-                    <div class="joystick-center-buttons">
-                        <div class="center-button select-btn">SELECT</div>
-                        <div class="center-button start-btn">START</div>
-                    </div>
-                    <div class="joystick-action-buttons">
-                        <div class="action-button button-x"></div>
-                        <div class="action-button button-y"></div>
-                        <div class="action-button button-a"></div>
-                        <div class="action-button button-b"></div>
+            <div class="interactive-elements">
+                <!-- ОКНО СО СНЕГОМ -->
+                <div class="window-wrapper">
+                    <div class="window-ceiling"></div>
+                    <div class="window-trim-left"></div>
+                    <div class="window-trim-right"></div>
+                    <div class="window-snow" id="windowSnow">
+                        <div class="window-frame-top"></div>
+                        <div class="window-frame-bottom"></div>
+                        <div class="window-frame-vertical-1"></div>
+                        <div class="window-frame-vertical-2"></div>
+                        <div class="window-frame-horizontal"></div>
+                        <div class="window-moon"></div>
+                        <div class="window-city"></div>
+                        <!-- СИЛУЭТЫ ДЕРЕВЬЕВ В СНЕГУ -->
+                        <div class="window-trees">
+                            <div class="tree-silhouette tree-silhouette-1"></div>
+                            <div class="tree-silhouette tree-silhouette-2"></div>
+                            <div class="tree-silhouette tree-silhouette-3"></div>
+                            <div class="tree-silhouette tree-silhouette-4"></div>
+                            <div class="snow-ground"></div>
+                        </div>
+                        <div class="snow-container" id="snowContainer"></div>
                     </div>
                 </div>
-                <div class="joystick-label">КрасноЦарство.exe</div>
-            </div>
-            
-            <!-- Кружка с паром под монитором -->
-            <div class="mug-with-steam">
-                <div class="mug-steam-animation"></div>
-            </div>
 
-            <!-- 4. Алхимическая станция (Генератор предсказаний) -->
-            <div class="alchemy-station" id="alchemyStation">
-                <div class="ingredients-panel">
-                    <div class="ingredients-group">
-                        <h3>Атмосфера</h3>
-                        <div class="ingredients">
-                            <div class="ingredient" data-category="atmosphere" data-id="mandarin">Мандариновый рай</div>
-                            <div class="ingredient" data-category="atmosphere" data-id="blizzard">Шепот метели</div>
-                            <div class="ingredient" data-category="atmosphere" data-id="fireplace">Треск камина</div>
-                            <div class="ingredient" data-category="atmosphere" data-id="tree">Запах елки</div>
+                <!-- КАРТА (Map Paper) -->
+                <div class="map-paper-item" id="mapTablet">
+                    <div class="map-paper-content">
+                        <div class="map-paper-pattern"></div>
+                        <img src="assets/images/interactive/map-tablet.png" alt="Маршрут №7" class="map-paper-image" />
+                        <div class="map-paper-header">
+                            <div class="map-icon">📍</div>
+                        </div>
+                        <div class="map-paper-scale">Scale: 1:10000</div>
+                        <div class="map-paper-blur"></div>
+                    </div>
+                </div>
+
+                <!-- ПИСЬМО -->
+                <div class="letter-envelope" id="newYearEnvelope">
+                    <div class="envelope-pattern"></div>
+                    <div class="envelope-triangle"></div>
+                    <div class="envelope-decorations">
+                        <div class="envelope-snowflakes">❄️</div>
+                        <div class="envelope-snowflakes">❄️</div>
+                        <div class="envelope-snowflakes">❄️</div>
+                    </div>
+                    <div class="envelope-stamp">
+                        <div class="stamp-content">🎄</div>
+                        <div class="stamp-border"></div>
+                    </div>
+                    <div class="envelope-seal">
+                        <div class="seal-impression">❄</div>
+                        <div class="seal-glow"></div>
+                    </div>
+                    <div class="envelope-ribbon"></div>
+                </div>
+
+                <!-- МОНИТОР (CRT) -->
+                <div class="crt-monitor-item" id="crtMonitor">
+                    <div class="crt-monitor-screen">
+                        <div class="crt-screen-content">
+                            <img src="assets/images/interactive/monitor-screen.png" alt="КРАСНО ЦАРСТВО" class="crt-screen-image" />
+                            <div class="crt-glitch-overlay"></div>
+                            <div class="crt-scanline"></div>
                         </div>
                     </div>
-                    <div class="ingredients-group">
-                        <h3>Жанр</h3>
-                        <div class="ingredients">
-                            <div class="ingredient" data-category="genre" data-id="mystery">Тайна прошлого</div>
-                            <div class="ingredient" data-category="genre" data-id="hope">Светлая надежда</div>
-                            <div class="ingredient" data-category="genre" data-id="adventure">Стремительное приключение</div>
-                            <div class="ingredient" data-category="genre" data-id="warmth">Тепло сердца</div>
-                        </div>
-                    </div>
-                    <div class="ingredients-group">
-                        <h3>Элемент силы</h3>
-                        <div class="ingredients">
-                            <div class="ingredient" data-category="element" data-id="clock">Старинные часы</div>
-                            <div class="ingredient" data-category="element" data-id="key">Забытый ключ</div>
-                            <div class="ingredient" data-category="element" data-id="gingerbread">Пряничный человечек</div>
-                            <div class="ingredient" data-category="element" data-id="book">Волшебная книга</div>
-                        </div>
+                    <div class="crt-monitor-label">ARCHIVE_TERMINAL</div>
+                </div>
+
+                <!-- ЗВЁЗДОЧКИ ПО КРАЯМ -->
+                <div class="stars-container">
+                    <div class="star star-1">✨</div>
+                    <div class="star star-2">⭐</div>
+                    <div class="star star-3">✨</div>
+                    <div class="star star-4">⭐</div>
+                    <div class="star star-5">✨</div>
+                    <div class="star star-6">⭐</div>
+                    <div class="star star-7">✨</div>
+                    <div class="star star-8">⭐</div>
+                </div>
+
+                <!-- АЛХИМИЯ -->
+                <div class="alchemy-center" id="alchemyStation">
+                    <div class="magic-circle" id="magicCircle"></div>
+                    
+                    <div class="alchemy-hint" id="alchemyHint">
+                        <span class="hint-icon">✨</span>
+                        <span class="hint-text">Выбери три компонента и нажми "СИНТЕЗ"</span>
+                        <span class="hint-sparkles">❄️✨🎄</span>
                     </div>
                     
-                    <div class="selected-ingredients" id="selectedIngredients">
-                        <div class="selected-label">Выбрано: <span id="selectedCount">0</span>/3</div>
+                    <div class="flask-container" id="flaskContainer">
+                        <div class="flask-glow"></div>
+                        <div class="flask-particles"></div>
+                        <div class="magic-circle-flask" id="magicCircleFlask">
+                            <svg viewBox="0 0 100 100" class="magic-circle-svg">
+                                <circle cx="50" cy="50" r="48" stroke-dasharray="4 2" />
+                                <circle cx="50" cy="50" r="40" stroke-width="0.2" />
+                            </svg>
+                            <div class="magic-snowflake">❄️</div>
+                        </div>
+                        <svg class="flask-icon" viewBox="0 0 200 300" fill="none" stroke="currentColor" stroke-width="2">
+                            <!-- Коническое тело колбы -->
+                            <path d="M 100 280 L 40 120 Q 35 100 35 80 L 35 60 Q 35 50 40 50 L 160 50 Q 165 50 165 60 L 165 80 Q 165 100 160 120 L 100 280 Z" 
+                                  fill="rgba(255,255,255,0.1)" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- Цилиндрическая горловина -->
+                            <path d="M 40 50 L 40 30 Q 40 20 50 20 L 150 20 Q 160 20 160 30 L 160 50" 
+                                  fill="rgba(255,255,255,0.1)" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- Верхний ободок -->
+                            <path d="M 50 20 L 150 20" 
+                                  stroke-width="3" 
+                                  stroke-linecap="round"/>
+                            <!-- Измерительные линии -->
+                            <line x1="50" y1="100" x2="60" y2="100" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="140" x2="60" y2="140" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="180" x2="60" y2="180" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="220" x2="60" y2="220" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="50" y1="260" x2="60" y2="260" stroke-width="1.5" opacity="0.6"/>
+                            <!-- Длинная линия на горловине -->
+                            <line x1="50" y1="40" x2="60" y2="40" stroke-width="2" opacity="0.7"/>
+                        </svg>
+                        <div class="flask-liquid" id="flaskLiquid">
+                            <div class="liquid-shimmer"></div>
+                            <div class="liquid-bubbles"></div>
+                        </div>
+                        <div class="flask-sparkles" id="flaskSparkles">
+                            <span class="sparkle">✨</span>
+                            <span class="sparkle">⭐</span>
+                            <span class="sparkle">❄️</span>
+                        </div>
+                        <div class="flask-button-overlay">
+                            <div class="flask-status" id="flaskStatus">0/3</div>
+                            <button class="flask-synthesize-btn" id="synthesizeBtn" disabled>
+                                <span class="btn-sparkle">✨</span>
+                                СИНТЕЗ
+                                <span class="btn-sparkle">✨</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <button class="synthesize-btn" id="synthesizeBtn" disabled>Синтезировать предсказание</button>
+                    <div class="ingredients-grid">
+                        <button class="ingredient-btn" data-id="mandarin" data-category="atmosphere" title="Мандарин">
+                            <span class="ingredient-icon">🍊</span>
+                            <span class="ingredient-tooltip">Мандарин</span>
+                        </button>
+                        <button class="ingredient-btn" data-id="snow" data-category="atmosphere" title="Снежинка">
+                            <span class="ingredient-icon">❄️</span>
+                            <span class="ingredient-tooltip">Снежинка</span>
+                        </button>
+                        <button class="ingredient-btn" data-id="star" data-category="magic" title="Звезда">
+                            <span class="ingredient-icon">✨</span>
+                            <span class="ingredient-tooltip">Звезда</span>
+                        </button>
+                        <button class="ingredient-btn" data-id="pine" data-category="atmosphere" title="Хвоя">
+                            <span class="ingredient-icon">🌲</span>
+                            <span class="ingredient-tooltip">Хвоя</span>
+                        </button>
+                        <button class="ingredient-btn" data-id="scroll" data-category="magic" title="Свиток">
+                            <span class="ingredient-icon">📜</span>
+                            <span class="ingredient-tooltip">Свиток</span>
+                        </button>
+                        <button class="ingredient-btn" data-id="potion" data-category="magic" title="Эфир">
+                            <span class="ingredient-icon">🧪</span>
+                            <span class="ingredient-tooltip">Эфир</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Уютные детали -->
-            <div class="cozy-details">
-                <div class="mug">
-                    <div class="mug-steam"></div>
-                </div>
-                <div class="cookies"></div>
-                <div class="mandarins"></div>
-                <div class="books-stack"></div>
             </div>
         </div>
 
-        <!-- Модальные окна -->
-            <!-- Модалка карты -->
-            <div class="modal" id="mapModal">
-                <div class="modal-content map-modal">
-                    <button class="modal-close">&times;</button>
-                    <div class="modal-header">
-                        <h2>Маршрут: Новогодний Красногвардейский!</h2>
+        <!-- МОДАЛЬНЫЕ ОКНА -->
+        
+        <!-- Модалка карты -->
+        <div class="modal" id="mapModal">
+            <div class="modal-content map-modal paper-theme">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <h2>Полевой дневник</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="route-header">
+                        <span class="route-badge">ВЗЛОМАННЫЙ ПРОТОКОЛ №7</span>
                     </div>
-                    <div class="modal-body">
-                        <p>Собрали подборку локаций, которые стоит посетить, чтобы зарядиться праздничным настроением. Здесь инженерное наследие города соседствует с новыми местами для прогулок и активного отдыха.</p>
-                        
-                        <p><strong>Световые акценты и набережные:</strong></p>
-                        <ul>
-                            <li><strong>Мост Александра Невского:</strong> в этом году его украшают 200 световых елей высотой по три метра.</li>
-                            <li><strong>Большеохтинский мост:</strong> на арках засияли праздничные цифры, буквы и герб России, а в центре установлена восьмиконечная звезда.</li>
-                            <li><strong>Свердловская набережная:</strong> после реконструкции 2025 года здесь открыты новые зоны отдыха, установлена ёлка и работает парк городской скульптуры под открытым небом.</li>
-                        </ul>
-                        
-                        <p class="section-spacing"><strong>Праздничные ёлки:</strong></p>
-                        <ul>
-                            <li><strong>Среднеохтинский проспект / шоссе Революции:</strong> одна из центральных новогодних площадок.</li>
-                            <li><strong>Театр «Буфф»:</strong> новогодняя ель у здания театра на Заневском проспекте.</li>
-                            <li><strong>Заневский проспект, 65:</strong> ёлка между храмом Андрея Первозванного и гипермаркетом «Окей».</li>
-                            <li><strong>ТЦ «Июнь»:</strong> праздничная точка на пересечении Индустриального проспекта и проспекта Энтузиастов.</li>
-                        </ul>
-                        
-                        <p class="section-spacing"><strong>Зимние активности:</strong></p>
-                        <ul>
-                            <li><strong>Ржевский лесопарк:</strong> на набережной реки Лапка работают всесезонная горка и освещённая лыжня. В январе планируется первая орнитологическая экскурсия на лыжах.</li>
-                            <li><strong>Полюстровский парк:</strong> здесь проложена лыжная трасса по живописным аллеям мимо прудов.</li>
-                            <li><strong>Катки:</strong> при минусовой температуре в районе зальют 8 площадок, включая адреса: ул. Металлистов, 66, Заневский пр., 53 и ул. Маршала Тухачевского, 3 и 41. На них пройдут открытые занятия по фигурному катанию и турниры по хоккею.</li>
-                        </ul>
-                        
-                        <p>Чтобы не заблудиться и узнать больше интересных фактов о каждой локации, воспользуйтесь чат-ботом от проекта #пробегирайон. Он проведёт вас по маршруту более подробно, расскажет скрытые истории и поможет сориентироваться на местности.</p>
-                        <p class="modal-note"><strong>Готовы к прогулке?</strong> Запускайте бот и открывайте Красногвардейский с новой стороны!</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="https://t.me/probegirayon_bot" class="cta-btn" id="telegramBtn" target="_blank">Запустить бот</a>
+                    <p class="route-intro">"Красногвардейский район. Обнаружены аномалии..."</p>
+                    <div class="route-sections" id="routeSections"></div>
+                    <div class="route-footer">
+                        <a href="https://t.me/probegirayon_bot" class="cta-btn route-btn" id="telegramBtn" target="_blank" rel="noreferrer">
+                            <span class="btn-icon">🔗</span>
+                            ЗАПУСТИТЬ БОТА-ПРОВОДНИКА
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
 
         <!-- Модалка мероприятия -->
         <div class="modal" id="eventModal">
@@ -255,22 +318,26 @@
 
         <!-- Модалка монитора -->
         <div class="modal" id="monitorModal">
-            <div class="modal-content monitor-modal">
+            <div class="modal-content monitor-modal terminal-theme">
                 <button class="modal-close">&times;</button>
-                <div class="terminal">
-                    <div class="terminal-header">
-                        <span class="terminal-title">SYSTEM TERMINAL</span>
-                        <span class="terminal-status">PROTOTYPE MODE</span>
+                <div class="modal-header">
+                    <h2>ARCHIVE_TERMINAL</h2>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-content">
+                        <p>&gt; CONNECTING TO ARCHIVE...</p>
+                        <p>ОБЪЕКТ: КрасноЦарство.exe</p>
+                        <p>СТАТУС: Демо-версия доступа</p>
+                        <br/>
+                        <p>ОПИСАНИЕ:</p>
+                        <p class="terminal-description">Визуальная новелла. В цифровых архивах Красногвардейского района обнаружена история, где ты сам влияешь на судьбу. Переплетение реальности и мифа ждет тебя.</p>
+                        <p class="terminal-warning">Предупреждение: возможны побочные эффекты в виде полного погружения.</p>
                     </div>
-                    <div class="terminal-body">
-                        <div class="terminal-line">ОБЪЕКТ: <span class="terminal-accent">КрасноЦарство.exe</span></div>
-                        <div class="terminal-line">СТАТУС: <span class="terminal-warning">Прототип: Демо-версия доступа</span></div>
-                        <div class="terminal-line">ОПИСАНИЕ:</div>
-                        <div class="terminal-line terminal-indent">Визуальная новелла. В цифровых архивах Красногвардейского района обнаружена история, где ты сам влияешь на судьбу. Переплетение реальности и мифа ждет тебя.</div>
-                        <div class="terminal-line terminal-warning">Предупреждение: возможны побочные эффекты в виде полного погружения.</div>
-                    </div>
-                    <div class="terminal-footer">
-                        <a href="#" class="cta-btn terminal-btn" id="vkPlayBtn" target="_blank">ЗАПУСТИТЬ СИМУЛЯЦИЮ НА VK PLAY</a>
+                    <div class="terminal-warning-box">
+                        <a href="https://vkplay.ru/" class="cta-btn terminal-btn" id="vkPlayBtn" target="_blank" rel="noreferrer">
+                            <span class="btn-icon">▶</span>
+                            ЗАПУСТИТЬ СИМУЛЯЦИЮ
+                        </a>
                     </div>
                 </div>
             </div>
@@ -281,58 +348,44 @@
             <div class="modal-content prediction-modal">
                 <button class="modal-close">&times;</button>
                 <div class="modal-header">
-                    <h2 id="predictionTitle">Ваше предсказание</h2>
+                    <h2>Синтез Завершен!</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="prediction-quote">
-                        <blockquote id="predictionQuote"></blockquote>
-                        <cite id="predictionAuthor"></cite>
-                    </div>
-                    <div class="prediction-challenge">
-                        <h3>Книжный Челлендж:</h3>
-                        <p id="predictionChallenge"></p>
+                    <div class="prediction-result">
+                        <div class="prediction-icon">✨</div>
+                        <h3 id="predictionTitle" class="prediction-title"></h3>
+                        <div class="prediction-quote">
+                            <blockquote id="predictionQuote"></blockquote>
+                            <cite id="predictionAuthor"></cite>
+                        </div>
+                        <div class="prediction-challenge-box">
+                            <h4 class="challenge-title">
+                                <span class="challenge-icon">📖</span>
+                                Твой Челлендж
+                            </h4>
+                            <p id="predictionChallenge"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Новогодний конверт -->
-        <div class="new-year-envelope" id="newYearEnvelope">
-            <div class="envelope-icon">✉️</div>
-            <div class="envelope-glow"></div>
-        </div>
-
-        <!-- Модалка новогоднего послания -->
+        <!-- Модалка письма -->
         <div class="modal" id="messageModal">
-            <div class="modal-content message-modal">
+            <div class="modal-content message-modal letter-theme">
                 <button class="modal-close">&times;</button>
                 <div class="modal-header">
-                    <h2>Новогоднее послание 2026</h2>
+                    <h2>Новогодняя Почта</h2>
                 </div>
                 <div class="modal-body">
-                    <div class="message-content">
-                        <p class="message-greeting">Дорогие друзья!</p>
-                        
-                        <p>Библиотека «Ржевская» поздравляет вас с наступающим Новым 2026 годом! 🎄✨</p>
-                        
-                        <p>Пусть этот год принесёт вам множество удивительных открытий, вдохновляющих встреч с книгами и незабываемых моментов. Мы желаем вам, чтобы каждый день был наполнен радостью чтения, новыми знаниями и тёплым общением.</p>
-                        
-                        <p>В новом году мы продолжим радовать вас интересными мероприятиями, увлекательными лекциями, творческими мастер-классами и, конечно же, новыми книгами. Наша библиотека всегда открыта для вас!</p>
-                        
-                        <p class="message-signature">С любовью,<br>Команда библиотеки «Ржевская» ❄️</p>
-                        
-                        <div class="social-links">
-                            <p class="social-title">Присоединяйтесь к нам в социальных сетях:</p>
-                            <div class="social-buttons">
-                                <a href="https://vk.com/rzhevka_lib" class="social-btn vk-btn" target="_blank">
-                                    <span class="social-icon">📘</span>
-                                    <span>ВКонтакте</span>
-                                </a>
-                                <a href="https://t.me/lib_rzhevka" class="social-btn telegram-btn" target="_blank">
-                                    <span class="social-icon">✈️</span>
-                                    <span>Telegram</span>
-                                </a>
-                            </div>
+                    <div class="letter-content">
+                        <div class="letter-icon">✉️</div>
+                        <h3 class="letter-greeting">Дорогие друзья!</h3>
+                        <div class="letter-body" id="letterBody"></div>
+                        <div class="letter-signature">С любовью,<br>Команда библиотеки «Ржевская» ❄️</div>
+                        <div class="letter-social">
+                            <a href="https://vk.com" class="social-link vk-link">ВКонтакте</a>
+                            <a href="https://telegram.org" class="social-link telegram-link">Telegram</a>
                         </div>
                     </div>
                 </div>
@@ -340,9 +393,6 @@
         </div>
     </div>
 
-    <script src="js/predictions.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/position-helper.js"></script>
 </body>
 </html>
-

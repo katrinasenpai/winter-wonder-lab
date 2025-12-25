@@ -1,105 +1,236 @@
-// Инициализация при загрузке страницы
+// --- КОНФИГУРАЦИЯ И ДАННЫЕ ---
+
+const PREDICTIONS = [
+    { id: 1, title: "Эликсир Уютной Тишины", quote: "И всё-таки, как хорошо дома! Так тепло, уютно, нет лучше места на земле.", author: "Рэй Брэдбери", challenge: "В выходные устрой цифровой детокс на 3 часа: только ты, плед и книга." },
+    { id: 2, title: "Сыворотка Северного Сияния", quote: "Зима — это не время года, это сказка, написанная холодным ветром на стекле.", author: "Народная мудрость", challenge: "Найди и прочитай сказку Андерсена, которую не читал(а) в детстве." },
+    { id: 3, title: "Кристалл Храброго Сердца", quote: "Надо только выучиться ждать, надо быть спокойным и упрямым...", author: "Анна Герман", challenge: "Прочитай книгу в жанре приключения, где герои идут сквозь снега." },
+    { id: 4, title: "Микстура Внезапной Радости", quote: "Всякий раз, когда мы перешагиваем через страх, мы чувствуем себя немного свободнее.", author: "Нил Гейман", challenge: "Начни читать книгу автора, которого раньше никогда не открывал(а)." },
+    { id: 5, title: "Эссенция Старого Фонаря", quote: "Никогда не бойся теней. Они лишь означают, что где-то рядом есть свет.", author: "Джон Р.Р. Толкин", challenge: "Прогуляйся вечером, найди красивый фонарь и сделай фото." },
+    { id: 14, title: "Квинтэссенция Перемен", quote: "Даже самый маленький человек способен изменить ход будущего.", author: "Властелин Колец", challenge: "Сделай одно маленькое доброе дело анонимно." },
+];
+
+const INGREDIENTS = [
+    { id: 'mandarin', name: 'Мандарин', icon: '🍊', type: 'base' },
+    { id: 'snow', name: 'Снежинка', icon: '❄️', type: 'base' },
+    { id: 'star', name: 'Звезда', icon: '✨', type: 'magic' },
+    { id: 'pine', name: 'Хвоя', icon: '🌲', type: 'base' },
+    { id: 'scroll', name: 'Свиток', icon: '📜', type: 'magic' },
+    { id: 'potion', name: 'Эфир', icon: '🧪', type: 'magic' },
+];
+
+const EVENTS = [
+    { id: 1, title: "Час поэзии", date: "24 Дек, 18:00", desc: "Уютные чтения зимних стихов при свечах." },
+    { id: 2, title: "Новогодний Концерт", date: "26 Дек, 19:30", desc: "Живая музыка и праздничная атмосфера." },
+    { id: 3, title: "Мастер-класс", date: "28 Дек, 14:00", desc: "Создаем елочные игрушки своими руками." },
+    { id: 4, title: "Лекция: История Ёлки", date: "29 Дек, 16:00", desc: "Узнайте всё о традициях Нового года." },
+    { id: 5, title: "Зимняя Выставка", date: "30 Дек - 10 Янв", desc: "Экспозиция работ читателей библиотеки." },
+];
+
+const LIBRARY_LETTER = {
+    title: "Новогоднее послание 2026",
+    greeting: "Дорогие друзья!",
+    body: [
+        "Библиотека «Ржевская» поздравляет вас с наступающим Новым 2026 годом! 🎄✨",
+        "Пусть этот год принесёт вам множество удивительных открытий, вдохновляющих встреч с книгами и незабываемых моментов. Мы желаем вам, чтобы каждый день был наполнен радостью чтения, новыми знаниями и тёплым общением.",
+        "В новом году мы продолжим радовать вас интересными мероприятиями, увлекательными лекциями, творческими мастер-классами и, конечно же, новыми книгами. Наша библиотека всегда открыта для вас!"
+    ],
+    signature: "С любовью, Команда библиотеки «Ржевская» ❄️"
+};
+
+const ROUTE_DETAILS = [
+    {
+        category: "Световые акценты и набережные",
+        items: [
+            "Мост Александра Невского: 200 световых елей.",
+            "Большеохтинский мост: праздничная звезда и сияющие арки.",
+            "Свердловская набережная: новые зоны отдыха и парк скульптур."
+        ]
+    },
+    {
+        category: "Праздничные ёлки",
+        items: [
+            "Среднеохтинский проспект / шоссе Революции",
+            "Театр «Буфф» (Заневский пр.)",
+            "ТЦ «Июнь» (Индустриальный пр.)"
+        ]
+    },
+    {
+        category: "Зимние активности",
+        items: [
+            "Ржевский лесопарк: лыжня и всесезонная горка.",
+            "Полюстровский парк: лыжная трасса у прудов.",
+            "Катки: ул. Металлистов 66, Заневский 53."
+        ]
+    }
+];
+
+// --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
+
+let selectedIngredients = [];
+let isMixing = false;
+let magicParticles = [];
+
+// --- ИНИЦИАЛИЗАЦИЯ ---
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Инициализация сайта...');
+    
     initSnowfall();
+    initMagicParticles();
     initInteractivity();
     initAlchemyStation();
     initGarland();
-    initMagicParticles();
+    
+    console.log('Инициализация завершена');
 });
 
-// Анимация снега
+// --- СНЕГ В ОКНЕ ---
+
 function initSnowfall() {
     const snowContainer = document.getElementById('snowContainer');
-    const snowflakes = ['❄', '❅', '❆', '✻', '✼', '✽'];
+    if (!snowContainer) return;
     
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.className = 'snowflake';
-        snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-        snowflake.style.left = Math.random() * 100 + '%';
-        
-        // Разные размеры снежинок (от 0.7 до 1.5)
-        const size = Math.random() * 0.8 + 0.7;
-        snowflake.style.fontSize = size + 'em';
-        snowflake.style.transform = `scale(${size})`;
-        
-        // Медленное падение с постоянной скоростью
-        snowflake.style.animationDuration = (Math.random() * 4 + 6) + 's';
-        snowflake.style.animationDelay = Math.random() * 2 + 's';
-        
-        // Разная скорость горизонтального дрейфа для естественности
-        const driftAmount = (Math.random() * 80 - 40) + 'px';
-        snowflake.style.setProperty('--drift', driftAmount);
-        
-        snowContainer.appendChild(snowflake);
-        
-        setTimeout(() => {
-            snowflake.remove();
-        }, 15000);
-    }
+    // Очищаем контейнер
+    snowContainer.innerHTML = '';
     
-    // Создаем снежинки каждые 300мс
-    setInterval(createSnowflake, 300);
-    
-    // Создаем начальные снежинки
-    for (let i = 0; i < 20; i++) {
-        setTimeout(() => createSnowflake(), i * 150);
+    // Создаем 50 снежинок
+    for (let i = 0; i < 50; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'snowflake';
+        
+        const left = Math.random() * 100;
+        const animationDuration = 5 + Math.random() * 10;
+        const opacity = 0.3 + Math.random() * 0.7;
+        const size = 2 + Math.random() * 4;
+        
+        flake.style.left = `${left}%`;
+        flake.style.top = '-10px';
+        flake.style.width = `${size}px`;
+        flake.style.height = `${size}px`;
+        flake.style.opacity = opacity;
+        flake.style.animationDuration = `${animationDuration}s`;
+        flake.style.animationDelay = `-${Math.random() * 5}s`;
+        
+        snowContainer.appendChild(flake);
     }
 }
 
-// Инициализация интерактивных элементов
+// --- МАГИЧЕСКИЕ ЧАСТИЦЫ ---
+
+function initMagicParticles() {
+    const container = document.getElementById('magicParticles');
+    if (!container) return;
+    
+    // Очищаем контейнер
+    container.innerHTML = '';
+    magicParticles = [];
+    
+    // Создаем 30 частиц
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'magic-sparkle';
+        
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const animationDuration = 3 + Math.random() * 5;
+        const delay = Math.random() * 5;
+        const orbitRadius = 50 + Math.random() * 150;
+        
+        particle.style.left = `${left}%`;
+        particle.style.top = `${top}%`;
+        particle.style.animation = `float ${animationDuration}s linear infinite`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.opacity = '0.6';
+        particle.setAttribute('data-orbit-radius', orbitRadius);
+        
+        container.appendChild(particle);
+        magicParticles.push(particle);
+    }
+}
+
+function updateMagicParticles(isSynthesizing) {
+    const container = document.getElementById('magicParticles');
+    if (!container) return;
+    
+    if (isSynthesizing) {
+        container.classList.add('synthesizing');
+        magicParticles.forEach((particle, index) => {
+            const orbitRadius = particle.getAttribute('data-orbit-radius') || '100';
+            particle.style.left = '50%';
+            particle.style.top = '80%';
+            particle.style.setProperty('--orbit-radius', `${orbitRadius}px`);
+            particle.style.animation = `whirl 2s linear infinite`;
+            particle.style.animationDelay = `${-index * 0.1}s`;
+            particle.style.opacity = '0.8';
+            particle.style.boxShadow = '0 0 10px 2px rgba(253, 224, 71, 0.5)';
+        });
+    } else {
+        container.classList.remove('synthesizing');
+        magicParticles.forEach((particle) => {
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const animationDuration = 3 + Math.random() * 5;
+            const delay = Math.random() * 5;
+            
+            particle.style.left = `${left}%`;
+            particle.style.top = `${top}%`;
+            particle.style.animation = `float ${animationDuration}s linear infinite`;
+            particle.style.animationDelay = `${delay}s`;
+            particle.style.opacity = '0.6';
+            particle.style.boxShadow = 'none';
+        });
+    }
+}
+
+// --- ИНТЕРАКТИВНОСТЬ ---
+
 function initInteractivity() {
-    // Планшет с картой
+    // Карта
     const mapTablet = document.getElementById('mapTablet');
     const mapModal = document.getElementById('mapModal');
     
-    mapTablet.addEventListener('click', () => {
-        mapModal.classList.add('active');
-    });
+    if (mapTablet && mapModal) {
+        mapTablet.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMapModal();
+        });
+    }
     
-    // ЭЛТ-монитор
+    // Письмо
+    const newYearEnvelope = document.getElementById('newYearEnvelope');
+    const messageModal = document.getElementById('messageModal');
+    
+    if (newYearEnvelope && messageModal) {
+        newYearEnvelope.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openLetterModal();
+        });
+    }
+    
+    // Монитор
     const crtMonitor = document.getElementById('crtMonitor');
     const monitorModal = document.getElementById('monitorModal');
     
-    crtMonitor.addEventListener('click', () => {
-        monitorModal.classList.add('active');
-    });
+    if (crtMonitor && monitorModal) {
+        crtMonitor.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            monitorModal.classList.add('active');
+        });
+    }
     
-    // Фото-карточки мероприятий
+    // Карточки событий
     const photoCards = document.querySelectorAll('.photo-card');
     const eventModal = document.getElementById('eventModal');
     
-    // Устанавливаем даты в названия карточек
     photoCards.forEach((card, index) => {
-        const event = eventsData[index];
-        if (event && event.dateShort) {
-            const labelElement = card.querySelector('.photo-label');
-            if (labelElement) {
-                labelElement.textContent = labelElement.textContent + ' ' + event.dateShort;
-            }
-        }
-    });
-    
-    photoCards.forEach((card, index) => {
-        card.addEventListener('click', () => {
-            const event = eventsData[index];
-            if (event) {
-                document.getElementById('eventTitle').textContent = event.title;
-                document.getElementById('eventDate').textContent = event.date;
-                // Сохраняем переносы строк в описании
-                const descriptionElement = document.getElementById('eventDescription');
-                descriptionElement.innerHTML = event.description.replace(/\n/g, '<br>');
-                
-                const registerBtn = document.getElementById('eventRegisterBtn');
-                if (event.registerLink) {
-                    registerBtn.href = event.registerLink;
-                    registerBtn.style.display = 'inline-block';
-                    registerBtn.textContent = 'Зарегистрироваться';
-                } else {
-                    registerBtn.style.display = 'none';
-                }
-                
-                eventModal.classList.add('active');
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (index < EVENTS.length) {
+                openEventModal(EVENTS[index]);
             }
         });
     });
@@ -109,306 +240,308 @@ function initInteractivity() {
     const closeButtons = document.querySelectorAll('.modal-close');
     
     closeButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', function() {
             modals.forEach(modal => modal.classList.remove('active'));
         });
     });
     
     modals.forEach(modal => {
-        modal.addEventListener('click', (e) => {
+        modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 modal.classList.remove('active');
             }
         });
     });
-    
-    // Ссылки на внешние ресурсы
-    const telegramBtn = document.getElementById('telegramBtn');
-    if (telegramBtn) {
-        telegramBtn.href = 'https://t.me/probegirayon_bot';
-    }
-    
-    const vkPlayBtn = document.getElementById('vkPlayBtn');
-    if (vkPlayBtn) {
-        vkPlayBtn.href = 'https://vk.com/away.php?to=https%3A%2F%2Fvkplay.ru%2Fplay%2Fgame%2Fkrasnocarstvoexe&utf=1';
-    }
-    
-    // Новогодний конверт
-    const newYearEnvelope = document.getElementById('newYearEnvelope');
-    const messageModal = document.getElementById('messageModal');
-    
-    if (newYearEnvelope && messageModal) {
-        newYearEnvelope.addEventListener('click', () => {
-            messageModal.classList.add('active');
-        });
-    }
 }
 
-// Алхимическая станция (Генератор предсказаний)
-function initAlchemyStation() {
-    const ingredientsPanel = document.querySelector('.ingredients-panel');
-    const synthesizeBtn = document.getElementById('synthesizeBtn');
-    const selectedCount = document.getElementById('selectedCount');
-    const predictionModal = document.getElementById('predictionModal');
+function openMapModal() {
+    const mapModal = document.getElementById('mapModal');
+    const routeSections = document.getElementById('routeSections');
     
-    let selectedIngredients = [];
-    
-    // Функция обработки клика на ингредиент
-    function handleIngredientClick(ingredient) {
-        const category = ingredient.dataset.category;
-        const id = ingredient.dataset.id;
-        
-        if (!category || !id) {
-            return;
-        }
-        
-        // Если ингредиент уже выбран, снимаем выбор
-        if (ingredient.classList.contains('selected')) {
-            ingredient.classList.remove('selected');
-            selectedIngredients = selectedIngredients.filter(item => 
-                item.category !== category || item.id !== id
-            );
-        } else {
-            // Снимаем выбор с других ингредиентов той же категории
-            const sameCategoryIngredients = document.querySelectorAll(
-                `.ingredient[data-category="${category}"]`
-            );
-            sameCategoryIngredients.forEach(ing => {
-                if (ing.classList.contains('selected')) {
-                    ing.classList.remove('selected');
-                    selectedIngredients = selectedIngredients.filter(item => 
-                        item.category !== category
-                    );
-                }
-            });
-            
-            // Добавляем новый выбор
-            ingredient.classList.add('selected');
-            selectedIngredients.push({ category, id });
-        }
-        
-        // Обновляем счетчик
-        if (selectedCount) selectedCount.textContent = selectedIngredients.length;
-        
-        // Активируем кнопку синтеза только если выбрано ровно 3 ингредиента из разных категорий
-        const uniqueCategories = new Set(selectedIngredients.map(item => item.category));
-        if (selectedIngredients.length === 3 && uniqueCategories.size === 3) {
-            if (synthesizeBtn) synthesizeBtn.disabled = false;
-        } else {
-            if (synthesizeBtn) synthesizeBtn.disabled = true;
-        }
+    if (routeSections) {
+        routeSections.innerHTML = ROUTE_DETAILS.map((section, idx) => `
+            <div class="route-section">
+                <h4>${section.category}</h4>
+                <ul>
+                    ${section.items.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `).join('');
     }
     
-    // Добавляем прямые обработчики для всех кнопок
-    const allIngredients = document.querySelectorAll('.ingredient');
-    allIngredients.forEach((ingredient, index) => {
-        ingredient.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Ingredient clicked:', index, ingredient.textContent, ingredient.dataset);
-            handleIngredientClick(ingredient);
+    mapModal.classList.add('active');
+}
+
+function openLetterModal() {
+    const messageModal = document.getElementById('messageModal');
+    const letterBody = document.getElementById('letterBody');
+    
+    if (letterBody) {
+        letterBody.innerHTML = LIBRARY_LETTER.body.map(p => `<p>${p}</p>`).join('');
+    }
+    
+    messageModal.classList.add('active');
+}
+
+function openEventModal(event) {
+    const eventModal = document.getElementById('eventModal');
+    const eventTitle = document.getElementById('eventTitle');
+    const eventDate = document.getElementById('eventDate');
+    const eventDescription = document.getElementById('eventDescription');
+    
+    if (eventTitle) eventTitle.textContent = event.title;
+    if (eventDate) eventDate.textContent = event.date;
+    if (eventDescription) eventDescription.textContent = event.desc;
+    
+    eventModal.classList.add('active');
+}
+
+// --- АЛХИМИЧЕСКАЯ СТАНЦИЯ ---
+
+function initAlchemyStation() {
+    const flaskContainer = document.getElementById('flaskContainer');
+    const flaskLiquid = document.getElementById('flaskLiquid');
+    const flaskStatus = document.getElementById('flaskStatus');
+    const flaskSparkles = document.getElementById('flaskSparkles');
+    const synthesizeBtn = document.getElementById('synthesizeBtn');
+    const ingredientBtns = document.querySelectorAll('.ingredient-btn');
+    const alchemyHint = document.getElementById('alchemyHint');
+    
+    // Показываем подсказку при загрузке
+    showAlchemyHint();
+    
+    // Обработчики для кнопок ингредиентов
+    ingredientBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (isMixing) return;
+            
+            const ingredientId = btn.getAttribute('data-id');
+            toggleIngredient(ingredientId, btn);
+            updateFlaskUI();
+            updateAlchemyHint();
         });
     });
     
-    // Делегирование событий отключено, так как используем прямые обработчики
-    
-    // Синтез предсказания
+    // Обработчик для кнопки синтеза
     if (synthesizeBtn) {
-        synthesizeBtn.addEventListener('click', () => {
-            if (selectedIngredients.length !== 3) {
-                return;
+        synthesizeBtn.addEventListener('click', function() {
+            if (selectedIngredients.length === 3 && !isMixing) {
+                hideAlchemyHint();
+                synthesize();
             }
-            
-            // Блокируем кнопку синтеза
-            synthesizeBtn.disabled = true;
-            
-            // Блокируем все ингредиенты
-            const allIngredients = document.querySelectorAll('.ingredient');
-            allIngredients.forEach(ing => {
-                ing.classList.add('disabled');
-            });
-            
-            // Ускоряем и закручиваем частицы
-            const particlesContainer = document.getElementById('magicParticles');
-            if (particlesContainer) {
-                // Увеличиваем яркость всех искорок
-                const sparkles = particlesContainer.querySelectorAll('.magic-sparkle');
-                sparkles.forEach(sparkle => {
-                    const currentSize = parseFloat(sparkle.style.width) || 3;
-                    const colors = [
-                        { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 1)' },
-                        { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 1)' },
-                        { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 1)' },
-                        { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 1)' },
-                        { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 1)' },
-                        { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 1)' },
-                        { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 1)' },
-                        { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 1)' }
-                    ];
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.5)')})`;
-                    sparkle.style.boxShadow = `0 0 ${currentSize * 4}px ${color.shadow}, 0 0 ${currentSize * 8}px ${color.shadow}, 0 0 ${currentSize * 12}px ${color.shadow}`;
-                });
-                particlesContainer.classList.add('synthesizing');
-            }
-            
-            // Через 2 секунды показываем результат
-            setTimeout(() => {
-                // Возвращаем нормальную анимацию частиц
-                if (particlesContainer) {
-                    particlesContainer.classList.remove('synthesizing');
-                    // Восстанавливаем обычное свечение
-                    const sparkles = particlesContainer.querySelectorAll('.magic-sparkle');
-                    sparkles.forEach(sparkle => {
-                        const currentSize = parseFloat(sparkle.style.width) || 3;
-                        const colors = [
-                            { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 0.9)' },
-                            { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 0.9)' },
-                            { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 0.9)' },
-                            { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 0.9)' },
-                            { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 0.9)' },
-                            { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 0.9)' },
-                            { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 0.9)' },
-                            { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 0.9)' }
-                        ];
-                        const color = colors[Math.floor(Math.random() * colors.length)];
-                        sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.3)')})`;
-                        sparkle.style.boxShadow = `0 0 ${currentSize * 2}px ${color.shadow}, 0 0 ${currentSize * 4}px ${color.shadow}`;
-                    });
-                }
-                if (!predictionsData || !predictionsData.predictions) {
-                    console.error('Predictions data not found');
-                    return;
-                }
-                
-                const randomPrediction = predictionsData.predictions[
-                    Math.floor(Math.random() * predictionsData.predictions.length)
-                ];
-                
-                // Заполняем модальное окно
-                const titleEl = document.getElementById('predictionTitle');
-                const quoteEl = document.getElementById('predictionQuote');
-                const authorEl = document.getElementById('predictionAuthor');
-                const challengeEl = document.getElementById('predictionChallenge');
-                
-                if (titleEl) titleEl.textContent = randomPrediction.title;
-                if (quoteEl) quoteEl.textContent = randomPrediction.quote;
-                if (authorEl) authorEl.textContent = randomPrediction.author;
-                if (challengeEl) challengeEl.textContent = randomPrediction.challenge;
-                
-                // Показываем модальное окно
-                if (predictionModal) {
-                    predictionModal.classList.add('active');
-                }
-                
-                // Сбрасываем состояние
-                selectedIngredients = [];
-                if (selectedCount) selectedCount.textContent = '0';
-                allIngredients.forEach(ing => {
-                    ing.classList.remove('selected', 'disabled');
-                });
-                synthesizeBtn.disabled = true;
-            }, 2000);
         });
     }
     
-    // Сохранение открытки (упрощенная версия - можно доработать)
+    // Обработчик клика на колбу
+    if (flaskContainer) {
+        flaskContainer.addEventListener('click', function() {
+            if (selectedIngredients.length === 3 && !isMixing) {
+                hideAlchemyHint();
+                synthesize();
+            }
+        });
+    }
+    
+    updateFlaskUI();
 }
 
-// Закрытие модальных окон по Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(modal => {
-            modal.classList.remove('active');
-        });
-    }
-});
-
-// Инициализация магических частиц (разноцветные искорки)
-function initMagicParticles() {
-    const container = document.getElementById('magicParticles');
-    if (!container) return;
-    
-    // Создаем разноцветные искорки
-    for (let i = 0; i < 40; i++) {
+function showAlchemyHint() {
+    const alchemyHint = document.getElementById('alchemyHint');
+    if (alchemyHint && selectedIngredients.length < 3) {
         setTimeout(() => {
-            createSparkle(container);
-        }, i * 100);
+            alchemyHint.classList.add('show');
+            alchemyHint.classList.remove('hide');
+        }, 1000);
+    }
+}
+
+function hideAlchemyHint() {
+    const alchemyHint = document.getElementById('alchemyHint');
+    if (alchemyHint) {
+        alchemyHint.classList.remove('show');
+        alchemyHint.classList.add('hide');
+    }
+}
+
+function updateAlchemyHint() {
+    const alchemyHint = document.getElementById('alchemyHint');
+    if (!alchemyHint) return;
+    
+    const hintText = alchemyHint.querySelector('.hint-text');
+    if (!hintText) return;
+    
+    if (selectedIngredients.length === 0) {
+        hintText.textContent = 'Выбери три компонента и нажми "СИНТЕЗ"';
+        showAlchemyHint();
+    } else if (selectedIngredients.length < 3) {
+        const remaining = 3 - selectedIngredients.length;
+        hintText.textContent = `Выбрано: ${selectedIngredients.length}/3 ✨ Выбери ещё ${remaining}`;
+        showAlchemyHint();
+    } else {
+        hintText.textContent = 'Готово! 🎄 Нажми "СИНТЕЗ" или кликни на колбу';
+        showAlchemyHint();
+    }
+}
+
+function toggleIngredient(id, btnElement) {
+    const index = selectedIngredients.indexOf(id);
+    
+    if (index > -1) {
+        // Убираем ингредиент
+        selectedIngredients.splice(index, 1);
+        btnElement.classList.remove('selected');
+    } else {
+        // Добавляем ингредиент (максимум 3)
+        if (selectedIngredients.length < 3) {
+            selectedIngredients.push(id);
+            btnElement.classList.add('selected');
+        }
+    }
+}
+
+function updateFlaskUI() {
+    const flaskLiquid = document.getElementById('flaskLiquid');
+    const flaskStatus = document.getElementById('flaskStatus');
+    const flaskSparkles = document.getElementById('flaskSparkles');
+    const synthesizeBtn = document.getElementById('synthesizeBtn');
+    const flaskContainer = document.getElementById('flaskContainer');
+    
+    const count = selectedIngredients.length;
+    
+    // Обновляем уровень жидкости
+    if (flaskLiquid) {
+        flaskLiquid.className = 'flask-liquid';
+        if (count === 0) {
+            flaskLiquid.classList.add('empty');
+        } else {
+            flaskLiquid.classList.add(`level-${count}`);
+        }
     }
     
-    // Периодически добавляем новые искорки
-    setInterval(() => {
-        if (container.children.length < 50) {
-            createSparkle(container);
+    // Обновляем статус
+    if (flaskStatus) {
+        flaskStatus.textContent = `${count}/3`;
+    }
+    
+    // Обновляем кнопку синтеза
+    if (synthesizeBtn) {
+        if (count === 3 && !isMixing) {
+            synthesizeBtn.disabled = false;
+            synthesizeBtn.textContent = 'СИНТЕЗ';
+        } else {
+            synthesizeBtn.disabled = true;
+            synthesizeBtn.textContent = 'СИНТЕЗ';
         }
-    }, 2000);
+    }
+    
+    // Обновляем подсказку
+    updateAlchemyHint();
 }
 
-function createSparkle(container) {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'magic-sparkle';
+function synthesize() {
+    if (selectedIngredients.length !== 3 || isMixing) return;
     
-    // Случайный размер от 2px до 5px
-    const size = Math.random() * 3 + 2;
-    sparkle.style.width = size + 'px';
-    sparkle.style.height = size + 'px';
+    isMixing = true;
     
-    // Случайная начальная позиция
-    sparkle.style.left = Math.random() * 100 + '%';
-    sparkle.style.top = Math.random() * 100 + '%';
+    const flaskContainer = document.getElementById('flaskContainer');
+    const flaskSparkles = document.getElementById('flaskSparkles');
+    const magicCircle = document.getElementById('magicCircle');
     
-    // Случайная задержка анимации
-    sparkle.style.animationDelay = Math.random() * 4 + 's';
-    sparkle.style.animationDuration = (Math.random() * 8 + 8) + 's';
+    // Включаем анимацию смешивания
+    if (flaskContainer) flaskContainer.classList.add('mixing');
+    if (flaskSparkles) flaskSparkles.style.display = 'block';
+    if (magicCircle) magicCircle.classList.add('active');
     
-    // Случайный цвет из палитры
-    const colors = [
-        { bg: 'rgba(255, 100, 100, 1)', shadow: 'rgba(255, 100, 100, 0.9)' }, // Красный
-        { bg: 'rgba(100, 200, 255, 1)', shadow: 'rgba(100, 200, 255, 0.9)' }, // Синий
-        { bg: 'rgba(100, 255, 100, 1)', shadow: 'rgba(100, 255, 100, 0.9)' }, // Зеленый
-        { bg: 'rgba(255, 255, 100, 1)', shadow: 'rgba(255, 255, 100, 0.9)' }, // Желтый
-        { bg: 'rgba(255, 150, 255, 1)', shadow: 'rgba(255, 150, 255, 0.9)' }, // Розовый
-        { bg: 'rgba(150, 255, 255, 1)', shadow: 'rgba(150, 255, 255, 0.9)' }, // Голубой
-        { bg: 'rgba(255, 200, 100, 1)', shadow: 'rgba(255, 200, 100, 0.9)' }, // Оранжевый
-        { bg: 'rgba(200, 100, 255, 1)', shadow: 'rgba(200, 100, 255, 0.9)' }  // Фиолетовый
-    ];
-    const color = colors[Math.floor(Math.random() * colors.length)];
+    // Включаем магический круг вокруг колбы
+    const magicCircleFlask = document.getElementById('magicCircleFlask');
+    if (magicCircleFlask) {
+        magicCircleFlask.style.opacity = '0.6';
+    }
     
-    sparkle.style.background = `radial-gradient(circle, ${color.bg}, ${color.bg.replace('1)', '0.3)')})`;
-    sparkle.style.boxShadow = `0 0 ${size * 2}px ${color.shadow}, 0 0 ${size * 4}px ${color.shadow}`;
+    // Обновляем магические частицы
+    updateMagicParticles(true);
     
-    container.appendChild(sparkle);
-    
-    // Удаляем через 25 секунд
+    // Через 3 секунды показываем результат
     setTimeout(() => {
-        if (sparkle.parentNode) {
-            sparkle.remove();
+        const randomPred = PREDICTIONS[Math.floor(Math.random() * PREDICTIONS.length)];
+        showPrediction(randomPred);
+        
+        // Сбрасываем состояние
+        isMixing = false;
+        selectedIngredients = [];
+        
+        // Сбрасываем UI
+        if (flaskContainer) flaskContainer.classList.remove('mixing');
+        if (flaskSparkles) flaskSparkles.style.display = 'none';
+        if (magicCircle) magicCircle.classList.remove('active');
+        
+        // Скрываем магический круг вокруг колбы
+        const magicCircleFlask = document.getElementById('magicCircleFlask');
+        if (magicCircleFlask) {
+            magicCircleFlask.style.opacity = '0';
         }
-    }, 25000);
+        
+        // Сбрасываем кнопки
+        document.querySelectorAll('.ingredient-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        updateFlaskUI();
+        updateMagicParticles(false);
+    }, 3000);
 }
 
-// Управление гирляндой
+function showPrediction(prediction) {
+    const predictionModal = document.getElementById('predictionModal');
+    const predictionTitle = document.getElementById('predictionTitle');
+    const predictionQuote = document.getElementById('predictionQuote');
+    const predictionAuthor = document.getElementById('predictionAuthor');
+    const predictionChallenge = document.getElementById('predictionChallenge');
+    
+    if (predictionTitle) predictionTitle.textContent = prediction.title;
+    if (predictionQuote) predictionQuote.textContent = `"${prediction.quote}"`;
+    if (predictionAuthor) predictionAuthor.textContent = `— ${prediction.author}`;
+    if (predictionChallenge) predictionChallenge.textContent = prediction.challenge;
+    
+    if (predictionModal) {
+        predictionModal.classList.add('active');
+    }
+}
+
+// --- ГИРЛЯНДА ---
+
 function initGarland() {
     const garlandToggle = document.getElementById('garlandToggle');
     const garland = document.getElementById('garland');
     
-    // Проверяем сохранённое состояние в localStorage
-    const garlandState = localStorage.getItem('garlandState');
-    const isActive = garlandState === 'true' || garlandState === null; // По умолчанию включена
-    
-    if (isActive) {
-        garland.classList.add('active');
-        garlandToggle.classList.add('active');
-    }
-    
-    garlandToggle.addEventListener('click', () => {
-        garland.classList.toggle('active');
-        garlandToggle.classList.toggle('active');
+    if (garlandToggle && garland) {
+        // Проверяем сохраненное состояние
+        const savedState = localStorage.getItem('garlandActive');
+        // По умолчанию гирлянда включена (если нет сохраненного состояния или оно true)
+        const isActive = savedState === null || savedState === 'true';
         
-        // Сохраняем состояние
-        localStorage.setItem('garlandState', garland.classList.contains('active'));
-    });
+        if (isActive) {
+            garland.classList.add('active');
+            garlandToggle.classList.add('active');
+        } else {
+            garland.classList.remove('active');
+            garlandToggle.classList.remove('active');
+        }
+        
+        garlandToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const isNowActive = garland.classList.toggle('active');
+            garlandToggle.classList.toggle('active');
+            
+            // Сохраняем состояние
+            localStorage.setItem('garlandActive', isNowActive);
+            
+            console.log('Гирлянда', isNowActive ? 'включена' : 'выключена');
+        });
+    } else {
+        console.error('garlandToggle или garland не найдены');
+    }
 }
-
-// Анимация пузырьков над колбой
 
