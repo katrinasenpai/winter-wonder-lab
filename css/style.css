@@ -4096,13 +4096,16 @@ body {
         display: none;
     }
 
+    .window-trees,
     .tree-silhouette,
     .decorated-tree {
-        animation: none !important;
+        display: none !important;
     }
 
     .mobile-header {
         display: block;
+        text-align: center;
+        padding: 20px 10px;
     }
 
     .main-content {
@@ -4117,132 +4120,90 @@ body {
         width: 100%;
         min-height: 100vh;
         padding-bottom: 40px;
+        align-items: center;
     }
 
     .window-wrapper {
-        height: 50vh;
-        order: 0;
-        position: relative;
-        margin-bottom: 30px;
-    }
-    
-    .window-snow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-    }
-    
-    .window-trim-left,
-    .window-trim-right {
-        width: 20px;
+        display: none;
     }
     
     .bulletin-board {
         position: relative;
         height: auto;
-        min-height: 200px;
+        min-height: auto;
         order: 1;
-        margin-bottom: 40px;
+        margin: 20px auto 40px;
         padding: 20px 10px;
         width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .bulletin-board .photo-card {
+        position: relative !important;
+        width: calc(140px * var(--element-scale)) !important;
+        height: calc(182px * var(--element-scale)) !important;
+        max-width: calc(140px * var(--element-scale)) !important;
+        max-height: calc(182px * var(--element-scale)) !important;
+        margin: 0 !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
     }
 
     .map-paper-item {
         position: relative;
-        width: calc(480px * var(--element-scale));
-        max-width: 90vw;
+        width: calc(400px * var(--element-scale));
+        max-width: 85vw;
         margin: 0 auto 40px;
         transform: none;
         order: 2;
+        left: auto;
+        right: auto;
+        bottom: auto;
     }
 
     .alchemy-center {
         position: relative;
         transform: none;
-        width: 100%;
-        max-width: 384px;
+        width: calc(320px * var(--element-scale));
+        max-width: 85vw;
         margin: 0 auto 40px;
         order: 3;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
     }
 
     .crt-monitor-item {
         position: relative;
-        width: calc(540px * var(--element-scale));
-        max-width: 90vw;
+        width: calc(450px * var(--element-scale));
+        max-width: 85vw;
         margin: 0 auto 40px;
         order: 4;
+        left: auto;
+        right: auto;
+        bottom: auto;
     }
 
     .letter-envelope {
         position: relative;
-        margin: 0 auto;
+        margin: 0 auto 40px;
         transform: none;
         order: 5;
-        width: calc(120px * var(--element-scale));
-        max-width: 90vw;
+        width: calc(200px * var(--element-scale));
+        max-width: 85vw;
+        left: auto;
+        right: auto;
+        bottom: auto;
     }
 
-    .star {
-        font-size: 16px;
-    }
-
-    .tree-silhouette-1 {
-        border-left-width: 15px;
-        border-right-width: 15px;
-        border-bottom-width: 80px;
-    }
-
-    .tree-silhouette-2 {
-        border-left-width: 18px;
-        border-right-width: 18px;
-        border-bottom-width: 90px;
-    }
-
-    .tree-silhouette-3 {
-        border-left-width: 20px;
-        border-right-width: 20px;
-        border-bottom-width: 100px;
-    }
-
-    .tree-silhouette-4 {
-        border-left-width: 16px;
-        border-right-width: 16px;
-        border-bottom-width: 85px;
-    }
-
-    .tree-silhouette-5,
-    .tree-silhouette-6,
-    .tree-silhouette-7,
-    .tree-silhouette-8,
-    .tree-silhouette-9,
-    .tree-silhouette-10 {
-        border-left-width: 12px;
-        border-right-width: 12px;
-        border-bottom-width: 60px;
-    }
-
-    .decorated-tree-1,
-    .decorated-tree-2,
-    .decorated-tree-3,
-    .decorated-tree-4,
-    .decorated-tree-5 {
-        border-left-width: 20px;
-        border-right-width: 20px;
-        border-bottom-width: 90px;
-    }
-
-    .tree-star {
-        font-size: 12px;
-        top: -15px;
-    }
-
-    .tree-ornament {
-        width: 8px;
-        height: 8px;
-    }
     
     body {
         overflow-y: auto;
@@ -4277,11 +4238,16 @@ body {
 }
 
 @media (max-width: 480px) {
-    .photo-card {
-        width: calc(80px * var(--element-scale)) !important;
-        height: calc(104px * var(--element-scale)) !important;
-        max-width: calc(80px * var(--element-scale)) !important;
-        max-height: calc(104px * var(--element-scale)) !important;
+    .bulletin-board .photo-card {
+        width: calc(120px * var(--element-scale)) !important;
+        height: calc(156px * var(--element-scale)) !important;
+        max-width: calc(120px * var(--element-scale)) !important;
+        max-height: calc(156px * var(--element-scale)) !important;
+    }
+
+    .bulletin-board {
+        gap: 10px;
+        padding: 15px 5px;
     }
     
     .modal-content {
