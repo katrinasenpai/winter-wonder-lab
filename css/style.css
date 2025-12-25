@@ -796,8 +796,8 @@ body {
 .map-paper-item {
     position: absolute;
     bottom: 16%;
-    left: 15%;
-    width: calc(340px * var(--element-scale));
+    left: 9%;
+    width: calc(480px * var(--element-scale));
     aspect-ratio: 4/3;
     background: #f0e6d2;
     box-shadow: 
@@ -1187,8 +1187,8 @@ body {
 .crt-monitor-item {
     position: absolute;
     bottom: 12%;
-    right: 12%;
-    width: calc(380px * var(--element-scale));
+    right: 6%;
+    width: calc(540px * var(--element-scale));
     aspect-ratio: 4/3;
     background: #cbbcb1;
     border-radius: calc(8px * var(--element-scale));
