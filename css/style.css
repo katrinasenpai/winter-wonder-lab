@@ -4067,9 +4067,9 @@ body {
 }
 
 @media (max-width: 768px) {
-    *,
-    *::before,
-    *::after {
+    *:not(.magic-particles):not(.magic-particles *):not(.magic-sparkle),
+    *:not(.magic-particles):not(.magic-particles *):not(.magic-sparkle)::before,
+    *:not(.magic-particles):not(.magic-particles *):not(.magic-sparkle)::after {
         animation: none !important;
         transition: none !important;
     }
@@ -4079,7 +4079,6 @@ body {
     }
 
     .magic-mist,
-    .magic-particles,
     .twinkling-stars-container,
     .twinkling-star,
     .snowflake,
@@ -4088,9 +4087,56 @@ body {
         display: none !important;
     }
 
+    .magic-particles {
+        display: block !important;
+    }
+
+    .magic-particles,
+    .magic-particles *,
+    .magic-sparkle {
+        animation: inherit !important;
+        transition: inherit !important;
+    }
+
+    @keyframes whirl {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg) translateX(var(--orbit-radius, 100px)) rotate(0deg);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg) translateX(0px) rotate(-360deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) translateX(0);
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(-100px) translateX(20px);
+            opacity: 0;
+        }
+    }
+
     .side-garland {
         display: block;
-        width: 50px;
+        width: 50px !important;
+    }
+
+    .side-garland-right {
+        right: 0 !important;
+    }
+
+    .side-garland-left {
+        left: 0 !important;
     }
 
     .cloud {
@@ -4134,13 +4180,14 @@ body {
         min-height: auto;
         order: 1;
         margin: 20px auto 40px;
-        padding: 20px 15px;
-        width: calc(100% - 100px);
+        padding: 20px 10px;
+        width: calc(100vw - 100px);
         max-width: calc(100vw - 100px);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
+        box-sizing: border-box;
     }
 
     .bulletin-board .photo-card {
@@ -4159,7 +4206,7 @@ body {
 
     .map-paper-item {
         position: relative;
-        width: calc(100% - 100px);
+        width: calc(100vw - 100px);
         max-width: calc(100vw - 100px);
         margin: 0 auto 60px;
         transform: none;
@@ -4167,12 +4214,13 @@ body {
         left: auto;
         right: auto;
         bottom: auto;
+        box-sizing: border-box;
     }
 
     .alchemy-center {
         position: relative;
         transform: none;
-        width: calc(100% - 100px);
+        width: calc(100vw - 100px);
         max-width: calc(100vw - 100px);
         margin: 0 auto 60px;
         order: 3;
@@ -4180,17 +4228,19 @@ body {
         right: auto;
         top: auto;
         bottom: auto;
+        box-sizing: border-box;
     }
 
     .crt-monitor-item {
         position: relative;
-        width: calc(100% - 100px);
+        width: calc(100vw - 100px);
         max-width: calc(100vw - 100px);
         margin: 0 auto 60px;
         order: 4;
         left: auto;
         right: auto;
         bottom: auto;
+        box-sizing: border-box;
     }
 
     .letter-envelope {
@@ -4211,9 +4261,23 @@ body {
     
     body {
         overflow-y: auto;
-        overflow-x: hidden;
+        overflow-x: hidden !important;
         height: auto;
         min-height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+    }
+
+    html {
+        overflow-x: hidden !important;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .winter-lab-container {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
     .winter-lab-container {
@@ -4222,14 +4286,40 @@ body {
         overflow: visible;
     }
     
+    .modal {
+        padding: 10px;
+    }
+
     .modal-content {
-        max-width: 95%;
-        max-height: 90vh;
-        padding: 16px;
+        max-width: calc(100vw - 120px);
+        width: calc(100vw - 120px);
+        max-height: 85vh;
+        padding: 12px;
+        font-size: 0.9em;
+        overflow-y: auto;
+        box-sizing: border-box;
     }
     
     .event-modal {
-        max-width: 95%;
+        max-width: calc(100vw - 120px);
+        width: calc(100vw - 120px);
+    }
+
+    .map-modal,
+    .monitor-modal,
+    .prediction-modal,
+    .letter-modal {
+        max-width: calc(100vw - 120px);
+        width: calc(100vw - 120px);
+    }
+
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .modal-body {
+        font-size: 0.85em;
+        line-height: 1.4;
     }
 
     .garland-bulb {
