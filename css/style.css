@@ -4067,11 +4067,44 @@ body {
 }
 
 @media (max-width: 768px) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .splash-cursor {
+        display: none;
+    }
+
+    .magic-mist,
+    .magic-particles,
+    .twinkling-stars-container,
+    .twinkling-star,
+    .snowflake,
+    .map-paper-snowflake,
+    .crt-monitor-snowflake {
+        display: none !important;
+    }
+
+    .side-garland {
+        display: none;
+    }
+
+    .cloud {
+        display: none;
+    }
+
+    .tree-silhouette,
+    .decorated-tree {
+        animation: none !important;
+    }
+
     .mobile-header {
         display: block;
     }
 
-    /* Основной контейнер для вертикального расположения */
     .main-content {
         min-height: auto;
         height: auto;
@@ -4107,7 +4140,6 @@ body {
         width: 20px;
     }
     
-    /* Карточки мероприятий - первый блок */
     .bulletin-board {
         position: relative;
         height: auto;
@@ -4115,9 +4147,9 @@ body {
         order: 1;
         margin-bottom: 40px;
         padding: 20px 10px;
+        width: 100%;
     }
 
-    /* Карта - второй блок */
     .map-paper-item {
         position: relative;
         width: calc(480px * var(--element-scale));
@@ -4127,7 +4159,6 @@ body {
         order: 2;
     }
 
-    /* Генератор - третий блок */
     .alchemy-center {
         position: relative;
         transform: none;
@@ -4137,7 +4168,6 @@ body {
         order: 3;
     }
 
-    /* Игра/монитор - четвертый блок */
     .crt-monitor-item {
         position: relative;
         width: calc(540px * var(--element-scale));
@@ -4146,7 +4176,6 @@ body {
         order: 4;
     }
 
-    /* Письмо - последний блок */
     .letter-envelope {
         position: relative;
         margin: 0 auto;
@@ -4215,7 +4244,6 @@ body {
         height: 8px;
     }
     
-    /* Улучшения для мобильной версии */
     body {
         overflow-y: auto;
         overflow-x: hidden;
@@ -4229,7 +4257,6 @@ body {
         overflow: visible;
     }
     
-    /* Модальные окна на мобильных */
     .modal-content {
         max-width: 95%;
         max-height: 90vh;
@@ -4238,6 +4265,14 @@ body {
     
     .event-modal {
         max-width: 95%;
+    }
+
+    .garland-bulb {
+        animation: none !important;
+    }
+
+    .garland-bulb.active {
+        animation: none !important;
     }
 }
 
