@@ -4089,7 +4089,8 @@ body {
     }
 
     .side-garland {
-        display: none;
+        display: block;
+        width: 50px;
     }
 
     .cloud {
@@ -4133,9 +4134,9 @@ body {
         min-height: auto;
         order: 1;
         margin: 20px auto 40px;
-        padding: 20px 10px;
-        width: 100%;
-        max-width: 100%;
+        padding: 20px 15px;
+        width: calc(100% - 100px);
+        max-width: calc(100vw - 100px);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -4158,9 +4159,9 @@ body {
 
     .map-paper-item {
         position: relative;
-        width: calc(400px * var(--element-scale));
-        max-width: 85vw;
-        margin: 0 auto 40px;
+        width: calc(100% - 100px);
+        max-width: calc(100vw - 100px);
+        margin: 0 auto 60px;
         transform: none;
         order: 2;
         left: auto;
@@ -4171,9 +4172,9 @@ body {
     .alchemy-center {
         position: relative;
         transform: none;
-        width: calc(320px * var(--element-scale));
-        max-width: 85vw;
-        margin: 0 auto 40px;
+        width: calc(100% - 100px);
+        max-width: calc(100vw - 100px);
+        margin: 0 auto 60px;
         order: 3;
         left: auto;
         right: auto;
@@ -4183,9 +4184,9 @@ body {
 
     .crt-monitor-item {
         position: relative;
-        width: calc(450px * var(--element-scale));
-        max-width: 85vw;
-        margin: 0 auto 40px;
+        width: calc(100% - 100px);
+        max-width: calc(100vw - 100px);
+        margin: 0 auto 60px;
         order: 4;
         left: auto;
         right: auto;
@@ -4197,8 +4198,11 @@ body {
         margin: 0 auto 40px;
         transform: none;
         order: 5;
-        width: calc(200px * var(--element-scale));
-        max-width: 85vw;
+        width: calc(250px * var(--element-scale));
+        height: calc(162.5px * var(--element-scale));
+        max-width: calc(250px * var(--element-scale));
+        max-height: calc(162.5px * var(--element-scale));
+        aspect-ratio: 120 / 78;
         left: auto;
         right: auto;
         bottom: auto;
