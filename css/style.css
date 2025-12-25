@@ -27,8 +27,9 @@
     --base-height: 1080px;
     
     /* Масштаб для элементов (не для фона) */
-    /* Увеличиваем элементы в 1.5 раза, адаптируем под размер экрана: минимум 0.5, максимум 1.5 */
-    --element-scale: clamp(0.5, min(100vw / 640px, 100vh / 360px), 1.5);
+    /* Улучшенная формула для корректной работы на ноутбуках и больших экранах */
+    /* Используем более разумные базовые значения для лучшей адаптации */
+    --element-scale: clamp(0.65, min(100vw / 1200px, 100vh / 800px), 1.8);
 }
 
 * {
@@ -4144,16 +4145,16 @@ body {
 
     .map-paper-item {
         position: relative;
-        width: 100%;
-        max-width: 340px;
+        width: calc(480px * var(--element-scale));
+        max-width: 90vw;
         margin: 20px auto;
         transform: none;
     }
 
     .crt-monitor-item {
         position: relative;
-        width: 100%;
-        max-width: 380px;
+        width: calc(540px * var(--element-scale));
+        max-width: 90vw;
         margin: 20px auto;
     }
 
