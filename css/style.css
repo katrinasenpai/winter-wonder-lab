@@ -21,10 +21,32 @@
 }
 
 /* Общие стили */
+:root {
+    /* Базовый размер для масштабирования (ориентир на стандартный десктоп Full HD) */
+    --base-width: 1920px;
+    --base-height: 1080px;
+    
+    /* Масштаб для элементов (не для фона) */
+    /* Увеличиваем элементы в 1.5 раза, адаптируем под размер экрана: минимум 0.5, максимум 1.5 */
+    --element-scale: clamp(0.5, min(100vw / 640px, 100vh / 360px), 1.5);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Эффект курсора с брызгами */
+.splash-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    mix-blend-mode: screen;
 }
 
 body {
@@ -118,6 +140,92 @@ body {
     opacity: 0.8;
 }
 
+/* --- МАГИЧЕСКАЯ ДЫМКА --- */
+.magic-mist {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.4;
+}
+
+.magic-mist::before,
+.magic-mist::after {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: mist-float 20s ease-in-out infinite;
+}
+
+.magic-mist::before {
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle, 
+        rgba(139, 92, 246, 0.3) 0%,
+        rgba(236, 72, 153, 0.2) 30%,
+        rgba(251, 191, 36, 0.15) 50%,
+        transparent 70%
+    );
+    animation: mist-float 25s ease-in-out infinite, mist-rotate 30s linear infinite;
+    animation-delay: 0s;
+}
+
+.magic-mist::after {
+    bottom: -25%;
+    right: -25%;
+    background: radial-gradient(circle, 
+        rgba(59, 130, 246, 0.25) 0%,
+        rgba(139, 92, 246, 0.2) 30%,
+        rgba(236, 72, 153, 0.15) 50%,
+        transparent 70%
+    );
+    animation: mist-float 30s ease-in-out infinite, mist-rotate 35s linear infinite reverse;
+    animation-delay: -5s;
+}
+
+@keyframes snowflake-float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-10px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes mist-float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+    }
+    25% {
+        transform: translate(5%, -8%) scale(1.1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-5%, 5%) scale(0.95);
+        opacity: 0.35;
+    }
+    75% {
+        transform: translate(8%, 3%) scale(1.05);
+        opacity: 0.45;
+    }
+}
+
+@keyframes mist-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* --- ГИРЛЯНДА С КАРТОЧКАМИ (из старой версии) --- */
 .bulletin-board {
     position: absolute;
@@ -154,6 +262,7 @@ body {
     justify-content: center;
     transition: all 0.3s ease;
     font-size: 1.2em;
+    transform-origin: top right;
 }
 
 .garland-toggle:hover {
@@ -257,16 +366,16 @@ body {
 
 .photo-card {
     position: absolute !important;
-    width: min(130px, 8.5vw);
-    height: min(169px, 11vw);
-    max-width: 130px;
-    max-height: 169px;
+    width: calc(130px * var(--element-scale));
+    height: calc(169px * var(--element-scale));
+    max-width: calc(130px * var(--element-scale));
+    max-height: calc(169px * var(--element-scale));
     background: linear-gradient(to bottom, 
         rgba(255, 255, 255, 0.98) 0%,
         rgba(250, 250, 240, 0.95) 100%
     );
-    border: 4px solid rgba(139, 69, 19, 0.9);
-    border-radius: 8px;
+    border: calc(4px * var(--element-scale)) solid rgba(139, 69, 19, 0.9);
+    border-radius: calc(8px * var(--element-scale));
     box-shadow: 
         0 8px 20px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -276,10 +385,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 14px;
+    padding: calc(14px * var(--element-scale));
     backdrop-filter: blur(2px);
     z-index: 55;
     pointer-events: auto;
+    transform-origin: center center;
 }
 
 .photo-card::before {
@@ -317,47 +427,53 @@ body {
     display: none;
 }
 
-/* Позиционирование карточек */
+/* Позиционирование карточек - равномерное распределение от края до края */
 .photo-card[data-event="0"] {
-    left: clamp(8%, 8vw, 8%);
+    left: clamp(3%, 3vw, 3%);
     top: calc(12% + 20px);
-    transform: rotate(-5deg);
+    transform: rotate(-4deg);
 }
 
 .photo-card[data-event="1"] {
-    left: clamp(20%, 20vw, 20%);
-    top: calc(12% + 20px);
-    transform: rotate(3deg);
-}
-
-.photo-card[data-event="2"] {
-    left: clamp(32%, 32vw, 32%);
-    top: calc(12% + 20px);
-    transform: rotate(-2deg);
-}
-
-.photo-card[data-event="3"] {
-    left: clamp(44%, 44vw, 44%);
-    top: calc(12% + 20px);
-    transform: rotate(4deg);
-}
-
-.photo-card[data-event="4"] {
-    left: clamp(56%, 56vw, 56%);
-    top: calc(12% + 20px);
-    transform: rotate(-3deg);
-}
-
-.photo-card[data-event="5"] {
-    left: clamp(68%, 68vw, 68%);
+    left: clamp(15.57%, 15.57vw, 15.57%);
     top: calc(12% + 20px);
     transform: rotate(2deg);
 }
 
-.photo-card[data-event="6"] {
-    left: clamp(80%, 80vw, 80%);
+.photo-card[data-event="2"] {
+    left: clamp(28.14%, 28.14vw, 28.14%);
+    top: calc(12% + 20px);
+    transform: rotate(-3deg);
+}
+
+.photo-card[data-event="3"] {
+    left: clamp(40.71%, 40.71vw, 40.71%);
+    top: calc(12% + 20px);
+    transform: rotate(3deg);
+}
+
+.photo-card[data-event="4"] {
+    left: clamp(53.28%, 53.28vw, 53.28%);
     top: calc(12% + 20px);
     transform: rotate(-2deg);
+}
+
+.photo-card[data-event="5"] {
+    left: clamp(65.85%, 65.85vw, 65.85%);
+    top: calc(12% + 20px);
+    transform: rotate(4deg);
+}
+
+.photo-card[data-event="6"] {
+    left: clamp(78.42%, 78.42vw, 78.42%);
+    top: calc(12% + 20px);
+    transform: rotate(-3deg);
+}
+
+.photo-card[data-event="7"] {
+    left: clamp(90.99%, 90.99vw, 90.99%);
+    top: calc(12% + 20px);
+    transform: rotate(2deg);
 }
 
 .photo-card:hover {
@@ -385,40 +501,44 @@ body {
 }
 
 .photo-card[data-event="0"] .photo-content {
-    background-image: url('../assets/images/event-0-poetry.png');
+    background-image: url('../assets/images/felt-horse-masterclass.jpg');
 }
 
 .photo-card[data-event="1"] .photo-content {
-    background-image: url('../assets/images/event-1-concert.png');
+    background-image: url('../assets/images/event-0-poetry.png');
 }
 
 .photo-card[data-event="2"] .photo-content {
-    background-image: url('../assets/images/event-2-videomakers.png');
+    background-image: url('../assets/images/event-1-concert.png');
 }
 
 .photo-card[data-event="3"] .photo-content {
-    background-image: url('../assets/images/event-3-lecture-district.png');
+    background-image: url('../assets/images/event-2-videomakers.png');
 }
 
 .photo-card[data-event="4"] .photo-content {
-    background-image: url('../assets/images/event-4-masterclass-symbol.png');
+    background-image: url('../assets/images/event-3-lecture-district.png');
 }
 
 .photo-card[data-event="5"] .photo-content {
-    background-image: url('../assets/images/event-5-lecture-tolkien.png');
+    background-image: url('../assets/images/event-4-masterclass-symbol.png');
 }
 
 .photo-card[data-event="6"] .photo-content {
+    background-image: url('../assets/images/event-5-lecture-tolkien.png');
+}
+
+.photo-card[data-event="7"] .photo-content {
     background-image: url('../assets/images/event-6-exhibition.png');
 }
 
 .photo-label {
-    font-size: 1em;
+    font-size: 0.85em;
     color: #1a1f3a;
     text-align: center;
     font-weight: 300;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-    padding: 5px 0;
+    padding: 4px 0;
     width: 100%;
     background: linear-gradient(to bottom, 
         rgba(255, 255, 255, 0.3) 0%,
@@ -426,18 +546,31 @@ body {
     );
     border-radius: 4px;
     margin-top: 5px;
+    line-height: 1.3;
+}
+
+.photo-date {
+    font-size: 0.7em;
+    color: #5c4d3c;
+    text-align: center;
+    font-weight: 400;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    padding: 2px 0;
+    width: 100%;
+    margin-top: 2px;
+    opacity: 0.8;
 }
 
 /* --- МАГИЧЕСКИЕ ЧАСТИЦЫ --- */
 .magic-particles {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
-    z-index: 12;
-    overflow: hidden;
+    z-index: 30;
+    overflow: visible;
     opacity: 0.6;
     transition: opacity 1s;
 }
@@ -655,6 +788,8 @@ body {
     border-radius: 50%;
     animation: fall linear infinite;
     pointer-events: none;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+    filter: blur(0.5px);
 }
 
 /* --- КАРТА (Map Paper) --- */
@@ -662,21 +797,107 @@ body {
     position: absolute;
     bottom: 16%;
     left: 15%;
-    width: 340px;
+    width: calc(340px * var(--element-scale));
     aspect-ratio: 4/3;
     background: #f0e6d2;
     box-shadow: 
         1px 1px 0px #dcd0b0,
         2px 2px 0px #dcd0b0,
         3px 3px 0px #dcd0b0,
-        0 10px 20px rgba(0,0,0,0.3);
+        0 10px 20px rgba(0,0,0,0.3),
+        /* Магическая новогодняя тень - фиолетовая с синими снежинками */
+        0 0 30px rgba(138, 43, 226, 0.4),
+        0 0 50px rgba(138, 43, 226, 0.3),
+        0 0 70px rgba(75, 0, 130, 0.2),
+        0 5px 15px rgba(0, 100, 200, 0.3),
+        0 -5px 15px rgba(0, 100, 200, 0.3),
+        5px 0 15px rgba(0, 100, 200, 0.3),
+        -5px 0 15px rgba(0, 100, 200, 0.3);
     cursor: pointer;
     transform: rotate(-6deg);
+    transform-origin: center center;
     transition: all 0.3s ease;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 2px;
-    z-index: 20;
+    z-index: 50;
     pointer-events: auto;
+}
+
+/* Подсказка для карты */
+.map-paper-item .tooltip {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    background: rgba(20, 20, 20, 0.95);
+    color: #f0e6d2;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Georgia', serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 200;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(138, 43, 226, 0.3);
+    border: 1px solid rgba(138, 43, 226, 0.4);
+}
+
+.map-paper-item .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 20, 0.95);
+}
+
+.map-paper-item .tooltip.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+/* Снежинки вокруг карты - используем отдельные элементы */
+.map-paper-snowflake {
+    position: absolute;
+    font-size: 12px;
+    color: rgba(100, 149, 237, 0.6);
+    animation: snowflake-float 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.map-paper-snowflake:nth-child(1) {
+    top: -15px;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.map-paper-snowflake:nth-child(2) {
+    bottom: -15px;
+    right: 15%;
+    animation-delay: 1s;
+    font-size: 10px;
+}
+
+.map-paper-snowflake:nth-child(3) {
+    top: 20%;
+    left: -10px;
+    animation-delay: 0.5s;
+    font-size: 8px;
+}
+
+.map-paper-snowflake:nth-child(4) {
+    top: 60%;
+    right: -10px;
+    animation-delay: 1.5s;
+    font-size: 9px;
 }
 
 .map-paper-item:hover {
@@ -686,7 +907,12 @@ body {
         2px 2px 0px #dcd0b0,
         3px 3px 0px #dcd0b0,
         0 10px 20px rgba(0,0,0,0.3),
-        0 10px 25px rgba(135, 206, 250, 0.5);
+        /* При hover - голубая и красная тень */
+        0 0 40px rgba(135, 206, 250, 0.6),
+        0 0 60px rgba(135, 206, 250, 0.4),
+        0 0 80px rgba(239, 68, 68, 0.3),
+        0 10px 25px rgba(135, 206, 250, 0.5),
+        0 -10px 25px rgba(239, 68, 68, 0.4);
 }
 
 .map-paper-content {
@@ -771,21 +997,22 @@ body {
 
 /* --- ПИСЬМО (Envelope) --- */
 .letter-envelope {
-    position: absolute;
-    bottom: 24px;
-    left: 16px;
-    width: 120px;
-    height: 78px;
+    position: fixed;
+    bottom: 60px;
+    left: 40px;
+    width: calc(120px * var(--element-scale));
+    height: calc(78px * var(--element-scale));
     background: linear-gradient(135deg, #fffaf0 0%, #fef5e7 100%);
     box-shadow: 
         2px 5px 15px rgba(0,0,0,0.3),
         0 0 0 rgba(135, 206, 250, 0);
     cursor: pointer;
     transform: rotate(-5deg);
+    transform-origin: center center;
     transition: all 0.3s ease;
-    border: 2px solid #d4a574;
-    border-radius: 4px;
-    z-index: 30;
+    border: calc(2px * var(--element-scale)) solid #d4a574;
+    border-radius: calc(4px * var(--element-scale));
+    z-index: 100;
     pointer-events: auto;
     overflow: visible;
     animation: envelope-float 4s ease-in-out infinite;
@@ -961,21 +1188,115 @@ body {
     position: absolute;
     bottom: 12%;
     right: 12%;
-    width: 380px;
+    width: calc(380px * var(--element-scale));
     aspect-ratio: 4/3;
     background: #cbbcb1;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    border-radius: calc(8px * var(--element-scale));
+    padding: calc(12px * var(--element-scale));
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.6),
+        /* Магическая новогодняя тень - фиолетовая с синими снежинками */
+        0 0 30px rgba(138, 43, 226, 0.4),
+        0 0 50px rgba(138, 43, 226, 0.3),
+        0 0 70px rgba(75, 0, 130, 0.2),
+        0 5px 15px rgba(0, 100, 200, 0.3),
+        0 -5px 15px rgba(0, 100, 200, 0.3),
+        5px 0 15px rgba(0, 100, 200, 0.3),
+        -5px 0 15px rgba(0, 100, 200, 0.3);
     cursor: pointer;
-    z-index: 20;
+    z-index: 50;
     pointer-events: auto;
     transition: all 0.3s ease;
     transform-origin: center;
 }
 
+/* Подсказка для монитора */
+.crt-monitor-item .tooltip {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 20, 0.95);
+    color: #f0e6d2;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Georgia', serif;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 100;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(138, 43, 226, 0.3);
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    transform: translateX(-50%) translateY(-5px);
+}
+
+.crt-monitor-item .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 20, 0.95);
+}
+
+.crt-monitor-item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Снежинки вокруг монитора - используем отдельные элементы */
+.crt-monitor-snowflake {
+    position: absolute;
+    font-size: 12px;
+    color: rgba(100, 149, 237, 0.6);
+    animation: snowflake-float 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.crt-monitor-snowflake:nth-child(1) {
+    top: -20px;
+    right: 20%;
+    animation-delay: 0s;
+    font-size: 14px;
+}
+
+.crt-monitor-snowflake:nth-child(2) {
+    bottom: -20px;
+    left: 15%;
+    animation-delay: 1.5s;
+    font-size: 12px;
+}
+
+.crt-monitor-snowflake:nth-child(3) {
+    top: 30%;
+    left: -15px;
+    animation-delay: 0.7s;
+    font-size: 10px;
+}
+
+.crt-monitor-snowflake:nth-child(4) {
+    top: 50%;
+    right: -15px;
+    animation-delay: 2s;
+    font-size: 11px;
+}
+
 .crt-monitor-item:hover {
     transform: scale(1.05);
+    box-shadow: 
+        0 20px 50px rgba(0,0,0,0.6),
+        /* При hover - только голубая тень */
+        0 0 40px rgba(135, 206, 250, 0.6),
+        0 0 60px rgba(135, 206, 250, 0.4),
+        0 10px 25px rgba(135, 206, 250, 0.5);
 }
 
 .crt-monitor-item::before,
@@ -1001,13 +1322,7 @@ body {
 
 .crt-monitor-item:hover::before,
 .crt-monitor-item:hover::after {
-    background: linear-gradient(to bottom, 
-        rgba(239, 68, 68, 0.8) 0%,
-        rgba(239, 68, 68, 0.6) 50%,
-        rgba(239, 68, 68, 0.8) 100%);
-    box-shadow: 
-        0 0 20px rgba(239, 68, 68, 0.8),
-        inset 0 0 20px rgba(239, 68, 68, 0.4);
+    opacity: 0;
 }
 
 .crt-monitor-screen {
@@ -1053,7 +1368,7 @@ body {
         inset 0 0 30px rgba(0, 0, 0, 0.6),
         inset 0 0 60px rgba(0, 0, 0, 0.4),
         inset 0 0 90px rgba(0, 0, 0, 0.2),
-        0 10px 25px rgba(239, 68, 68, 0.5);
+        0 10px 25px rgba(135, 206, 250, 0.5);
 }
 
 .crt-glitch-overlay {
@@ -1089,30 +1404,7 @@ body {
 }
 
 .crt-monitor-item:hover .crt-glitch-overlay {
-    animation: glitch-flicker-fast 0.05s infinite, glitch-scan-fast 0.08s linear infinite;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 1px,
-            rgba(239, 68, 68, 0.15) 1px,
-            rgba(239, 68, 68, 0.15) 2px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 1px,
-            rgba(239, 68, 68, 0.08) 1px,
-            rgba(239, 68, 68, 0.08) 2px
-        ),
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 3px,
-            rgba(239, 68, 68, 0.05) 3px,
-            rgba(239, 68, 68, 0.05) 4px
-        );
-    opacity: 1;
+    opacity: 0;
 }
 
 .crt-scanline {
@@ -1140,23 +1432,24 @@ body {
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    width: 320px;
+    transform-origin: center bottom;
+    width: calc(320px * var(--element-scale));
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 20;
+    z-index: 50;
 }
 
 .alchemy-hint {
     position: absolute;
-    top: -50px;
+    top: calc(-50px * var(--element-scale));
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
     backdrop-filter: blur(12px);
-    padding: 10px 16px;
-    border-radius: 25px;
-    border: 2px solid rgba(251, 191, 36, 0.5);
+    padding: calc(10px * var(--element-scale)) calc(16px * var(--element-scale));
+    border-radius: calc(25px * var(--element-scale));
+    border: calc(2px * var(--element-scale)) solid rgba(251, 191, 36, 0.5);
     box-shadow: 
         0 4px 20px rgba(251, 191, 36, 0.4),
         0 0 30px rgba(139, 92, 246, 0.3),
@@ -1168,7 +1461,7 @@ body {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: calc(8px * var(--element-scale));
     animation: hint-glow 2s ease-in-out infinite;
 }
 
@@ -1183,12 +1476,12 @@ body {
 }
 
 .hint-icon {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--element-scale));
     animation: sparkle-rotate 2s linear infinite;
 }
 
 .hint-text {
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--element-scale));
     color: #fef3c7;
     text-align: center;
     font-weight: 600;
@@ -1196,7 +1489,7 @@ body {
 }
 
 .hint-sparkles {
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--element-scale));
     animation: sparkle-bounce 1.5s ease-in-out infinite;
 }
 
@@ -1205,8 +1498,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%);
-    width: 300px;
-    height: 300px;
+    width: calc(300px * var(--element-scale));
+    height: calc(300px * var(--element-scale));
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1228,8 +1521,8 @@ body {
 
 .flask-container {
     position: relative;
-    width: 160px;
-    height: 240px;
+    width: calc(160px * var(--element-scale));
+    height: calc(240px * var(--element-scale));
     cursor: pointer;
     pointer-events: auto;
     z-index: 25;
@@ -1243,8 +1536,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
+    width: calc(200px * var(--element-scale));
+    height: calc(200px * var(--element-scale));
     background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(236, 72, 153, 0.2) 40%, transparent 70%);
     border-radius: 50%;
     opacity: 0.6;
@@ -1263,8 +1556,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
+    width: calc(200px * var(--element-scale));
+    height: calc(200px * var(--element-scale));
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s;
@@ -1291,7 +1584,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 80px;
+    font-size: calc(80px * var(--element-scale));
     color: rgba(196, 181, 253, 0.8);
     filter: drop-shadow(0 0 20px rgba(196, 181, 253, 0.6));
     animation: spin-slow 10s linear infinite;
@@ -1331,8 +1624,8 @@ body {
 }
 
 .flask-icon {
-    width: 133px;
-    height: 200px;
+    width: calc(133px * var(--element-scale));
+    height: calc(200px * var(--element-scale));
     color: rgba(255, 255, 255, 0.6);
     filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6)) drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
     transition: all 1s;
@@ -1357,10 +1650,10 @@ body {
 
 .flask-liquid {
     position: absolute;
-    bottom: 13px;
+    bottom: calc(13px * var(--element-scale));
     left: 50%;
     transform: translateX(-50%);
-    width: 87px;
+    width: calc(87px * var(--element-scale));
     border-radius: 0 0 50% 50%;
     opacity: 0.95;
     transition: all 1s;
@@ -1396,22 +1689,22 @@ body {
 }
 
 .flask-liquid.empty {
-    height: 40px;
+    height: calc(40px * var(--element-scale));
     background: linear-gradient(to top, #581c87 0%, #6b21a8 50%, #7c3aed 100%);
 }
 
 .flask-liquid.level-1 {
-    height: 67px;
+    height: calc(67px * var(--element-scale));
     background: linear-gradient(to top, #6b21a8 0%, #7c3aed 50%, #8b5cf6 100%);
 }
 
 .flask-liquid.level-2 {
-    height: 93px;
+    height: calc(93px * var(--element-scale));
     background: linear-gradient(to top, #7c3aed 0%, #9333ea 50%, #a855f7 100%);
 }
 
 .flask-liquid.level-3 {
-    height: 120px;
+    height: calc(120px * var(--element-scale));
     background: linear-gradient(to top, #8b5cf6 0%, #a855f7 50%, #c084fc 100%);
     box-shadow: 
         inset 0 0 30px rgba(255, 255, 255, 0.4),
@@ -1419,7 +1712,7 @@ body {
 }
 
 .flask-container.mixing .flask-liquid {
-    height: 147px;
+    height: calc(147px * var(--element-scale));
     background: linear-gradient(to top, #9333ea 0%, #ec4899 50%, #fbbf24 100%);
     animation: bubbling 2s ease-in-out infinite, liquid-glow 1.5s ease-in-out infinite;
     box-shadow: 
@@ -1486,30 +1779,30 @@ body {
 }
 
 .flask-status {
-    font-size: 0.75rem;
+    font-size: calc(0.75rem * var(--element-scale));
     color: rgba(255, 255, 255, 0.4);
-    margin-bottom: 4px;
+    margin-bottom: calc(4px * var(--element-scale));
 }
 
 .flask-synthesize-btn {
     background: linear-gradient(135deg, rgba(217, 119, 6, 0.9) 0%, rgba(251, 191, 36, 0.9) 100%);
     color: white;
-    padding: 6px 16px;
+    padding: calc(6px * var(--element-scale)) calc(16px * var(--element-scale));
     border-radius: 9999px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--element-scale));
     font-weight: bold;
     box-shadow: 
         0 4px 15px rgba(251, 191, 36, 0.5),
         0 0 20px rgba(217, 119, 6, 0.4),
         inset 0 0 10px rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(4px);
-    border: 2px solid rgba(251, 191, 36, 0.7);
+    border: calc(2px * var(--element-scale)) solid rgba(251, 191, 36, 0.7);
     cursor: pointer;
     pointer-events: auto;
     animation: bounce 2s infinite, button-glow 2s ease-in-out infinite;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: calc(6px * var(--element-scale));
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     transition: all 0.3s;
 }
@@ -1547,28 +1840,28 @@ body {
 .ingredients-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 16px;
+    gap: calc(16px * var(--element-scale));
+    margin-top: calc(16px * var(--element-scale));
     background: rgba(0, 0, 0, 0.6);
-    padding: 16px;
-    border-radius: 12px;
+    padding: calc(16px * var(--element-scale));
+    border-radius: calc(12px * var(--element-scale));
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: calc(1px * var(--element-scale)) solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     position: relative;
     z-index: 20;
 }
 
 .ingredient-btn {
-    width: 48px;
-    height: 48px;
+    width: calc(48px * var(--element-scale));
+    height: calc(48px * var(--element-scale));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: calc(1.5rem * var(--element-scale));
     background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
+    border: calc(1px * var(--element-scale)) solid rgba(255,255,255,0.1);
+    border-radius: calc(8px * var(--element-scale));
     cursor: pointer;
     transition: all 0.3s;
     pointer-events: auto;
@@ -1807,28 +2100,136 @@ body {
     background: #6d4621;
 }
 
+.event-modal .cta-btn {
+    background: #991b1b;
+    color: #fffaf0;
+}
+
+.event-modal .cta-btn:hover {
+    background: #7a1515;
+}
+
 .btn-icon {
     margin-right: 8px;
 }
 
 /* Стили для модалки события */
 .event-modal {
-    background: #1a1c29;
+    background: #fffaf0;
+    border: 4px double #991b1b;
+    color: #2c1810;
+    font-family: serif;
+    max-width: 650px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+
+.event-modal .modal-header {
+    margin-bottom: 20px;
+}
+
+.event-modal .modal-header h2 {
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: #991b1b;
+}
+
+.event-modal .modal-close {
+    color: #991b1b;
+}
+
+.event-modal .modal-body {
+    padding: 12px 0;
 }
 
 .event-date {
-    background: rgba(217, 119, 6, 0.2);
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-bottom: 12px;
-    font-size: 0.875rem;
-    color: #fbbf24;
+    background: rgba(153, 27, 27, 0.1);
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: #991b1b;
+    font-weight: 500;
+    display: inline-block;
+    border-left: 3px solid #991b1b;
 }
 
 .event-description {
-    line-height: 1.6;
-    color: #d1d5db;
+    line-height: 1.8;
+    color: #2c1810;
     margin-bottom: 12px;
+    font-size: 0.95rem;
+    text-align: justify;
+}
+
+.event-description p {
+    margin-bottom: 1em;
+    text-indent: 1.5em;
+}
+
+.event-description p:first-child {
+    text-indent: 0;
+    font-weight: 500;
+    color: #991b1b;
+    margin-bottom: 1.2em;
+    font-size: 1.05rem;
+}
+
+.event-description .event-block {
+    background: rgba(153, 27, 27, 0.05);
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border-left: 4px solid #991b1b;
+}
+
+.event-description .event-block-title {
+    font-weight: 600;
+    color: #991b1b;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.event-description ul,
+.event-description ol {
+    margin: 1em 0;
+    padding-left: 2em;
+    list-style-position: outside;
+}
+
+.event-description li {
+    margin-bottom: 0.6em;
+    line-height: 1.7;
+}
+
+.event-description li.check-item {
+    list-style: none;
+    padding-left: 1.5em;
+    position: relative;
+}
+
+.event-description li.check-item::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #991b1b;
+    font-weight: bold;
+}
+
+.event-description strong {
+    color: #991b1b;
+    font-weight: 600;
+}
+
+.event-description em {
+    font-style: italic;
+    color: #5c4d3c;
+}
+
+.event-description .highlight {
+    background: rgba(153, 27, 27, 0.15);
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #991b1b;
 }
 
 /* Стили для модалки монитора */
@@ -2195,6 +2596,60 @@ body {
     animation-delay: 0.5s;
 }
 
+.tree-silhouette-5 {
+    left: 10%;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-bottom: 110px solid #16213e;
+    animation: tree-sway 9.5s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.tree-silhouette-6 {
+    left: 35%;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
+    border-bottom: 145px solid #0f3460;
+    animation: tree-sway 10.5s ease-in-out infinite;
+    animation-delay: 2.5s;
+}
+
+.tree-silhouette-7 {
+    left: 60%;
+    border-left: 26px solid transparent;
+    border-right: 26px solid transparent;
+    border-bottom: 125px solid #1a1a2e;
+    animation: tree-sway 8.5s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+.tree-silhouette-8 {
+    left: 85%;
+    border-left: 24px solid transparent;
+    border-right: 24px solid transparent;
+    border-bottom: 115px solid #16213e;
+    animation: tree-sway 11.5s ease-in-out infinite;
+    animation-delay: 1.8s;
+}
+
+.tree-silhouette-9 {
+    left: 15%;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 105px solid #0f3460;
+    animation: tree-sway 9s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+.tree-silhouette-10 {
+    left: 90%;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 100px solid #1a1a2e;
+    animation: tree-sway 10s ease-in-out infinite;
+    animation-delay: 2.2s;
+}
+
 .snow-ground {
     position: absolute;
     bottom: 0;
@@ -2220,13 +2675,982 @@ body {
     }
 }
 
+/* ТУЧИ */
+.cloud {
+    position: absolute;
+    background: rgba(80, 100, 130, 0.4);
+    border-radius: 100px;
+    filter: blur(12px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(80, 100, 130, 0.4);
+    border-radius: 100px;
+    filter: blur(8px);
+}
+
+/* Большие статичные тучи */
+.cloud-1 {
+    width: 250px;
+    height: 80px;
+    top: 5%;
+    left: 5%;
+    /* Без анимации - статичная */
+}
+
+.cloud-1::before {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    left: 30px;
+}
+
+.cloud-1::after {
+    width: 140px;
+    height: 140px;
+    top: -70px;
+    right: 30px;
+}
+
+.cloud-2 {
+    width: 280px;
+    height: 90px;
+    top: 12%;
+    right: 8%;
+    /* Без анимации - статичная */
+}
+
+.cloud-2::before {
+    width: 130px;
+    height: 130px;
+    top: -65px;
+    left: 40px;
+}
+
+.cloud-2::after {
+    width: 150px;
+    height: 150px;
+    top: -75px;
+    right: 40px;
+}
+
+.cloud-3 {
+    width: 220px;
+    height: 75px;
+    top: 3%;
+    left: 50%;
+    /* Без анимации - статичная */
+}
+
+.cloud-3::before {
+    width: 110px;
+    height: 110px;
+    top: -55px;
+    left: 25px;
+}
+
+.cloud-3::after {
+    width: 130px;
+    height: 130px;
+    top: -65px;
+    right: 25px;
+}
+
+/* Медленно движущиеся тучи */
+.cloud-4 {
+    width: 240px;
+    height: 85px;
+    top: 8%;
+    left: 30%;
+    animation: cloud-drift-slow 120s linear infinite;
+    animation-delay: 0s;
+}
+
+.cloud-4::before {
+    width: 115px;
+    height: 115px;
+    top: -58px;
+    left: 35px;
+}
+
+.cloud-4::after {
+    width: 135px;
+    height: 135px;
+    top: -68px;
+    right: 35px;
+}
+
+.cloud-5 {
+    width: 260px;
+    height: 88px;
+    top: 15%;
+    left: 70%;
+    animation: cloud-drift-slow 150s linear infinite;
+    animation-delay: -30s;
+}
+
+.cloud-5::before {
+    width: 125px;
+    height: 125px;
+    top: -63px;
+    left: 38px;
+}
+
+.cloud-5::after {
+    width: 145px;
+    height: 145px;
+    top: -73px;
+    right: 38px;
+}
+
+.cloud-6 {
+    width: 200px;
+    height: 70px;
+    top: 20%;
+    left: 15%;
+    /* Без анимации - статичная */
+}
+
+.cloud-6::before {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    left: 20px;
+}
+
+.cloud-6::after {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    right: 20px;
+}
+
+.cloud-7 {
+    width: 230px;
+    height: 82px;
+    top: 18%;
+    right: 20%;
+    animation: cloud-drift-slow 140s linear infinite;
+    animation-delay: -60s;
+}
+
+.cloud-7::before {
+    width: 112px;
+    height: 112px;
+    top: -56px;
+    left: 32px;
+}
+
+.cloud-7::after {
+    width: 132px;
+    height: 132px;
+    top: -66px;
+    right: 32px;
+}
+
+.cloud-8 {
+    width: 210px;
+    height: 72px;
+    top: 25%;
+    left: 55%;
+    /* Без анимации - статичная */
+}
+
+.cloud-8::before {
+    width: 105px;
+    height: 105px;
+    top: -53px;
+    left: 22px;
+}
+
+.cloud-8::after {
+    width: 125px;
+    height: 125px;
+    top: -63px;
+    right: 22px;
+}
+
+/* Облака в середине окна */
+.cloud-9 {
+    width: 240px;
+    height: 85px;
+    top: 35%;
+    left: 10%;
+    /* Без анимации - статичная */
+}
+
+.cloud-9::before {
+    width: 115px;
+    height: 115px;
+    top: -58px;
+    left: 35px;
+}
+
+.cloud-9::after {
+    width: 135px;
+    height: 135px;
+    top: -68px;
+    right: 35px;
+}
+
+.cloud-10 {
+    width: 220px;
+    height: 78px;
+    top: 40%;
+    right: 12%;
+    animation: cloud-drift-slow 130s linear infinite;
+    animation-delay: -20s;
+}
+
+.cloud-10::before {
+    width: 108px;
+    height: 108px;
+    top: -54px;
+    left: 28px;
+}
+
+.cloud-10::after {
+    width: 128px;
+    height: 128px;
+    top: -64px;
+    right: 28px;
+}
+
+.cloud-11 {
+    width: 250px;
+    height: 88px;
+    top: 38%;
+    left: 45%;
+    /* Без анимации - статичная */
+}
+
+.cloud-11::before {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    left: 40px;
+}
+
+.cloud-11::after {
+    width: 140px;
+    height: 140px;
+    top: -70px;
+    right: 40px;
+}
+
+.cloud-12 {
+    width: 200px;
+    height: 70px;
+    top: 42%;
+    left: 25%;
+    animation: cloud-drift-slow 145s linear infinite;
+    animation-delay: -40s;
+}
+
+.cloud-12::before {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    left: 20px;
+}
+
+.cloud-12::after {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    right: 20px;
+}
+
+.cloud-13 {
+    width: 230px;
+    height: 82px;
+    top: 36%;
+    right: 30%;
+    /* Без анимации - статичная */
+}
+
+.cloud-13::before {
+    width: 112px;
+    height: 112px;
+    top: -56px;
+    left: 32px;
+}
+
+.cloud-13::after {
+    width: 132px;
+    height: 132px;
+    top: -66px;
+    right: 32px;
+}
+
+.cloud-14 {
+    width: 215px;
+    height: 75px;
+    top: 44%;
+    left: 65%;
+    animation: cloud-drift-slow 135s linear infinite;
+    animation-delay: -50s;
+}
+
+.cloud-14::before {
+    width: 106px;
+    height: 106px;
+    top: -53px;
+    left: 24px;
+}
+
+.cloud-14::after {
+    width: 126px;
+    height: 126px;
+    top: -63px;
+    right: 24px;
+}
+
+/* Дополнительные облака */
+.cloud-15 {
+    width: 225px;
+    height: 80px;
+    top: 30%;
+    left: 20%;
+    /* Без анимации - статичная */
+}
+
+.cloud-15::before {
+    width: 110px;
+    height: 110px;
+    top: -55px;
+    left: 30px;
+}
+
+.cloud-15::after {
+    width: 130px;
+    height: 130px;
+    top: -65px;
+    right: 30px;
+}
+
+.cloud-16 {
+    width: 195px;
+    height: 68px;
+    top: 28%;
+    right: 25%;
+    animation: cloud-drift-slow 125s linear infinite;
+    animation-delay: -70s;
+}
+
+.cloud-16::before {
+    width: 98px;
+    height: 98px;
+    top: -49px;
+    left: 18px;
+}
+
+.cloud-16::after {
+    width: 118px;
+    height: 118px;
+    top: -59px;
+    right: 18px;
+}
+
+.cloud-17 {
+    width: 245px;
+    height: 86px;
+    top: 32%;
+    left: 60%;
+    /* Без анимации - статичная */
+}
+
+.cloud-17::before {
+    width: 118px;
+    height: 118px;
+    top: -59px;
+    left: 42px;
+}
+
+.cloud-17::after {
+    width: 138px;
+    height: 138px;
+    top: -69px;
+    right: 42px;
+}
+
+.cloud-18 {
+    width: 205px;
+    height: 73px;
+    top: 46%;
+    left: 8%;
+    animation: cloud-drift-slow 140s linear infinite;
+    animation-delay: -80s;
+}
+
+.cloud-18::before {
+    width: 102px;
+    height: 102px;
+    top: -51px;
+    left: 26px;
+}
+
+.cloud-18::after {
+    width: 122px;
+    height: 122px;
+    top: -61px;
+    right: 26px;
+}
+
+.cloud-19 {
+    width: 235px;
+    height: 83px;
+    top: 33%;
+    right: 5%;
+    /* Без анимации - статичная */
+}
+
+.cloud-19::before {
+    width: 114px;
+    height: 114px;
+    top: -57px;
+    left: 36px;
+}
+
+.cloud-19::after {
+    width: 134px;
+    height: 134px;
+    top: -67px;
+    right: 36px;
+}
+
+.cloud-20 {
+    width: 190px;
+    height: 67px;
+    top: 39%;
+    left: 35%;
+    animation: cloud-drift-slow 128s linear infinite;
+    animation-delay: -90s;
+}
+
+.cloud-20::before {
+    width: 96px;
+    height: 96px;
+    top: -48px;
+    left: 16px;
+}
+
+.cloud-20::after {
+    width: 116px;
+    height: 116px;
+    top: -58px;
+    right: 16px;
+}
+
+.cloud-21 {
+    width: 255px;
+    height: 90px;
+    top: 41%;
+    right: 18%;
+    /* Без анимации - статичная */
+}
+
+.cloud-21::before {
+    width: 122px;
+    height: 122px;
+    top: -61px;
+    left: 44px;
+}
+
+.cloud-21::after {
+    width: 142px;
+    height: 142px;
+    top: -71px;
+    right: 44px;
+}
+
+.cloud-22 {
+    width: 200px;
+    height: 71px;
+    top: 37%;
+    left: 75%;
+    animation: cloud-drift-slow 132s linear infinite;
+    animation-delay: -100s;
+}
+
+.cloud-22::before {
+    width: 101px;
+    height: 101px;
+    top: -51px;
+    left: 21px;
+}
+
+.cloud-22::after {
+    width: 121px;
+    height: 121px;
+    top: -61px;
+    right: 21px;
+}
+
+/* Нижний слой облаков */
+.cloud-23 {
+    width: 260px;
+    height: 92px;
+    top: 50%;
+    left: 5%;
+    /* Без анимации - статичная */
+}
+
+.cloud-23::before {
+    width: 125px;
+    height: 125px;
+    top: -63px;
+    left: 38px;
+}
+
+.cloud-23::after {
+    width: 145px;
+    height: 145px;
+    top: -73px;
+    right: 38px;
+}
+
+.cloud-24 {
+    width: 230px;
+    height: 81px;
+    top: 52%;
+    right: 8%;
+    animation: cloud-drift-slow 138s linear infinite;
+    animation-delay: -110s;
+}
+
+.cloud-24::before {
+    width: 112px;
+    height: 112px;
+    top: -56px;
+    left: 32px;
+}
+
+.cloud-24::after {
+    width: 132px;
+    height: 132px;
+    top: -66px;
+    right: 32px;
+}
+
+.cloud-25 {
+    width: 245px;
+    height: 87px;
+    top: 48%;
+    left: 35%;
+    /* Без анимации - статичная */
+}
+
+.cloud-25::before {
+    width: 118px;
+    height: 118px;
+    top: -59px;
+    left: 42px;
+}
+
+.cloud-25::after {
+    width: 138px;
+    height: 138px;
+    top: -69px;
+    right: 42px;
+}
+
+.cloud-26 {
+    width: 210px;
+    height: 74px;
+    top: 54%;
+    left: 60%;
+    animation: cloud-drift-slow 142s linear infinite;
+    animation-delay: -120s;
+}
+
+.cloud-26::before {
+    width: 104px;
+    height: 104px;
+    top: -52px;
+    left: 23px;
+}
+
+.cloud-26::after {
+    width: 124px;
+    height: 124px;
+    top: -62px;
+    right: 23px;
+}
+
+.cloud-27 {
+    width: 250px;
+    height: 89px;
+    top: 51%;
+    right: 25%;
+    /* Без анимации - статичная */
+}
+
+.cloud-27::before {
+    width: 120px;
+    height: 120px;
+    top: -60px;
+    left: 40px;
+}
+
+.cloud-27::after {
+    width: 140px;
+    height: 140px;
+    top: -70px;
+    right: 40px;
+}
+
+.cloud-28 {
+    width: 220px;
+    height: 77px;
+    top: 49%;
+    left: 80%;
+    animation: cloud-drift-slow 133s linear infinite;
+    animation-delay: -130s;
+}
+
+.cloud-28::before {
+    width: 108px;
+    height: 108px;
+    top: -54px;
+    left: 28px;
+}
+
+.cloud-28::after {
+    width: 128px;
+    height: 128px;
+    top: -64px;
+    right: 28px;
+}
+
+@keyframes cloud-drift-slow {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100vw);
+    }
+}
+
+/* БОЛЬШИЕ ЕЛИ С УКРАШЕНИЯМИ */
+.decorated-tree {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+    filter: blur(0.5px);
+    z-index: 3;
+}
+
+/* Ярусы ели */
+.tree-layer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: solid transparent;
+    border-right: solid transparent;
+    border-bottom: solid;
+}
+
+/* Нижний ярус (самый широкий) */
+.tree-layer-bottom {
+    border-left-width: 60px;
+    border-right-width: 60px;
+    border-bottom-width: calc(50vh * 0.5);
+    border-bottom-color: #2d5a4e;
+    z-index: 1;
+}
+
+/* Средний ярус - перекрывает нижний */
+.tree-layer-middle {
+    border-left-width: 45px;
+    border-right-width: 45px;
+    border-bottom-width: calc(50vh * 0.4);
+    border-bottom-color: #1e4a3e;
+    bottom: calc(50vh * 0.5 - 50px); /* Перекрывает нижний ярус на 50px */
+    z-index: 2;
+}
+
+/* Верхний ярус - перекрывает средний */
+.tree-layer-top {
+    border-left-width: 30px;
+    border-right-width: 30px;
+    border-bottom-width: calc(50vh * 0.25);
+    border-bottom-color: #2d5a4e;
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px); /* Перекрывает средний ярус на 40px */
+    z-index: 3;
+}
+
+.decorated-tree-1 {
+    left: 20%;
+    animation: tree-sway 9s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.decorated-tree-1 .tree-layer-bottom {
+    border-left-width: 60px;
+    border-right-width: 60px;
+    border-bottom-width: calc(50vh * 0.5);
+}
+
+.decorated-tree-1 .tree-layer-middle {
+    border-left-width: 45px;
+    border-right-width: 45px;
+    border-bottom-width: calc(50vh * 0.4);
+    bottom: calc(50vh * 0.5 - 50px);
+}
+
+.decorated-tree-1 .tree-layer-top {
+    border-left-width: 30px;
+    border-right-width: 30px;
+    border-bottom-width: calc(50vh * 0.25);
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px);
+}
+
+.decorated-tree-2 {
+    left: 55%;
+    animation: tree-sway 10s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.decorated-tree-2 .tree-layer-bottom {
+    border-left-width: 65px;
+    border-right-width: 65px;
+    border-bottom-width: calc(50vh * 0.5);
+    border-bottom-color: #1e4a3e;
+}
+
+.decorated-tree-2 .tree-layer-middle {
+    border-left-width: 50px;
+    border-right-width: 50px;
+    border-bottom-width: calc(50vh * 0.4);
+    border-bottom-color: #2d5a4e;
+    bottom: calc(50vh * 0.5 - 50px);
+}
+
+.decorated-tree-2 .tree-layer-top {
+    border-left-width: 35px;
+    border-right-width: 35px;
+    border-bottom-width: calc(50vh * 0.25);
+    border-bottom-color: #1e4a3e;
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px);
+}
+
+.decorated-tree-3 {
+    left: 80%;
+    animation: tree-sway 8.5s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+.decorated-tree-3 .tree-layer-bottom {
+    border-left-width: 58px;
+    border-right-width: 58px;
+    border-bottom-width: calc(50vh * 0.5);
+}
+
+.decorated-tree-3 .tree-layer-middle {
+    border-left-width: 43px;
+    border-right-width: 43px;
+    border-bottom-width: calc(50vh * 0.4);
+    bottom: calc(50vh * 0.5 - 50px);
+}
+
+.decorated-tree-3 .tree-layer-top {
+    border-left-width: 28px;
+    border-right-width: 28px;
+    border-bottom-width: calc(50vh * 0.25);
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px);
+}
+
+.decorated-tree-4 {
+    left: 12%;
+    animation: tree-sway 9.5s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.decorated-tree-4 .tree-layer-bottom {
+    border-left-width: 62px;
+    border-right-width: 62px;
+    border-bottom-width: calc(50vh * 0.5);
+    border-bottom-color: #1e4a3e;
+}
+
+.decorated-tree-4 .tree-layer-middle {
+    border-left-width: 47px;
+    border-right-width: 47px;
+    border-bottom-width: calc(50vh * 0.4);
+    border-bottom-color: #2d5a4e;
+    bottom: calc(50vh * 0.5 - 50px);
+}
+
+.decorated-tree-4 .tree-layer-top {
+    border-left-width: 32px;
+    border-right-width: 32px;
+    border-bottom-width: calc(50vh * 0.25);
+    border-bottom-color: #1e4a3e;
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px);
+}
+
+.decorated-tree-5 {
+    left: 70%;
+    animation: tree-sway 10.5s ease-in-out infinite;
+    animation-delay: 1.2s;
+}
+
+.decorated-tree-5 .tree-layer-bottom {
+    border-left-width: 56px;
+    border-right-width: 56px;
+    border-bottom-width: calc(50vh * 0.5);
+}
+
+.decorated-tree-5 .tree-layer-middle {
+    border-left-width: 41px;
+    border-right-width: 41px;
+    border-bottom-width: calc(50vh * 0.4);
+    bottom: calc(50vh * 0.5 - 50px);
+}
+
+.decorated-tree-5 .tree-layer-top {
+    border-left-width: 26px;
+    border-right-width: 26px;
+    border-bottom-width: calc(50vh * 0.25);
+    bottom: calc(50vh * 0.5 - 50px + 50vh * 0.4 - 40px);
+}
+
+/* Звезда на верхушке */
+.tree-star {
+    position: absolute;
+    top: calc(-30px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    color: #ffd700;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+    animation: star-twinkle 2s ease-in-out infinite;
+    z-index: 5;
+}
+
+/* Огоньки на ёлке */
+.tree-lights {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(255, 255, 255, 0.9) 8px,
+        rgba(255, 255, 255, 0.9) 10px
+    );
+    z-index: 4;
+    pointer-events: none;
+}
+
+.tree-lights::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 8px,
+        rgba(255, 255, 255, 0.9) 8px,
+        rgba(255, 255, 255, 0.9) 10px
+    );
+}
+
+/* Игрушки на ёлке */
+.tree-ornament {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    z-index: 4;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.4);
+    animation: ornament-sparkle 3s ease-in-out infinite;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tree-ornament-blue {
+    background: radial-gradient(circle at 30% 30%, #87ceeb, #4682b4);
+}
+
+.tree-ornament-yellow {
+    background: radial-gradient(circle at 30% 30%, #ffd700, #ffa500);
+}
+
+.tree-ornament-red {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #dc143c);
+}
+
+.tree-ornament-green {
+    background: radial-gradient(circle at 30% 30%, #90ee90, #32cd32);
+}
+
+@keyframes ornament-sparkle {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 12px rgba(255, 255, 255, 1);
+    }
+}
+
+/* Снег на ветках елей */
+.decorated-tree::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    filter: blur(2px);
+    z-index: 2;
+}
+
+.decorated-tree::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    filter: blur(2px);
+    z-index: 2;
+}
+
 /* --- АНИМАЦИИ --- */
 @keyframes fall {
     0% {
         transform: translateY(-10vh) translateX(0);
     }
     100% {
-        transform: translateY(110vh) translateX(20px);
+        transform: translateY(110vh) translateX(var(--drift, 20px));
     }
 }
 
@@ -2595,6 +4019,39 @@ body {
     }
 }
 
+/* Звёздочки по всему сайту */
+.twinkling-stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 18;
+    overflow: visible;
+}
+
+.twinkling-star {
+    position: absolute;
+    opacity: 0.4;
+    animation: star-twinkle 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+    user-select: none;
+}
+
+@keyframes star-twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(180deg);
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+    }
+}
+
 @keyframes sparkle-twinkle {
     0%, 100% {
         opacity: 1;
@@ -2684,10 +4141,6 @@ body {
         height: 35%;
     }
     
-    .photo-card {
-        width: min(120px, 12vw);
-        height: min(156px, 15vw);
-    }
 
     .map-paper-item {
         position: relative;
@@ -2746,5 +4199,376 @@ body {
         border-bottom-width: 85px;
     }
 
+    .tree-silhouette-5,
+    .tree-silhouette-6,
+    .tree-silhouette-7,
+    .tree-silhouette-8,
+    .tree-silhouette-9,
+    .tree-silhouette-10 {
+        border-left-width: 12px;
+        border-right-width: 12px;
+        border-bottom-width: 60px;
+    }
+
+    .decorated-tree-1,
+    .decorated-tree-2,
+    .decorated-tree-3,
+    .decorated-tree-4,
+    .decorated-tree-5 {
+        border-left-width: 20px;
+        border-right-width: 20px;
+        border-bottom-width: 90px;
+    }
+
+    .tree-star {
+        font-size: 12px;
+        top: -15px;
+    }
+
+    .tree-ornament {
+        width: 8px;
+        height: 8px;
+    }
+    
+    /* Улучшения для мобильной версии */
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    /* Модальные окна на мобильных */
+    .modal-content {
+        max-width: 95%;
+        max-height: 90vh;
+        padding: 16px;
+    }
+    
+    .event-modal {
+        max-width: 95%;
+    }
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+    .photo-card {
+        width: calc(80px * var(--element-scale)) !important;
+        height: calc(104px * var(--element-scale)) !important;
+        max-width: calc(80px * var(--element-scale)) !important;
+        max-height: calc(104px * var(--element-scale)) !important;
+    }
+    
+    .modal-content {
+        padding: 12px;
+        font-size: 0.9em;
+    }
+    
+    .event-modal .modal-header h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* --- БОКОВЫЕ НОВОГОДНИЕ ГИРЛЯНДЫ --- */
+.side-garland {
+    position: fixed;
+    top: 0;
+    width: 80px;
+    height: 100vh;
+    z-index: 35;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+    gap: 50px;
+    transition: opacity 0.5s ease;
+    /* Убеждаемся, что гирлянды видны */
+    visibility: visible;
+    opacity: 1;
+}
+
+.side-garland-left {
+    left: 0;
+}
+
+.side-garland-right {
+    right: 0;
+}
+
+/* Изогнутая верёвка гирлянды - используем SVG для плавного изгиба */
+.side-garland .garland-string {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Создаём изогнутую верёвку через псевдоэлемент */
+.side-garland .garland-string::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        rgba(60, 40, 20, 0.95) 0%,
+        rgba(60, 40, 20, 0.8) 20%,
+        rgba(60, 40, 20, 0.7) 40%,
+        rgba(60, 40, 20, 0.75) 50%,
+        rgba(60, 40, 20, 0.7) 60%,
+        rgba(60, 40, 20, 0.8) 80%,
+        rgba(60, 40, 20, 0.95) 100%
+    );
+    border-radius: 2px;
+    box-shadow: 
+        0 0 2px rgba(0, 0, 0, 0.5),
+        inset 0 0 2px rgba(0, 0, 0, 0.3);
+    /* Создаём изгиб через transform */
+    transform: translateX(-50%) perspective(200px) rotateY(5deg);
+}
+
+.side-garland .garland-bulb {
+    position: relative;
+    width: 18px;
+    height: 35px;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+    /* Смещение для изогнутой верёвки - создаёт эффект свисания */
+    margin-left: calc(var(--bulb-offset, 0px));
+}
+
+/* Каплевидная лампочка C9 style */
+.side-garland .garland-bulb::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 28px;
+    /* Каплевидная форма */
+    border-radius: 50% 50% 50% 50% / 60% 60% 100% 100%;
+    background: radial-gradient(
+        ellipse at 40% 35%,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.7) 20%,
+        currentColor 60%,
+        currentColor 100%
+    );
+    box-shadow: 
+        0 0 20px currentColor,
+        0 0 40px currentColor,
+        0 0 60px rgba(255, 255, 255, 0.4),
+        inset -1px -1px 3px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 3px rgba(255, 255, 255, 0.5);
+    animation: 
+        bulb-twinkle 2.5s ease-in-out infinite,
+        bulb-sway 4s ease-in-out infinite;
+    animation-delay: 
+        calc(var(--bulb-index, 0) * 0.2s),
+        calc(var(--bulb-index, 0) * 0.15s);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Основание лампочки (соединение с верёвкой) */
+.side-garland .garland-bulb::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: linear-gradient(to bottom, #4a3a2a, #2a1f15);
+    border-radius: 2px 2px 0 0;
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.5),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* Выключенное состояние - лампочки остаются видимыми, но тусклыми */
+.side-garland:not(.active) .garland-bulb::before {
+    opacity: 0.25;
+    box-shadow: 
+        0 0 3px rgba(0, 0, 0, 0.3),
+        0 0 6px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+    animation: none;
+    background: radial-gradient(
+        ellipse at 40% 35%,
+        rgba(100, 100, 100, 0.3) 0%,
+        rgba(80, 80, 80, 0.2) 20%,
+        rgba(60, 60, 60, 0.3) 60%,
+        rgba(40, 40, 40, 0.4) 100%
+    );
+}
+
+.side-garland:not(.active) .garland-bulb::after {
+    opacity: 0.6;
+}
+
+.side-garland:not(.active) .garland-string::before {
+    opacity: 0.5;
+}
+
+/* Цвета лампочек - красный, зелёный, жёлтый (как на изображении) */
+.side-garland .garland-bulb:nth-child(2) {
+    color: #ffd700;
+    --bulb-offset: 3px;
+    --bulb-index: 0;
+}
+
+.side-garland .garland-bulb:nth-child(3) {
+    color: #dc143c;
+    --bulb-offset: -2px;
+    --bulb-index: 1;
+}
+
+.side-garland .garland-bulb:nth-child(4) {
+    color: #228b22;
+    --bulb-offset: 4px;
+    --bulb-index: 2;
+}
+
+.side-garland .garland-bulb:nth-child(5) {
+    color: #dc143c;
+    --bulb-offset: -3px;
+    --bulb-index: 3;
+}
+
+.side-garland .garland-bulb:nth-child(6) {
+    color: #228b22;
+    --bulb-offset: 5px;
+    --bulb-index: 4;
+}
+
+.side-garland .garland-bulb:nth-child(7) {
+    color: #ffd700;
+    --bulb-offset: -2px;
+    --bulb-index: 5;
+}
+
+.side-garland .garland-bulb:nth-child(8) {
+    color: #dc143c;
+    --bulb-offset: 3px;
+    --bulb-index: 6;
+}
+
+.side-garland .garland-bulb:nth-child(9) {
+    color: #228b22;
+    --bulb-offset: -4px;
+    --bulb-index: 7;
+}
+
+.side-garland .garland-bulb:nth-child(10) {
+    color: #ffd700;
+    --bulb-offset: 4px;
+    --bulb-index: 8;
+}
+
+.side-garland .garland-bulb:nth-child(11) {
+    color: #dc143c;
+    --bulb-offset: -3px;
+    --bulb-index: 9;
+}
+
+.side-garland .garland-bulb:nth-child(12) {
+    color: #228b22;
+    --bulb-offset: 2px;
+    --bulb-index: 10;
+}
+
+.side-garland .garland-bulb:nth-child(13) {
+    color: #ffd700;
+    --bulb-offset: -2px;
+    --bulb-index: 11;
+}
+
+.side-garland .garland-bulb:nth-child(14) {
+    color: #dc143c;
+    --bulb-offset: 3px;
+    --bulb-index: 12;
+}
+
+.side-garland .garland-bulb:nth-child(15) {
+    color: #228b22;
+    --bulb-offset: -3px;
+    --bulb-index: 13;
+}
+
+.side-garland .garland-bulb:nth-child(16) {
+    color: #ffd700;
+    --bulb-offset: 2px;
+    --bulb-index: 14;
+}
+
+@keyframes bulb-twinkle {
+    0%, 100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+        box-shadow: 
+            0 0 20px currentColor,
+            0 0 40px currentColor,
+            0 0 60px rgba(255, 255, 255, 0.4),
+            inset -1px -1px 3px rgba(0, 0, 0, 0.3),
+            inset 1px 1px 3px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        opacity: 0.75;
+        transform: translateX(-50%) scale(0.98);
+        box-shadow: 
+            0 0 12px currentColor,
+            0 0 25px currentColor,
+            0 0 40px rgba(255, 255, 255, 0.3),
+            inset -1px -1px 2px rgba(0, 0, 0, 0.25),
+            inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes bulb-sway {
+    0%, 100% {
+        transform: translateX(-50%) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateX(-50%) translateX(1px) rotate(0.5deg);
+    }
+    75% {
+        transform: translateX(-50%) translateX(-1px) rotate(-0.5deg);
+    }
+}
+
+/* Адаптация боковых гирлянд для мобильных */
+@media (max-width: 768px) {
+    .side-garland {
+        width: 50px;
+        padding-top: 60px;
+        gap: 35px;
+    }
+    
+    .side-garland .garland-bulb {
+        width: 14px;
+        height: 24px;
+    }
+    
+    .side-garland .garland-bulb::before {
+        width: 14px;
+        height: 20px;
+    }
+    
+    .side-garland .garland-bulb::after {
+        width: 8px;
+        height: 5px;
+    }
+    
+    .side-garland .garland-string::before {
+        width: 3px;
+    }
 }
 
